@@ -31,18 +31,20 @@ const Accordion: React.FC<AccordionProps> = ({
         <h2 className="text-lg font-medium text-gray-900">{title}</h2>
         
         <div className="flex items-center gap-2">
-          {isVerified && (
-            <div className="flex items-center justify-center w-5 h-5 bg-green-500 rounded-full">
-              <CheckIcon className="w-3 h-3 text-white" />
-            </div>
-          )}
+          <div
+            className={`flex items-center justify-center w-5 h-5 rounded-full ${
+              isVerified ? 'bg-green-500' : 'bg-gray-300'
+            }`}
+          >
+            <CheckIcon className={`w-3 h-3 ${isVerified ? 'text-white' : 'text-gray-600'}`} />
+          </div>
           <ChevronDownIcon 
             className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${
               isOpen ? 'rotate-180' : ''
             }`}
           />
         </div>
-      </div>
+      </div> {/* ✅ This was the missing closing tag */}
 
       {/* Accordion Content */}
       <div className={`transition-all duration-300 ease-in-out overflow-hidden ${

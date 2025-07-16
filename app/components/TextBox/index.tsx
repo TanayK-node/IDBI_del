@@ -10,6 +10,8 @@ interface TextBoxProps {
   type?: "text" | "password";
   value: string;
   onChange: (value: string) => void;
+  className?: string;
+  required?: boolean;
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
@@ -18,6 +20,8 @@ const TextBox: React.FC<TextBoxProps> = ({
   type = "text",
   value,
   onChange,
+  required = false,
+  className = "",
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,8 +31,9 @@ const TextBox: React.FC<TextBoxProps> = ({
 
   return (
     <div className="mb-6">
-      <label className="block text-gray-700 text-sm font-medium mb-2">
+      <label className="block text-sm font-medium text-gray-700 mb-1">
         {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
       </label>
       <div className="relative">
         <input
@@ -36,7 +41,8 @@ const TextBox: React.FC<TextBoxProps> = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28] placeholder-gray-500"
+          required={required}
+           className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28] placeholder-gray-500 ${className}`}
         />
 
         {type === "password" && (
