@@ -9,9 +9,10 @@ interface BasicDetailsProps {
   className?: string;
 }
 
-interface BasicData {
+export interface BasicData {
   aadhaarNumber: string;
 }
+
 
 const BasicDetails: React.FC<BasicDetailsProps> = ({
   onVerify,

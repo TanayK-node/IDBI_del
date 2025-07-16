@@ -7,6 +7,7 @@ import CustomerIDProofPage from './components/CustomerPAN';
 import ServiceDropdown from './components/ServiceDropdown';
 import CustomerDetails from './components/CustomerDetails';
 import BasicDetails from './components/BasicDetails';
+import type { BasicData } from './components/BasicDetails';
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState("Open Savings Account");
