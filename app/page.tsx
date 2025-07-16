@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import CustomerIDProofPage from './components/CustomerPAN';
 import ServiceDropdown from './components/ServiceDropdown';
-
+import CustomerDetails from './components/CustomerDetails';
 export default function Home() {
   const [selectedService, setSelectedService] = useState("Open Savings Account");
 
@@ -44,6 +44,10 @@ export default function Home() {
 
         {/* Customer ID Proof Section */}
         <CustomerIDProofPage />
+        <CustomerDetails
+          onVerify={handleProceed}
+          defaultOpen={true}
+        />
       </div>
     </div>
   );

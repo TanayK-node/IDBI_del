@@ -17,11 +17,13 @@ const Button: React.FC<ButtonProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-1/2 py-3 px-6 rounded-4xl font-medium text-white transition-colors duration-200 ${
-        disabled
-          ? "bg-gray-400 cursor-not-allowed"
-          : "bg-gray-400 hover:bg-orange-600 active:bg-orange-700"
-      } ${className}`}
+      className={`w-[200px] h-[48px] py-3 px-6 rounded-3xl font-medium text-white transition-colors duration-200
+    ${
+      disabled
+        ? "bg-gray-400 cursor-not-allowed"
+        : "bg-gray-400 hover:bg-orange-600 active:bg-orange-700"
+    }
+    ${className}`}
     >
       {children}
     </button>

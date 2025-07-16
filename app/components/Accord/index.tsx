@@ -22,7 +22,7 @@ const Accordion: React.FC<AccordionProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 w-full max-w-[1150.4px]  mx-auto">
       {/* Accordion Header */}
       <div 
         className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors"
