@@ -6,6 +6,8 @@ import Hero from './components/Hero';
 import CustomerIDProofPage from './components/CustomerPAN';
 import ServiceDropdown from './components/ServiceDropdown';
 import CustomerDetails from './components/CustomerDetails';
+import BasicDetails from './components/BasicDetails';
+
 export default function Home() {
   const [selectedService, setSelectedService] = useState("Open Savings Account");
 
@@ -16,6 +18,12 @@ export default function Home() {
     { id: 'fd', label: 'FD' },
     { id: 'rd', label: 'RD' },
   ];
+
+  const handleBasicDetailsVerify = (basicData: BasicData) => {
+  console.log('Basic details verified:', basicData);
+  // Handle verification logic here
+  // API call, state update, etc.
+};
 
   const handleServiceSelect = (option: any) => {
     setSelectedService(option.label);
@@ -48,6 +56,7 @@ export default function Home() {
           onVerify={handleProceed}
           defaultOpen={true}
         />
+        <BasicDetails onVerify={handleBasicDetailsVerify} />
       </div>
     </div>
   );
