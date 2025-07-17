@@ -26,6 +26,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
   });
 
   const [isVerified, setIsVerified] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
 
   const handleInputChange = (field: keyof CustomerData, value: string) => {
     setCustomerData((prev) => ({
@@ -39,6 +40,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
     if (customerData.name && customerData.dob && customerData.email) {
       setIsVerified(true);
       onVerify?.(customerData);
+      setFormOpen(false);
     }
   };
 
@@ -49,7 +51,8 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
     <Accordion
       title="Customer Details"
       isVerified={isVerified}
-      defaultOpen={false}
+      isOpen={formOpen}
+      onToggle={setFormOpen}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="space-y-4">
@@ -88,8 +91,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
                 disabled={!isFormValid}
                 className={`${
                   isFormValid
-                    ? "bg-orange-500 hover:bg-orange-600"
-                    : "bg-gray-400 cursor-not-allowed"
+                   
                 }`}
               >
                 Verify

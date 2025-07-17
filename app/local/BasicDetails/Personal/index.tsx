@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
-import Button from "../../../components/Button/index"; // Adjust path as needed
+import TextBox from "../../../components/TextBox/index"; 
 import Dropdown from "../../../components/DropBox/index";
-import Accordion from "../../../components/Accord/index";
-import InfoBox from "../../../components/InfoBox/index"; // Adjust path as needed
+import InfoBox from "../../../components/InfoBox/index"; 
+
 interface PersonalDetailsProps {
-  onSave?: (data: PersonalDetailsData) => void;
+  value: PersonalDetailsData;
+  onChange: (data: PersonalDetailsData) => void;
   className?: string;
 }
 
@@ -18,41 +18,22 @@ export interface PersonalDetailsData {
   motherName: string;
 }
 
+
 const PersonalDetails: React.FC<PersonalDetailsProps> = ({
-  onSave,
+  value,
+  onChange,
   className = "",
 }) => {
-  const [isVerified, setIsVerified] = useState(false);
-  const [formData, setFormData] = useState<PersonalDetailsData>({
-    customerEmail: "",
-    emailForCommunication: false,
-    maritalStatus: "",
-    fatherName: "",
-    motherName: "",
-  });
+  const formData = value;
 
   const handleInputChange = (
     field: keyof PersonalDetailsData,
-    value: string | boolean
+    val: string | boolean
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const handleSave = () => {
-    const isFormValid =
-      formData.customerEmail.trim() !== "" &&
-      formData.maritalStatus.trim() !== "" &&
-      formData.fatherName.trim() !== "" &&
-      formData.motherName.trim() !== "";
-
-    if (isFormValid) {
-      setIsVerified(true);
-      onSave?.(formData);
-      console.log("Personal details saved:", formData);
-    }
+    onChange({
+      ...formData,
+      [field]: val,
+    });
   };
 
   const isFormValid =

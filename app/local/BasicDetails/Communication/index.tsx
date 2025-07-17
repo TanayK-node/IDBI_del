@@ -1,14 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
-import Accordion from "../../../components/Accord/index";
+import TextBox from "../../../components/TextBox/index"; // 
 import InfoBox from "../../../components/InfoBox/index"; // Adjust path as needed
-import Button from "../../../components/Button/index"; // Adjust path as needed
-
-interface CommunicationAddressProps {
-  onSave?: (data: CommunicationAddressData) => void;
-  className?: string;
-}
 
 export interface CommunicationAddressData {
   communicationSameAsAadhaar: boolean;
@@ -20,50 +13,40 @@ export interface CommunicationAddressData {
   pincode: string;
 }
 
+interface CommunicationAddressProps {
+  value: CommunicationAddressData;
+  onChange: (data: CommunicationAddressData) => void;
+  className?: string;
+}
+
+
+
 const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
-  onSave,
+  value,
+  onChange,
   className = "",
 }) => {
   const [isVerified, setIsVerified] = useState(false);
-  const [formData, setFormData] = useState<CommunicationAddressData>({
-    communicationSameAsAadhaar: false,
-    communicationFromBank: true,
-    addressLine1: "",
-    addressLine2: "",
-    city: "",
-    state: "",
-    pincode: "",
-  });
+  
 
   const handleInputChange = (
-    field: keyof CommunicationAddressData,
-    value: string | boolean
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+  field: keyof CommunicationAddressData,
+  fieldValue: string | boolean // <-- renamed from `value` to `fieldValue`
+) => {
+  const updatedData = {
+    ...value, // `value` is the prop (CommunicationAddressData)
+    [field]: fieldValue, // update just the field
   };
+  onChange(updatedData); // send updated object to parent
+};
 
-  const handleSave = () => {
-    const isFormValid =
-      formData.addressLine1.trim() !== "" &&
-      formData.city.trim() !== "" &&
-      formData.state.trim() !== "" &&
-      formData.pincode.trim() !== "";
-
-    if (isFormValid) {
-      setIsVerified(true);
-      onSave?.(formData);
-      console.log("Communication address saved:", formData);
-    }
-  };
+  
 
   const isFormValid =
-    formData.addressLine1.trim() !== "" &&
-    formData.city.trim() !== "" &&
-    formData.state.trim() !== "" &&
-    formData.pincode.trim() !== "";
+    value.addressLine1.trim() !== "" &&
+    value.city.trim() !== "" &&
+    value.state.trim() !== "" &&
+    value.pincode.trim() !== "";
 
   return (
     <div className={className}>
@@ -80,7 +63,7 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
             <input
               type="checkbox"
               id="communicationSameAsAadhaar"
-              checked={formData.communicationSameAsAadhaar}
+              checked={value.communicationSameAsAadhaar}
               onChange={(e) =>
                 handleInputChange(
                   "communicationSameAsAadhaar",
@@ -101,14 +84,14 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
             <TextBox
               label="Address Line 1"
               placeholder="Enter Address Line 1"
-              value={formData.addressLine1}
+              value={value.addressLine1}
               onChange={(value) => handleInputChange("addressLine1", value)}
               required
             />
             <TextBox
               label="Address Line 2"
               placeholder="Enter Address Line 2"
-              value={formData.addressLine2}
+              value={value.addressLine2}
               onChange={(value) => handleInputChange("addressLine2", value)}
             />
           </div>
@@ -117,21 +100,21 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
             <TextBox
               label="City"
               placeholder="Enter City"
-              value={formData.city}
+              value={value.city}
               onChange={(value) => handleInputChange("city", value)}
               required
             />
             <TextBox
               label="State"
               placeholder="Enter State"
-              value={formData.state}
+              value={value.state}
               onChange={(value) => handleInputChange("state", value)}
               required
             />
             <TextBox
               label="Pincode"
               placeholder="Enter Pincode"
-              value={formData.pincode}
+              value={value.pincode}
               onChange={(value) => handleInputChange("pincode", value)}
               required
             />

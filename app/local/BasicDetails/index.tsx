@@ -47,16 +47,14 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
 }) => {
   const [isVerified, setIsVerified] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
+  const [formVerified, setFormVerified] = useState(false);
+  const [formOpen, setFormOpen] = useState(true);
+
   const [verificationError, setVerificationError] = useState<string | null>(
     null
   );
+
   const [basicData, setBasicData] = useState<BasicData>(initialBasicData);
-  const [communicationAddressData, setCommunicationAddressData] =
-    useState<CommunicationAddressData | null>(null);
-  const [personalDetailsData, setPersonalDetailsData] =
-    useState<PersonalDetailsData | null>(null);
-  const [professionalDetailsData, setProfessionalDetailsData] =
-    useState<ProfessionalDetailsData | null>(null);
 
   const handleInputChange = (field: keyof BasicData, value: string) => {
     setBasicData((prev) => ({
@@ -131,37 +129,61 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     };
   };
 
-  const handleCommunicationAddressSave = (data: CommunicationAddressData) => {
-    setCommunicationAddressData(data);
-  };
+  const [personalDetailsData, setPersonalDetailsData] =
+    useState<PersonalDetailsData>({
+      customerEmail: "",
+      emailForCommunication: false,
+      maritalStatus: "",
+      fatherName: "",
+      motherName: "",
+    });
 
-  const handlePersonalDetailsSave = (data: PersonalDetailsData) => {
-    setPersonalDetailsData(data);
-  };
+  const [communicationAddressData, setCommunicationAddressData] =
+    useState<CommunicationAddressData>({
+      communicationSameAsAadhaar: false,
+      communicationFromBank: true, // or false — depends on your default
+      addressLine1: "",
+      addressLine2: "",
+      city: "",
+      state: "",
+      pincode: "",
+    });
+  const [ProfessionalDetailsData, setProfessionalDetailsData] =
+    useState<ProfessionalDetailsData>({
+      occupation: "",
+      organizationType: "",
+      organizationName: "",
+      sourceOfFunds: "",
+      grossAnnualIncome: "",
+      savingsAccountType: "",
+    });
 
-  const handleProfessionalDetailsSave = (data: ProfessionalDetailsData) => {
-    setProfessionalDetailsData(data);
-  };
+  const isAllSectionsSaved =
+    communicationAddressData && personalDetailsData && ProfessionalDetailsData;
 
   const handleFinalSubmit = () => {
+    console.log("Trying to submit form...");
+    console.log("communicationAddressData:", communicationAddressData);
+    console.log("personalDetailsData:", personalDetailsData);
+    console.log("professionalDetailsData:", ProfessionalDetailsData);
+
     if (
       communicationAddressData &&
       personalDetailsData &&
-      professionalDetailsData
+      ProfessionalDetailsData
     ) {
       const allData: CompleteFormData = {
         basicData,
         communicationAddress: communicationAddressData,
         personalDetails: personalDetailsData,
-        professionalDetails: professionalDetailsData,
+        professionalDetails: ProfessionalDetailsData,
       };
+      setFormOpen(false);
+      setFormVerified(true);
       onSubmit?.(allData);
       console.log("Complete form submitted:", allData);
     }
   };
-
-  const isAllSectionsSaved =
-    communicationAddressData && personalDetailsData && professionalDetailsData;
 
   const handleEditBasicDetails = () => {
     setIsVerified(false);
@@ -283,39 +305,54 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       {/* Show remaining sections only after verification */}
       {isVerified && (
         <>
-        <Accordion
-          title="Complete Application Form"
-         
-          defaultOpen={true}>
-          {/* Communication Address Section */}
-          <div className="mb-6">
-            <CommunicationAddress onSave={handleCommunicationAddressSave} />
-            <hr className="my-4 border-t border-gray-300" />
-          </div>
+          <Accordion
+            title="Complete Application Form"
+              isOpen={formOpen}
+              onToggle={setFormOpen}
+              isVerified={formVerified}
+          >
+            {/* Communication Address Section */}
+            <div className="mb-6">
+              <CommunicationAddress
+                value={communicationAddressData}
+                onChange={setCommunicationAddressData}
+              />
+              <hr className="my-4 border-t border-gray-300" />
+            </div>
 
-          {/* Personal Details Section */}
-          <div className="mb-6">
-            <PersonalDetails onSave={handlePersonalDetailsSave} />
-            <hr className="my-4 border-t border-gray-300" />
-          </div>
+            {/* Personal Details Section */}
+            <div className="mb-6">
+              <PersonalDetails
+                value={personalDetailsData}
+                onChange={setPersonalDetailsData}
+              />
+              <hr className="my-4 border-t border-gray-300" />
+            </div>
 
-          {/* Professional Details Section */}
-          <div className="mb-6">
-            <ProfessionalDetails onSave={handleProfessionalDetailsSave} />
-        
-          </div>
-        </Accordion>
-          {/* Final Submit Button */}
-          {isAllSectionsSaved && (
+            {/* Professional Details Section */}
+            <div className="mb-6">
+              <ProfessionalDetails
+                value={ProfessionalDetailsData}
+                onChange={setProfessionalDetailsData}
+              />
+            </div>
+
+            {/* Submit Button */}
             <div className="flex justify-center mt-8">
-              <button
+              <Button
                 onClick={handleFinalSubmit}
-                className="px-8 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full font-medium focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+                disabled={!isAllSectionsSaved}
+              
+                className={`${
+                  isAllSectionsSaved
+                    ? "bg-orange-500 hover:bg-orange-600"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
               >
                 Submit Application
-              </button>
+              </Button>
             </div>
-          )}
+          </Accordion>
         </>
       )}
     </div>

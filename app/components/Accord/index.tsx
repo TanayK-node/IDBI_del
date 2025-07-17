@@ -7,18 +7,26 @@ interface AccordionProps {
   children: React.ReactNode;
   isVerified?: boolean;
   defaultOpen?: boolean;
+  isOpen?: boolean; 
+  onToggle?: (open: boolean) => void;
 }
 
 const Accordion: React.FC<AccordionProps> = ({ 
   title, 
   children, 
   isVerified = false, 
-  defaultOpen = false 
+  defaultOpen = false ,
+  isOpen: controlledOpen,
+  onToggle,
 }) => {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const isControlled = controlledOpen !== undefined;
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const isOpen = isControlled ? controlledOpen : internalOpen;
 
   const handleToggle = () => {
-    setIsOpen(!isOpen);
+    const newOpen = !isOpen;
+    if (!isControlled) setInternalOpen(newOpen);
+    onToggle?.(newOpen);
   };
 
   return (
@@ -48,7 +56,7 @@ const Accordion: React.FC<AccordionProps> = ({
 
       {/* Accordion Content */}
       <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
-        isOpen ? 'max-h-400 opacity-100' : 'max-h-0 opacity-0'
+        isOpen ? 'max-h-500 opacity-100' : 'max-h-0 opacity-0'
       }`}>
         <div className="px-4 pb-4 border-t border-gray-100">
           <div className="pt-4">

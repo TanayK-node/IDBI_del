@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
-import Button from "../../../components/Button/index"; // Adjust path as needed
 import Dropdown from "../../../components/DropBox/index";
-import Accordion from "../../../components/Accord/index";
+
 
 interface ProfessionalDetailsProps {
-  onSave?: (data: ProfessionalDetailsData) => void;
+  value: ProfessionalDetailsData;
+  onChange: (data: ProfessionalDetailsData) => void;
   className?: string;
 }
 
@@ -20,52 +20,48 @@ export interface ProfessionalDetailsData {
 }
 
 const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
-  onSave,
+  value,
+  onChange,
   className = "",
 }) => {
   const [isVerified, setIsVerified] = useState(false);
-  const [formData, setFormData] = useState<ProfessionalDetailsData>({
-    occupation: "",
-    organizationType: "",
-    organizationName: "",
-    sourceOfFunds: "",
-    grossAnnualIncome: "",
-    savingsAccountType: "",
-  });
+
+
 
   const handleInputChange = (
     field: keyof ProfessionalDetailsData,
-    value: string
+    fieldValue: string | boolean // <-- renamed from `value` to `fieldValue`
   ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    const updatedData = {
+      ...value, // `value` is the prop (CommunicationAddressData)
+      [field]: fieldValue, // update just the field
+    };
+    onChange(updatedData); // send updated object to parent
   };
 
   const handleSave = () => {
     const isFormValid =
-      formData.occupation.trim() !== "" &&
-      formData.organizationType.trim() !== "" &&
-      formData.organizationName.trim() !== "" &&
-      formData.sourceOfFunds.trim() !== "" &&
-      formData.grossAnnualIncome.trim() !== "" &&
-      formData.savingsAccountType.trim() !== "";
+      value.occupation.trim() !== "" &&
+      value.organizationType.trim() !== "" &&
+      value.organizationName.trim() !== "" &&
+      value.sourceOfFunds.trim() !== "" &&
+      value.grossAnnualIncome.trim() !== "" &&
+      value.savingsAccountType.trim() !== "";
 
     if (isFormValid) {
       setIsVerified(true);
-      onSave?.(formData);
-      console.log("Professional details saved:", formData);
+      onChange?.(value);
+      console.log("Professional details saved:", value);
     }
   };
 
   const isFormValid =
-    formData.occupation.trim() !== "" &&
-    formData.organizationType.trim() !== "" &&
-    formData.organizationName.trim() !== "" &&
-    formData.sourceOfFunds.trim() !== "" &&
-    formData.grossAnnualIncome.trim() !== "" &&
-    formData.savingsAccountType.trim() !== "";
+    value.occupation.trim() !== "" &&
+    value.organizationType.trim() !== "" &&
+    value.organizationName.trim() !== "" &&
+    value.sourceOfFunds.trim() !== "" &&
+    value.grossAnnualIncome.trim() !== "" &&
+    value.savingsAccountType.trim() !== "";
 
   // Dropdown options
   const occupationOptions = [
@@ -109,7 +105,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               label="Occupation"
               placeholder="Select Occupation"
               options={occupationOptions}
-              value={formData.occupation}
+              value={value.occupation}
               onChange={(value) => handleInputChange("occupation", value)}
               required
             />
@@ -117,14 +113,14 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               label="Organization Type"
               placeholder="Select Organization Type"
               options={organizationTypeOptions}
-              value={formData.organizationType}
+              value={value.organizationType}
               onChange={(value) => handleInputChange("organizationType", value)}
               required
             />
             <TextBox
               label="Organization Name"
               placeholder="Enter Organization Name"
-              value={formData.organizationName}
+              value={value.organizationName}
               onChange={(value) => handleInputChange("organizationName", value)}
               required
             />
@@ -135,14 +131,14 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               label="Source of Funds"
               placeholder="Select Organization Type"
               options={sourceOfFundsOptions}
-              value={formData.sourceOfFunds}
+              value={value.sourceOfFunds}
               onChange={(value) => handleInputChange("sourceOfFunds", value)}
               required
             />
             <TextBox
               label="Gross Annual Income"
               placeholder="Enter Gross Annual Income"
-              value={formData.grossAnnualIncome}
+              value={value.grossAnnualIncome}
               onChange={(value) =>
                 handleInputChange("grossAnnualIncome", value)
               }
@@ -152,7 +148,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               label="Type of Savings Account"
               placeholder="Select Savings Account Type"
               options={savingsAccountTypeOptions}
-              value={formData.savingsAccountType}
+              value={value.savingsAccountType}
               onChange={(value) =>
                 handleInputChange("savingsAccountType", value)
               }
