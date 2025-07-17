@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import TextBox from "../TextBox/index";
-import Button from "../Button/index";
-import Accordion from "../Accord/index";
+import TextBox from "../../components/TextBox/index";
+import Button from "../../components/Button/index";
+import Accordion from "../../components/Accord/index";
 
 interface BasicDetailsProps {
   onVerify?: (basicData: BasicData) => void;
@@ -48,7 +48,7 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
       <Accordion
         title="Basic Details"
         isVerified={isVerified}
-        defaultOpen={true}
+        defaultOpen={false}
       >
         <div className="flex items-end justify-between flex-wrap gap-4">
           {/* TextBox */}

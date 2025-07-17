@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import TextBox from "../TextBox/index";
-import Button from "../Button/index";
-import Accordion from "../Accord/index";
+import TextBox from "../../components/TextBox/index";
+import Button from "../../components/Button/index";
+import Accordion from "../../components/Accord/index";
 
 interface CustomerDetailsProps {
   onVerify?: (customerData: CustomerData) => void;

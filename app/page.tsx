@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import CustomerIDProofPage from './components/CustomerPAN';
+import CustomerIDProofPage from './local/CustomerPAN';
 import ServiceDropdown from './components/ServiceDropdown';
-import CustomerDetails from './components/CustomerDetails';
-import BasicDetails from './components/BasicDetails';
-import type { BasicData } from './components/BasicDetails';
+import CustomerDetails from './local/CustomerDetails';
+import BasicDetails from './local/BasicDetails/index';
+import type { BasicData } from './local/BasicDetails/index';
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState("Open Savings Account");
