@@ -67,12 +67,9 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
 
   return (
     <div className={className}>
-      <Accordion
-        title="Communication Address"
-        isVerified={isVerified}
-        defaultOpen={!isVerified}
-      >
+      
         <div className="space-y-4">
+          <h1 className="text-3xl">Communication Details</h1>
           <InfoBox
             message="All communication from the Bank will be received on communication address."
             type="info"
@@ -140,15 +137,9 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
             />
           </div>
 
-          {!isVerified && (
-            <div className="flex justify-end mt-6">
-              <Button onClick={handleSave} disabled={!isFormValid}>
-                Save
-              </Button>
-            </div>
-          )}
+          
         </div>
-      </Accordion>
+
     </div>
   );
 };

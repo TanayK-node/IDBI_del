@@ -71,11 +71,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
 
   return (
     <div className={className}>
-      <Accordion
-        title="Personal Details"
-        isVerified={isVerified}
-        defaultOpen={!isVerified}
-      >
+        <h1 className="text-3xl pb-4">Personal Details</h1>
         <div className="space-y-4">
           {/* Customer Email */}
           <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
@@ -117,18 +113,11 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
             />
           </div>
 
-          {/* Save Button */}
-          {!isVerified && (
-            <div className="flex justify-end mt-6">
-              <Button onClick={handleSave} disabled={!isFormValid}>
-                Save
-              </Button>
-            </div>
-          )}
+          
         </div>
-      </Accordion>
+      
     </div>
-  );
+  );  
 };
 
 export default PersonalDetails;

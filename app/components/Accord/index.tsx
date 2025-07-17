@@ -48,7 +48,7 @@ const Accordion: React.FC<AccordionProps> = ({
 
       {/* Accordion Content */}
       <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
-        isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        isOpen ? 'max-h-400 opacity-100' : 'max-h-0 opacity-0'
       }`}>
         <div className="px-4 pb-4 border-t border-gray-100">
           <div className="pt-4">

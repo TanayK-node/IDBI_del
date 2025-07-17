@@ -102,11 +102,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
 
   return (
     <div className={className}>
-      <Accordion
-        title="Professional Details"
-        isVerified={isVerified}
-        defaultOpen={!isVerified}
-      >
+      <h1 className="text-3xl pb-4">Proffesional Details</h1>
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Dropdown
@@ -164,15 +160,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
             />
           </div>
 
-          {!isVerified && (
-            <div className="flex justify-end mt-6">
-              <Button onClick={handleSave} disabled={!isFormValid}>
-                Save
-              </Button>
-            </div>
-          )}
+          
         </div>
-      </Accordion>
+      
     </div>
   );
 };

@@ -6,10 +6,9 @@ import Hero from './components/Hero';
 import CustomerIDProofPage from './local/CustomerPAN';
 import ServiceDropdown from './components/ServiceDropdown';
 import CustomerDetails from './local/CustomerDetails';
-import BasicDetails from './local/BasicDetails/index';
 import type { BasicData } from './local/BasicDetails/index';
 import CompleteForm from './local/BasicDetails/index';
-
+import BranchBankCard from './local/Branch/index';
 export default function Home() {
   const [selectedService, setSelectedService] = useState("Open Savings Account");
 
@@ -64,6 +63,11 @@ export default function Home() {
           defaultOpen={true}
         />
         <CompleteForm basicData={{ aadhaarNumber: "" }} onSubmit={handleSubmit} />
+        <BranchBankCard className='pb-6'//replace by fetched details 
+          branchName='Juhu'
+          branchCode='JH1234'
+          address='123 Juhu Road, Mumbai, Maharashtra, 400049'
+        />
       </div>
     </div>
   );

@@ -182,7 +182,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       {/* Conditional rendering based on verification status */}
       {!isVerified ? (
         // Before Verification - Input Form
-        <Accordion title="Basic Details" isVerified={false} defaultOpen={true}>
+        <Accordion title="Basic Details" isVerified={false} defaultOpen={false}>
           <div className="space-y-4">
             <div className="flex items-end justify-between flex-wrap gap-4">
               {/* TextBox */}
@@ -283,21 +283,28 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       {/* Show remaining sections only after verification */}
       {isVerified && (
         <>
+        <Accordion
+          title="Complete Application Form"
+         
+          defaultOpen={true}>
           {/* Communication Address Section */}
           <div className="mb-6">
             <CommunicationAddress onSave={handleCommunicationAddressSave} />
+            <hr className="my-4 border-t border-gray-300" />
           </div>
 
           {/* Personal Details Section */}
           <div className="mb-6">
             <PersonalDetails onSave={handlePersonalDetailsSave} />
+            <hr className="my-4 border-t border-gray-300" />
           </div>
 
           {/* Professional Details Section */}
           <div className="mb-6">
             <ProfessionalDetails onSave={handleProfessionalDetailsSave} />
+        
           </div>
-
+        </Accordion>
           {/* Final Submit Button */}
           {isAllSectionsSaved && (
             <div className="flex justify-center mt-8">
