@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import TextBox from "../../TextBox/index";
-import Dropdown from "../../DropBox/index";
-import Accordion from "../../Accord/index";
+import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
+import Button from "../../../components/Button/index"; // Adjust path as needed
+import Dropdown from "../../../components/DropBox/index";
+import Accordion from "../../../components/Accord/index";
 
 interface ProfessionalDetailsProps {
   onSave?: (data: ProfessionalDetailsData) => void;
@@ -32,7 +33,10 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     savingsAccountType: "",
   });
 
-  const handleInputChange = (field: keyof ProfessionalDetailsData, value: string) => {
+  const handleInputChange = (
+    field: keyof ProfessionalDetailsData,
+    value: string
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -40,7 +44,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   };
 
   const handleSave = () => {
-    const isFormValid = 
+    const isFormValid =
       formData.occupation.trim() !== "" &&
       formData.organizationType.trim() !== "" &&
       formData.organizationName.trim() !== "" &&
@@ -55,7 +59,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     }
   };
 
-  const isFormValid = 
+  const isFormValid =
     formData.occupation.trim() !== "" &&
     formData.organizationType.trim() !== "" &&
     formData.organizationName.trim() !== "" &&
@@ -98,7 +102,11 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
 
   return (
     <div className={className}>
-      <Accordion title="Professional Details" isVerified={isVerified} defaultOpen={!isVerified}>
+      <Accordion
+        title="Professional Details"
+        isVerified={isVerified}
+        defaultOpen={!isVerified}
+      >
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Dropdown
@@ -139,7 +147,9 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               label="Gross Annual Income"
               placeholder="Enter Gross Annual Income"
               value={formData.grossAnnualIncome}
-              onChange={(value) => handleInputChange("grossAnnualIncome", value)}
+              onChange={(value) =>
+                handleInputChange("grossAnnualIncome", value)
+              }
               required
             />
             <Dropdown
@@ -147,24 +157,18 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               placeholder="Select Savings Account Type"
               options={savingsAccountTypeOptions}
               value={formData.savingsAccountType}
-              onChange={(value) => handleInputChange("savingsAccountType", value)}
+              onChange={(value) =>
+                handleInputChange("savingsAccountType", value)
+              }
               required
             />
           </div>
 
           {!isVerified && (
             <div className="flex justify-end mt-6">
-              <button
-                onClick={handleSave}
-                disabled={!isFormValid}
-                className={`px-6 py-3 rounded-full focus:ring-gray-500 ${
-                  isFormValid
-                    ? "bg-orange-500 hover:bg-orange-600 text-white"
-                    : "bg-gray-400 cursor-not-allowed text-white"
-                }`}
-              >
+              <Button onClick={handleSave} disabled={!isFormValid}>
                 Save
-              </button>
+              </Button>
             </div>
           )}
         </div>

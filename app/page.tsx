@@ -8,6 +8,7 @@ import ServiceDropdown from './components/ServiceDropdown';
 import CustomerDetails from './local/CustomerDetails';
 import BasicDetails from './local/BasicDetails/index';
 import type { BasicData } from './local/BasicDetails/index';
+import CompleteForm from './local/BasicDetails/index';
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState("Open Savings Account");
@@ -31,6 +32,11 @@ export default function Home() {
     console.log('Selected service:', option);
   };
 
+  const handleSubmit = (allData: any) => {
+    console.log('All data submitted:', allData);
+    // Handle final submission logic here
+    // API call, state update, etc.
+  };
   const handleProceed = () => {
     console.log("application"); 
   };
@@ -57,7 +63,7 @@ export default function Home() {
           onVerify={handleProceed}
           defaultOpen={true}
         />
-        <BasicDetails onVerify={handleBasicDetailsVerify} />
+        <CompleteForm basicData={{ aadhaarNumber: "" }} onSubmit={handleSubmit} />
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import TextBox from "../../TextBox/index";
-import Dropdown from "../../DropBox/index";
-import Accordion from "../../Accord/index";
-
+import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
+import Button from "../../../components/Button/index"; // Adjust path as needed
+import Dropdown from "../../../components/DropBox/index";
+import Accordion from "../../../components/Accord/index";
+import InfoBox from "../../../components/InfoBox/index"; // Adjust path as needed
 interface PersonalDetailsProps {
   onSave?: (data: PersonalDetailsData) => void;
   className?: string;
@@ -30,7 +31,10 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
     motherName: "",
   });
 
-  const handleInputChange = (field: keyof PersonalDetailsData, value: string | boolean) => {
+  const handleInputChange = (
+    field: keyof PersonalDetailsData,
+    value: string | boolean
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -38,7 +42,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
   };
 
   const handleSave = () => {
-    const isFormValid = 
+    const isFormValid =
       formData.customerEmail.trim() !== "" &&
       formData.maritalStatus.trim() !== "" &&
       formData.fatherName.trim() !== "" &&
@@ -51,7 +55,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
     }
   };
 
-  const isFormValid = 
+  const isFormValid =
     formData.customerEmail.trim() !== "" &&
     formData.maritalStatus.trim() !== "" &&
     formData.fatherName.trim() !== "" &&
@@ -67,8 +71,13 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
 
   return (
     <div className={className}>
-      <Accordion title="Personal Details" isVerified={isVerified} defaultOpen={!isVerified}>
+      <Accordion
+        title="Personal Details"
+        isVerified={isVerified}
+        defaultOpen={!isVerified}
+      >
         <div className="space-y-4">
+          {/* Customer Email */}
           <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
             <TextBox
               label="Customer's Email ID"
@@ -79,19 +88,10 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
             />
           </div>
 
-          <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="emailForCommunication"
-              checked={formData.emailForCommunication}
-              onChange={(e) => handleInputChange("emailForCommunication", e.target.checked)}
-              className="w-4 h-4 text-[#02836C] border-gray-300 rounded focus:ring-[#02836C]"
-            />
-            <label htmlFor="emailForCommunication" className="text-sm text-gray-700">
-              Make sure your email ID is correct as all the communications from bank will be sent on this email address.
-            </label>
-          </div>
+          {/* Info Box */}
+          <InfoBox message="Make sure your email ID is correct as all communication from bank would be done on this email" />
 
+          {/* Marital Status, Father's, and Mother's Name */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Dropdown
               label="Marital Status"
@@ -117,19 +117,12 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
             />
           </div>
 
+          {/* Save Button */}
           {!isVerified && (
             <div className="flex justify-end mt-6">
-              <button
-                onClick={handleSave}
-                disabled={!isFormValid}
-                className={`px-6 py-3 rounded-full focus:ring-gray-500 ${
-                  isFormValid
-                    ? "bg-orange-500 hover:bg-orange-600 text-white"
-                    : "bg-gray-400 cursor-not-allowed text-white"
-                }`}
-              >
+              <Button onClick={handleSave} disabled={!isFormValid}>
                 Save
-              </button>
+              </Button>
             </div>
           )}
         </div>

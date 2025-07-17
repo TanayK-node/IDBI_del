@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import TextBox from "../../TextBox/index";
-import InfoBox from "../../InfoBox/index";
-import Accordion from "../../Accord/index";
-
+import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
+import Accordion from "../../../components/Accord/index";
+import InfoBox from "../../../components/InfoBox/index"; // Adjust path as needed
+import Button from "../../../components/Button/index"; // Adjust path as needed
 
 interface CommunicationAddressProps {
   onSave?: (data: CommunicationAddressData) => void;
@@ -35,7 +35,10 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
     pincode: "",
   });
 
-  const handleInputChange = (field: keyof CommunicationAddressData, value: string | boolean) => {
+  const handleInputChange = (
+    field: keyof CommunicationAddressData,
+    value: string | boolean
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -43,7 +46,7 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
   };
 
   const handleSave = () => {
-    const isFormValid = 
+    const isFormValid =
       formData.addressLine1.trim() !== "" &&
       formData.city.trim() !== "" &&
       formData.state.trim() !== "" &&
@@ -56,7 +59,7 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
     }
   };
 
-  const isFormValid = 
+  const isFormValid =
     formData.addressLine1.trim() !== "" &&
     formData.city.trim() !== "" &&
     formData.state.trim() !== "" &&
@@ -64,23 +67,35 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
 
   return (
     <div className={className}>
-      <Accordion title="Communication Address" isVerified={isVerified} defaultOpen={!isVerified}>
+      <Accordion
+        title="Communication Address"
+        isVerified={isVerified}
+        defaultOpen={!isVerified}
+      >
         <div className="space-y-4">
           <InfoBox
             message="All communication from the Bank will be received on communication address."
             type="info"
             className="mb-4"
           />
-          
+
           <div className="flex items-center space-x-2">
             <input
               type="checkbox"
               id="communicationSameAsAadhaar"
               checked={formData.communicationSameAsAadhaar}
-              onChange={(e) => handleInputChange("communicationSameAsAadhaar", e.target.checked)}
+              onChange={(e) =>
+                handleInputChange(
+                  "communicationSameAsAadhaar",
+                  e.target.checked
+                )
+              }
               className="w-4 h-4 text-[#02836C] border-gray-300 rounded focus:ring-[#02836C]"
             />
-            <label htmlFor="communicationSameAsAadhaar" className="text-sm text-gray-700">
+            <label
+              htmlFor="communicationSameAsAadhaar"
+              className="text-sm text-gray-700"
+            >
               Communication address same as Aadhaar card address
             </label>
           </div>
@@ -127,17 +142,9 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
 
           {!isVerified && (
             <div className="flex justify-end mt-6">
-              <button
-                onClick={handleSave}
-                disabled={!isFormValid}
-                className={`px-6 py-3 rounded-full focus:ring-gray-500 ${
-                  isFormValid
-                    ? "bg-orange-500 hover:bg-orange-600 text-white"
-                    : "bg-gray-400 cursor-not-allowed text-white"
-                }`}
-              >
+              <Button onClick={handleSave} disabled={!isFormValid}>
                 Save
-              </button>
+              </Button>
             </div>
           )}
         </div>
