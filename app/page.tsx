@@ -10,6 +10,7 @@ import type { BasicData } from "./local/BasicDetails/index";
 import CompleteForm from "./local/BasicDetails/index";
 import BranchBankCard from "./local/Branch/index";
 import Nominee from "./local/Nominee";
+import ChannelServicesComponent from "./local/ChannelService/index";
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
@@ -92,6 +93,7 @@ export default function Home() {
             <Nominee onChangeClick={() => setShowNominee(false)} />
           </div>
         )}
+        <ChannelServicesComponent />
       </div>
     </div>
   );
