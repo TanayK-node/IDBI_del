@@ -15,6 +15,7 @@ interface CompleteFormProps {
   basicData: BasicData;
   onSubmit?: (allData: CompleteFormData) => void;
   className?: string;
+  onSubmitSuccess?: () => void;
 }
 
 export interface BasicData {
@@ -43,13 +44,14 @@ interface VerifiedAadhaarData {
 const CompleteForm: React.FC<CompleteFormProps> = ({
   basicData: initialBasicData,
   onSubmit,
+  onSubmitSuccess,
   className = "",
 }) => {
   const [isVerified, setIsVerified] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [formVerified, setFormVerified] = useState(false);
   const [formOpen, setFormOpen] = useState(true);
-
+  const [showNominee, setShowNominee] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(
     null
   );
@@ -159,7 +161,20 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     });
 
   const isAllSectionsSaved =
-    communicationAddressData && personalDetailsData && ProfessionalDetailsData;
+  communicationAddressData?.addressLine1?.trim() &&
+  communicationAddressData?.city?.trim() &&
+  communicationAddressData?.state?.trim() &&
+  communicationAddressData?.pincode?.trim() &&
+  personalDetailsData?.customerEmail?.trim() &&
+  personalDetailsData?.maritalStatus?.trim() &&
+  personalDetailsData?.fatherName?.trim() &&
+  personalDetailsData?.motherName?.trim() &&
+  ProfessionalDetailsData?.occupation?.trim() && 
+  ProfessionalDetailsData?.organizationType?.trim();     
+  ProfessionalDetailsData?.organizationName?.trim();       
+  ProfessionalDetailsData?.sourceOfFunds?.trim();        
+  ProfessionalDetailsData?.grossAnnualIncome?.trim();        
+  ProfessionalDetailsData?.savingsAccountType?.trim();        
 
   const handleFinalSubmit = () => {
     console.log("Trying to submit form...");
@@ -180,6 +195,9 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       };
       setFormOpen(false);
       setFormVerified(true);
+      console.log("Setting showNominee to true");
+      setShowNominee(true)
+      onSubmitSuccess?.();  // Call the success callback if provided
       onSubmit?.(allData);
       console.log("Complete form submitted:", allData);
     }

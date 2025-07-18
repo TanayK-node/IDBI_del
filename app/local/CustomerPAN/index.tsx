@@ -9,10 +9,12 @@ import Button from "../../components/Button/index";
 const CustomerIdProofPage = () => {
   const [pan, setPan] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
 
   const handleVerify = () => {
     if (pan.trim()) {
       setIsVerified(true);
+      setFormOpen(false);
       console.log("PAN verified:", pan);
     }
   };
@@ -22,7 +24,8 @@ const CustomerIdProofPage = () => {
   <Accordion
     title="Customer ID Proof"
     isVerified={isVerified}
-    defaultOpen={false}
+    isOpen={formOpen}
+      onToggle={setFormOpen}
   >
     <div className="flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
       {/* TextBox on the left */}

@@ -89,9 +89,10 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
               <Button
                 onClick={handleVerify}
                 disabled={!isFormValid}
-                className={`${
+                className={`w-auto px-6 py-3 focus:ring-gray-500 ${
                   isFormValid
-                   
+                    ? "bg-orange-500 hover:bg-orange-600"
+                    : "bg-gray-400 cursor-not-allowed"
                 }`}
               >
                 Verify

@@ -13,6 +13,7 @@ const LoginPage: React.FC = () => {
   const handleProceed = () => {
     // Handle login logic here
     console.log("Login attempt:", { userId, password });
+    <a href='/'></a>
   };
   const handleforgotpwd = () => {
     // Handle login logic here
