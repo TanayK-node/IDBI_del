@@ -66,18 +66,22 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
               required
             />
 
-            <TextBox
-              label="DOB"
-              placeholder="dd-mm-yyyy"
-              type="text"
+            <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Date of Birth <span className="text-red-500 ml-1">*</span>
+            </label>
+            <input
+              type="date"
               value={customerData.dob}
-              onChange={(value) => handleInputChange("dob", value)}
+              onChange={(e) => handleInputChange("dob", e.target.value)}
+              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28]"
               required
             />
+          </div>
 
             <TextBox
               label="Email ID"
-              placeholder="Rajesh456@gmail.com"
+              placeholder="Enter email here"
               type="text"
               value={customerData.email}
               onChange={(value) => handleInputChange("email", value)}
