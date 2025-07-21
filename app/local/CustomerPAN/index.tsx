@@ -6,6 +6,8 @@ import Accordion from "../../components/Accord/index";
 import TextBox from "../../components/TextBox/index";
 import Button from "../../components/Button/index";
 
+
+
 const CustomerIdProofPage = () => {
   const [pan, setPan] = useState("");
   const [isVerified, setIsVerified] = useState(false);
@@ -15,7 +17,11 @@ const CustomerIdProofPage = () => {
     if (pan.trim()) {
       setIsVerified(true);
       setFormOpen(false);
+   
       console.log("PAN verified:", pan);
+          // ✅ Set global/localStorage flag
+    localStorage.setItem("idproof_verified", "true");
+
     }
   };
 

@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import Accordion from "../../components/Accord/index";
 import Dropdown from "../../components/DropBox/index";
+import Button from "../../components/Button/index";
 
 interface ChannelServicesData {
   debitCardType: string;
@@ -29,6 +30,9 @@ const ChannelServicesComponent: React.FC = () => {
     { value: "100", label: "100" },
   ];
 
+  const [isServicesSaved, setIsServicesSaved] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const handleInputChange = (
     field: keyof ChannelServicesData,
     value: string | boolean
@@ -39,36 +43,50 @@ const ChannelServicesComponent: React.FC = () => {
     }));
   };
 
+  const handleSave = () => {
+  // You can add validation here if needed
+  setIsServicesSaved(true);
+
+  // ✅ Set localStorage flag
+  localStorage.setItem("channel_services_saved", "true");
+  console.log("Channel services saved:", servicesData);
+};
+
   return (
-    <Accordion title="Channel Services" defaultOpen>
-      <div className="space-y-6">
-        {/* Debit Card Type */}
-        <div>
-          <h4 className="text-base font-medium text-gray-900 mb-4">
-            Debit Card Type
-          </h4>
-          <div className="space-y-3">
-            {["physical-virtual", "virtual-only"].map((type) => (
-              <label key={type} className="flex items-center">
-                <input
-                  type="radio"
-                  name="debitCardType"
-                  value={type}
-                  checked={servicesData.debitCardType === type}
-                  onChange={(e) =>
-                    handleInputChange("debitCardType", e.target.value)
-                  }
-                  className="h-4 w-4 text-[#02836C] focus:ring-[#02836C] border-gray-300"
-                />
-                <span className="ml-3 text-sm text-gray-700">
-                  {type === "physical-virtual"
-                    ? "Physical + Virtual"
-                    : "Virtual Only"}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
+   <Accordion
+  title="Channel Services"
+  isVerified={isServicesSaved}
+  isOpen={isExpanded}
+  onToggle={setIsExpanded}
+>
+  <div className="space-y-6">
+    {/* Debit Card Type */}
+    <div className="space-y-4">
+      <h4 className="text-base font-semibold text-gray-900">
+        Debit Card Type
+      </h4>
+      <div className="space-y-3">
+        {["physical-virtual", "virtual-only"].map((type) => (
+          <label key={type} className="flex items-center">
+            <input
+              type="radio"
+              name="debitCardType"
+              value={type}
+              checked={servicesData.debitCardType === type}
+              onChange={(e) =>
+                handleInputChange("debitCardType", e.target.value)
+              }
+              className="h-4 w-4 text-[#02836C] focus:ring-[#02836C] border-gray-300"
+            />
+            <span className="ml-3 text-sm text-gray-700">
+              {type === "physical-virtual"
+                ? "Physical + Virtual"
+                : "Virtual Only"}
+            </span>
+          </label>
+        ))}
+      </div>
+    </div>
 
         {/* Recommendation Message */}
         <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-lg">
@@ -84,7 +102,7 @@ const ChannelServicesComponent: React.FC = () => {
               <img
                 src="/assets/images/Card/Card.png" // ✅ fix your path to start from `/public` if using Next.js
                 alt="Debit Card"
-                className="w-full h-auto rounded-lg shadow-lg"
+                className="w-full h-auto rounded-lg "
               />
             </div>
 
@@ -151,6 +169,7 @@ const ChannelServicesComponent: React.FC = () => {
             options={chequeOptions}
             value={servicesData.chequeLeaves}
             onChange={(value) => handleInputChange("chequeLeaves", value)}
+            className="w-100 "
           />
           <div className="text-sm text-gray-600 -mt-4">
             No. of Cheque Leaves
@@ -175,6 +194,25 @@ const ChannelServicesComponent: React.FC = () => {
               You'll receive a confirmation message to start using the service.
             </span>
           </label>
+        </div>
+        {/*button*/}
+        <div className="text-center mt-6">
+          <Button
+            onClick={() => {
+              handleSave();
+              setIsServicesSaved(true);   // ✅ shows green tick
+              setIsExpanded(false);       // ✅ closes accordion
+              console.log("Channel Services Updated");
+            }}
+            disabled={!servicesData.debitCardType || !servicesData.chequeLeaves}
+            className={`w-auto px-6 py-3 focus:ring-gray-500 ${
+              servicesData.debitCardType && servicesData.chequeLeaves
+                ? "bg-orange-500 hover:bg-orange-600"
+                : "bg-gray-400 cursor-not-allowed"
+            }`}
+          >
+            Update Services
+          </Button>
         </div>
       </div>
     </Accordion>

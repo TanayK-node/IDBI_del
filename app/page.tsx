@@ -11,6 +11,8 @@ import CompleteForm from "./local/BasicDetails/index";
 import BranchBankCard from "./local/Branch/index";
 import Nominee from "./local/Nominee";
 import ChannelServicesComponent from "./local/ChannelService/index";
+import IndianResidentCard from "./local/Resident/index";
+import ProceedFooter from "./components/Proceed/index";
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
@@ -47,10 +49,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 text-gray-950">
       <Header />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-20">
         {/* Service Dropdown */}
         <div className="mb-6">
           <ServiceDropdown
@@ -79,7 +81,7 @@ export default function Home() {
 
         {/* Render Branch Card only after form submitted */}
         {showBranchCard && (
-          <div className="mt-6">
+          <div className="mt-4">
             <BranchBankCard
               branchName="Palace Road Branch"
               branchCode="IDBI000001"
@@ -93,7 +95,16 @@ export default function Home() {
             <Nominee onChangeClick={() => setShowNominee(false)} />
           </div>
         )}
-        <ChannelServicesComponent />
+        <div className="mt-4">
+          <ChannelServicesComponent />
+        </div>
+        <div className="mt-4">
+          <IndianResidentCard />
+        </div>
+        {/* Proceed Footer */}
+        <div className="mt-6">
+          <ProceedFooter onProceed={handleProceed} />
+        </div>
       </div>
     </div>
   );

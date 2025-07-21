@@ -41,6 +41,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = ({
       setIsVerified(true);
       onVerify?.(customerData);
       setFormOpen(false);
+      localStorage.setItem("customer_details", "true");
     }
   };
 

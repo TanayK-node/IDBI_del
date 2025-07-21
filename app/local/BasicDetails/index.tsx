@@ -200,6 +200,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       onSubmitSuccess?.();  // Call the success callback if provided
       onSubmit?.(allData);
       console.log("Complete form submitted:", allData);
+      localStorage.setItem("basic_details", "true");
     }
   };
 
