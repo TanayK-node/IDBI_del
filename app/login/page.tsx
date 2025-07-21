@@ -4,16 +4,18 @@ import React, { useState } from "react";
 import TextBox from "../components/TextBox/index";
 import Button from "../components/Button/index";
 import DownloadApp from "../components/AppDownload/index";
-import Logo from '../../public/assets/images/Logo/Logo.png'
+import Logo from "../../public/assets/images/Logo/Logo.png";
+import { useRouter } from "next/navigation";
 
 const LoginPage: React.FC = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleProceed = () => {
     // Handle login logic here
     console.log("Login attempt:", { userId, password });
-    <a href='/'></a>
+    router.push("/"); // ✅ This triggers the route change
   };
   const handleforgotpwd = () => {
     // Handle login logic here
@@ -30,8 +32,11 @@ const LoginPage: React.FC = () => {
           {/* IDBI Bank Logo */}
           <div className="flex items-center justify-center mb-6">
             <div className="flex items-center space-x-2">
-              <img src="/assets/images/Logo/Logo.png" alt="Logo" className="h-16  " />
-              
+              <img
+                src="/assets/images/Logo/Logo.png"
+                alt="Logo"
+                className="h-16  "
+              />
             </div>
           </div>
 
