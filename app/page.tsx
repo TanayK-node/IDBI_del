@@ -13,6 +13,8 @@ import Nominee from "./local/Nominee";
 import ChannelServicesComponent from "./local/ChannelService/index";
 import IndianResidentCard from "./local/Resident/index";
 import ProceedFooter from "./components/Proceed/index";
+import PhotoCapture from "./local/Face/index";
+import SignatureCapture from "./local/Sign/index"; // Assuming you have a SignatureCapture component
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
@@ -68,6 +70,10 @@ export default function Home() {
         {/* Customer Proof and Details */}
         <CustomerIDProofPage />
         <CustomerDetails onVerify={handleProceed} defaultOpen={true} />
+        <div className='mt-4'>
+          <PhotoCapture />
+        </div>
+        
 
         {/* Aadhaar + Complete Form Section */}
         <CompleteForm
@@ -101,10 +107,14 @@ export default function Home() {
         <div className="mt-4">
           <IndianResidentCard />
         </div>
+        <div className="mt-4">
+          <SignatureCapture/>
+        </div>
         {/* Proceed Footer */}
         <div className="mt-6">
           <ProceedFooter onProceed={handleProceed} />
         </div>
+        
       </div>
     </div>
   );
