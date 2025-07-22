@@ -59,32 +59,35 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
 
   // Check if nominee is under 18
   const calculateAge = (birthDate: string) => {
-  if (!birthDate) return 0;
+    if (!birthDate) return 0;
 
-  const birth = new Date(birthDate);
-  const today = new Date();
+    const birth = new Date(birthDate);
+    const today = new Date();
 
-  const birthYear = birth.getUTCFullYear();
-  const birthMonth = birth.getUTCMonth();
-  const birthDay = birth.getUTCDate();
+    const birthYear = birth.getUTCFullYear();
+    const birthMonth = birth.getUTCMonth();
+    const birthDay = birth.getUTCDate();
 
-  const todayYear = today.getUTCFullYear();
-  const todayMonth = today.getUTCMonth();
-  const todayDay = today.getUTCDate();
+    const todayYear = today.getUTCFullYear();
+    const todayMonth = today.getUTCMonth();
+    const todayDay = today.getUTCDate();
 
-  let age = todayYear - birthYear;
+    let age = todayYear - birthYear;
 
-  if (todayMonth < birthMonth || (todayMonth === birthMonth && todayDay < birthDay)) {
-    age--;
-  }
+    if (
+      todayMonth < birthMonth ||
+      (todayMonth === birthMonth && todayDay < birthDay)
+    ) {
+      age--;
+    }
 
-  return age;
-};
+    return age;
+  };
 
   useEffect(() => {
     const age = calculateAge(nomineeData.dateOfBirth);
     setShowGuardianSection(age < 18 && age >= 0);
-    
+
     // Reset guardian data if nominee is 18 or older
     if (age >= 18) {
       setGuardianData({
@@ -107,7 +110,10 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
     }));
   };
 
-  const handleGuardianInputChange = (field: keyof GuardianData, value: string) => {
+  const handleGuardianInputChange = (
+    field: keyof GuardianData,
+    value: string
+  ) => {
     setGuardianData((prev) => ({
       ...prev,
       [field]: value,
@@ -160,8 +166,13 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
   ];
 
   // Validation for save button
-  const isNomineeValid = nomineeData.name && nomineeData.relationship && nomineeData.dateOfBirth;
-  const isGuardianValid = !showGuardianSection || (guardianData.name && guardianData.relationship && guardianData.dateOfBirth);
+  const isNomineeValid =
+    nomineeData.name && nomineeData.relationship && nomineeData.dateOfBirth;
+  const isGuardianValid =
+    !showGuardianSection ||
+    (guardianData.name &&
+      guardianData.relationship &&
+      guardianData.dateOfBirth);
   const canSave = isNomineeValid && isGuardianValid;
 
   if (!isExpanded) {
@@ -250,7 +261,8 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
             />
             {showGuardianSection && (
               <p className="text-sm text-blue-600 mt-1">
-                Guardian details are required as nominee age is less than 18 years
+                Guardian details are required as nominee age is less than 18
+                years
               </p>
             )}
           </div>
@@ -294,31 +306,33 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
           </label>
         </div>
 
-        {/* Address Lines */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <TextBox
-            label="Address Line 1"
-            placeholder="Enter Address"
-            value={nomineeData.addressLine1}
-            onChange={(value) => handleInputChange("addressLine1", value)}
-            required
-          />
+        {/* Address Lines - Show only if not sameAsCustomer */}
+        {!sameAsCustomer && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <TextBox
+              label="Address Line 1"
+              placeholder="Enter Address"
+              value={nomineeData.addressLine1}
+              onChange={(value) => handleInputChange("addressLine1", value)}
+              required
+            />
 
-          <TextBox
-            label="Address Line 2 (Optional)"
-            placeholder="Enter Address"
-            value={nomineeData.addressLine2}
-            onChange={(value) => handleInputChange("addressLine2", value)}
-          />
+            <TextBox
+              label="Address Line 2 (Optional)"
+              placeholder="Enter Address"
+              value={nomineeData.addressLine2}
+              onChange={(value) => handleInputChange("addressLine2", value)}
+            />
 
-          <TextBox
-            label="Pin Code"
-            placeholder="Enter Pin Code"
-            value={nomineeData.pinCode}
-            onChange={(value) => handleInputChange("pinCode", value)}
-            required
-          />
-        </div>
+            <TextBox
+              label="Pin Code"
+              placeholder="Enter Pin Code"
+              value={nomineeData.pinCode}
+              onChange={(value) => handleInputChange("pinCode", value)}
+              required
+            />
+          </div>
+        )}
 
         {/* Guardian Section */}
         {showGuardianSection && (
@@ -344,7 +358,9 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
                 label="Relationship with Nominee"
                 placeholder="Select Relationship"
                 value={guardianData.relationship}
-                onChange={(value) => handleGuardianInputChange("relationship", value)}
+                onChange={(value) =>
+                  handleGuardianInputChange("relationship", value)
+                }
                 options={guardianRelationshipOptions}
                 required
               />
@@ -356,7 +372,9 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
                 <input
                   type="date"
                   value={guardianData.dateOfBirth}
-                  onChange={(e) => handleGuardianInputChange("dateOfBirth", e.target.value)}
+                  onChange={(e) =>
+                    handleGuardianInputChange("dateOfBirth", e.target.value)
+                  }
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28]"
                   required
                 />
@@ -402,31 +420,39 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
               </label>
             </div>
 
-            {/* Guardian Address Lines */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <TextBox
-                label="Address Line 1"
-                placeholder="Enter Address"
-                value={guardianData.addressLine1}
-                onChange={(value) => handleGuardianInputChange("addressLine1", value)}
-                required
-              />
+            {/* Guardian Address Lines - Show only if guardianSameAsNominee is false */}
+            {!guardianSameAsNominee && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <TextBox
+                  label="Address Line 1"
+                  placeholder="Enter Address"
+                  value={guardianData.addressLine1}
+                  onChange={(value) =>
+                    handleGuardianInputChange("addressLine1", value)
+                  }
+                  required
+                />
 
-              <TextBox
-                label="Address Line 2 (Optional)"
-                placeholder="Enter Address"
-                value={guardianData.addressLine2}
-                onChange={(value) => handleGuardianInputChange("addressLine2", value)}
-              />
+                <TextBox
+                  label="Address Line 2 (Optional)"
+                  placeholder="Enter Address"
+                  value={guardianData.addressLine2}
+                  onChange={(value) =>
+                    handleGuardianInputChange("addressLine2", value)
+                  }
+                />
 
-              <TextBox
-                label="Pin Code"
-                placeholder="Enter Pin Code"
-                value={guardianData.pinCode}
-                onChange={(value) => handleGuardianInputChange("pinCode", value)}
-                required
-              />
-            </div>
+                <TextBox
+                  label="Pin Code"
+                  placeholder="Enter Pin Code"
+                  value={guardianData.pinCode}
+                  onChange={(value) =>
+                    handleGuardianInputChange("pinCode", value)
+                  }
+                  required
+                />
+              </div>
+            )}
           </div>
         )}
 
