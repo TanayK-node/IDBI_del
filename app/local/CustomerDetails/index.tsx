@@ -20,17 +20,17 @@ const CustomerDetailsForm: React.FC = () => {
       console.log("Customer details verified:", customerData);
       markVerified(true);
       setShowOTP(true); // Show the OTP input
-      
+
       console.log("Customer details verified:", customerData);
       // You can also save to localStorage here if needed
       localStorage.setItem("customer_details_verified", "true");
     }
   };
-const handleOtpSubmit = (otp: string) => {
-  console.log("OTP verified successfully:", otp);
-  setShowOTP(false);
-  setIsAccordionOpen(false); // collapse only after OTP verified
-};
+  const handleOtpSubmit = (otp: string) => {
+    console.log("OTP verified successfully:", otp);
+    setShowOTP(false);
+    setIsAccordionOpen(false); // collapse only after OTP verified
+  };
   const isFormValid = Boolean(
     customerData.name && customerData.dob && customerData.email
   );
@@ -86,7 +86,8 @@ const handleOtpSubmit = (otp: string) => {
           <OTPVerification
             onSubmit={handleOtpSubmit}
             onClose={() => setShowOTP(false)}
-          />)}
+          />
+        )}
       </div>
     </Accordion>
   );

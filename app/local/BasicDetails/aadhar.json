@@ -1,0 +1,22 @@
+{
+  "123456789101": {
+    "name": "Rajan Kumar",
+    "gender": "Male",
+    "dob": "1987-07-04",
+    "addressLine1": "403 Matru Vatsalya",
+    "addressLine2": "S.V Road of V.p road",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "pincode": "400058"
+  },
+  "234567891011": {
+    "name": "Sneha Sharma",
+    "gender": "Female",
+    "dob": "1988-09-23",
+    "addressLine1": "45",
+    "addressLine2": "Park Street",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "pincode": ""
+  }
+}

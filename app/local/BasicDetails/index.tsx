@@ -10,6 +10,10 @@ import ProfessionalDetails, {
 } from "./Proffesional/index";
 import TextBox from "../../components/TextBox/index"; // Adjust path as needed
 import Button from "../../components/Button/index"; // Adjust path as needed
+import Dummy from "../CustomerPAN/dummy.json";
+import { useCustomer } from "../../../context/CustDetail";
+import rawAadhaarData from "./aadhar.json";
+import OTPVerification from "../../components/OTP/index";
 
 interface CompleteFormProps {
   basicData: BasicData;
@@ -40,6 +44,14 @@ interface VerifiedAadhaarData {
   dateOfBirth: string;
   address: string;
 }
+interface AadhaarRecord {
+  name: string;
+  gender: string;
+  dob: string;
+  address: string;
+}
+
+const aadhaarData = rawAadhaarData as Record<string, AadhaarRecord>;
 
 const CompleteForm: React.FC<CompleteFormProps> = ({
   basicData: initialBasicData,
@@ -52,12 +64,20 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
   const [formVerified, setFormVerified] = useState(false);
   const [formOpen, setFormOpen] = useState(true);
   const [showNominee, setShowNominee] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(
     null
   );
 
   const [basicData, setBasicData] = useState<BasicData>(initialBasicData);
 
+  const handleOtpSubmit = (otp: string) => {
+    console.log("OTP verified successfully:", otp);
+    setIsVerified(true); // ✅ Now mark the section as verified
+    setShowOTP(false);
+    setIsAccordionOpen(true); // collapse only after OTP verified
+  };
   const handleInputChange = (field: keyof BasicData, value: string) => {
     setBasicData((prev) => ({
       ...prev,
@@ -73,8 +93,6 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     setVerificationError(null);
 
     try {
-      // Simulate API call for Aadhaar verification
-      // Replace this with your actual verification logic
       const response = await mockVerifyAadhaar(basicData.aadhaarNumber);
 
       if (response.success) {
@@ -85,7 +103,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
           dateOfBirth: response.data!.dateOfBirth,
           address: response.data!.address,
         }));
-        setIsVerified(true);
+        setShowOTP(true); // Show OTP after success
       } else {
         setVerificationError(
           response.error || "Verification failed. Please try again."
@@ -107,26 +125,24 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     data?: VerifiedAadhaarData;
     error?: string;
   }> => {
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate delay
 
-    // Mock validation
-    if (aadhaarNumber.length !== 12) {
+    const record = aadhaarData[aadhaarNumber];
+
+    if (!record) {
       return {
         success: false,
-        error: "Invalid Aadhaar number. Must be 12 digits.",
+        error: "No record found for this Aadhaar number.",
       };
     }
 
-    // Mock success response
     return {
       success: true,
       data: {
-        name: "Rajan Kumar",
-        gender: "Male",
-        dateOfBirth: "04/07/1987",
-        address:
-          "123, Jasmine Apartments, Palace Road, Bangalore, Karnataka - 560003",
+        name: record.name,
+        gender: record.gender,
+        dateOfBirth: record.dob,
+        address: record.address,
       },
     };
   };
@@ -161,20 +177,16 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     });
 
   const isAllSectionsSaved =
-  communicationAddressData?.addressLine1?.trim() &&
-  communicationAddressData?.city?.trim() &&
-  communicationAddressData?.state?.trim() &&
-  communicationAddressData?.pincode?.trim() &&
-  personalDetailsData?.customerEmail?.trim() &&
-  personalDetailsData?.maritalStatus?.trim() &&
-  personalDetailsData?.fatherName?.trim() &&
-  personalDetailsData?.motherName?.trim() &&
-  ProfessionalDetailsData?.occupation?.trim() && 
-  ProfessionalDetailsData?.organizationType?.trim();     
-  ProfessionalDetailsData?.organizationName?.trim();       
-  ProfessionalDetailsData?.sourceOfFunds?.trim();        
-  ProfessionalDetailsData?.grossAnnualIncome?.trim();        
-  ProfessionalDetailsData?.savingsAccountType?.trim();        
+        personalDetailsData?.customerEmail?.trim() &&
+    personalDetailsData?.maritalStatus?.trim() &&
+    personalDetailsData?.fatherName?.trim() &&
+    personalDetailsData?.motherName?.trim() &&
+    ProfessionalDetailsData?.occupation?.trim() &&
+    ProfessionalDetailsData?.organizationType?.trim();
+  ProfessionalDetailsData?.organizationName?.trim();
+  ProfessionalDetailsData?.sourceOfFunds?.trim();
+  ProfessionalDetailsData?.grossAnnualIncome?.trim();
+  ProfessionalDetailsData?.savingsAccountType?.trim();
 
   const handleFinalSubmit = () => {
     console.log("Trying to submit form...");
@@ -196,8 +208,8 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       setFormOpen(false);
       setFormVerified(true);
       console.log("Setting showNominee to true");
-      setShowNominee(true)
-      onSubmitSuccess?.();  // Call the success callback if provided
+      setShowNominee(true);
+      onSubmitSuccess?.(); // Call the success callback if provided
       onSubmit?.(allData);
       console.log("Complete form submitted:", allData);
       localStorage.setItem("basic_details", "true");
@@ -221,65 +233,65 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       className={`w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 ${className}`}
     >
       {/* Conditional rendering based on verification status */}
-      {!isVerified ? (
-        // Before Verification - Input Form
-        <Accordion title="Basic Details" isVerified={false} defaultOpen={false}>
-          <div className="space-y-4">
-            <div className="flex items-end justify-between flex-wrap gap-4">
-              {/* TextBox */}
-              <div className="flex-1 min-w-[280px]">
-                <TextBox
-                  label="Aadhaar Number/VID"
-                  placeholder="Enter 12-digit Aadhaar Number"
-                  value={basicData.aadhaarNumber}
-                  onChange={(value) =>
-                    handleInputChange("aadhaarNumber", value)
-                  }
-                  required
-                  className="w-full sm:w-[336px] h-[48px] text-base"
+      <Accordion
+        title="Basic Details"
+        isVerified={isVerified}
+        isOpen={isAccordionOpen}
+        onToggle={(open) => setIsAccordionOpen(open)}
+      >
+        <div className="space-y-4 pb-4">
+          {!isVerified ? (
+            <>
+              <div className="flex items-end justify-between flex-wrap gap-4">
+                <div className="flex-1 min-w-[280px]">
+                  <TextBox
+                    label="Aadhaar Number/VID"
+                    placeholder="Enter 12-digit Aadhaar Number"
+                    value={basicData.aadhaarNumber}
+                    onChange={(value) =>
+                      handleInputChange("aadhaarNumber", value)
+                    }
+                    required
+                    className="w-full sm:w-[336px] h-[48px] text-base"
+                  />
+                </div>
+
+                <div className="ml-auto mb-1">
+                  <Button
+                    onClick={handleVerify}
+                    disabled={!isFormValid || isVerifying}
+                    className={`w-auto px-6 py-3 rounded-full focus:ring-gray-500 ${
+                      isFormValid && !isVerifying
+                        ? "bg-orange-500 hover:bg-orange-600 text-white"
+                        : "bg-gray-400 cursor-not-allowed text-gray-600"
+                    }`}
+                  >
+                    {isVerifying ? "Verifying..." : "Verify"}
+                  </Button>
+                </div>
+              </div>
+
+              {showOTP && (
+                <OTPVerification
+                  onSubmit={handleOtpSubmit}
+                  onClose={() => setShowOTP(false)}
                 />
-              </div>
+              )}
 
-              {/* Button aligned right */}
-              <div className="ml-auto mb-1">
-                <Button
-                  onClick={handleVerify}
-                  disabled={!isFormValid || isVerifying}
-                  className={`w-auto px-6 py-3 rounded-full focus:ring-gray-500 ${
-                    isFormValid && !isVerifying
-                      ? "bg-orange-500 hover:bg-orange-600 text-white"
-                      : "bg-gray-400 cursor-not-allowed text-gray-600"
-                  }`}
-                >
-                  {isVerifying ? "Verifying..." : "Verify"}
-                </Button>
-              </div>
-            </div>
+              {verificationError && (
+                <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
+                  {verificationError}
+                </div>
+              )}
 
-            {/* Error message */}
-            {verificationError && (
-              <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">
-                {verificationError}
-              </div>
-            )}
-
-            {/* Loading indicator */}
-            {isVerifying && (
-              <div className="text-orange-600 text-sm bg-orange-50 p-3 rounded-md">
-                Please wait while we verify your Aadhaar details...
-              </div>
-            )}
-          </div>
-        </Accordion>
-      ) : (
-        // After Verification - Summary View
-        <div className="mb-6">
-          <Accordion
-            title="Basic Details"
-            isVerified={true}
-            defaultOpen={false}
-          >
-            <div className="space-y-4">
+              {isVerifying && (
+                <div className="text-orange-600 text-sm bg-orange-50 p-3 rounded-md">
+                  Please wait while we verify your Aadhaar details...
+                </div>
+              )}
+            </>
+          ) : (
+            <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 text-sm">
                 <div>
                   <span className="font-medium text-gray-700">Name:</span>
@@ -301,40 +313,31 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                   </span>
                   <div className="text-gray-900">{basicData.dateOfBirth}</div>
                 </div>
-                <div>
-                  <span className="font-medium text-gray-700">Address:</span>
-                  <div className="text-gray-900">{basicData.address}</div>
-                </div>
+                
               </div>
-
-              {/* Edit button */}
-              <div className="flex justify-end pt-2">
-                <button
-                  onClick={handleEditBasicDetails}
-                  className="text-orange-500 hover:text-orange-600 text-sm font-medium"
-                >
-                  Edit Details
-                </button>
-              </div>
-            </div>
-          </Accordion>
+            </>
+          )}
         </div>
-      )}
+      </Accordion>
 
       {/* Show remaining sections only after verification */}
       {isVerified && (
         <>
+          {/* Spacing between previous section and this accordion */}
+          <div className="my-6" />
+
           <Accordion
             title="Complete Application Form"
-              isOpen={formOpen}
-              onToggle={setFormOpen}
-              isVerified={formVerified}
+            isOpen={formOpen}
+            onToggle={setFormOpen}
+            isVerified={formVerified}
           >
             {/* Communication Address Section */}
             <div className="mb-6">
               <CommunicationAddress
                 value={communicationAddressData}
                 onChange={setCommunicationAddressData}
+                aadhaarNumber={basicData.aadhaarNumber}
               />
               <hr className="my-4 border-t border-gray-300" />
             </div>
@@ -361,7 +364,6 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
               <Button
                 onClick={handleFinalSubmit}
                 disabled={!isAllSectionsSaved}
-              
                 className={`${
                   isAllSectionsSaved
                     ? "bg-orange-500 hover:bg-orange-600"
