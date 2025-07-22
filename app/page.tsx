@@ -22,7 +22,7 @@ export default function Home() {
   );
   const [showBranchCard, setShowBranchCard] = useState(false);
   const [showNominee, setShowNominee] = useState(false);
-
+  const [customerData, setCustomerData] = useState<{ name: string; dob: string } | null>(null);
   const serviceOptions = [
     { id: "savings", label: "Open Savings Account" },
     { id: "loans", label: "Loans" },
@@ -68,9 +68,11 @@ export default function Home() {
         <Hero />
 
         {/* Customer Proof and Details */}
-        <CustomerIDProofPage />
+        
+        
 
         <CustomerProvider>
+          <CustomerIDProofPage setCustomerData={setCustomerData} />
         <CustomerDetailsForm />
         </CustomerProvider>
 

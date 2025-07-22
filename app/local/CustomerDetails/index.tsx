@@ -5,14 +5,19 @@ import Button from "../../components/Button/index";
 import Accordion from "../../components/Accord/index";
 
 import { useCustomer } from "../../../context/CustDetail"; // Ensure this path is correct
+interface CustomerDetailsProps {
+  customerData: { name: string; dob: string } | null;
+}
+
 
 const CustomerDetailsForm: React.FC = () => {
-  const { customerData, isVerified, updateCustomerField, setIsVerified } = useCustomer();
+  const { customerData, isVerified, updateCustomerField, markVerified } = useCustomer();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const handleVerify = () => {
     // Basic validation
     if (customerData.name && customerData.dob && customerData.email) {
-      setIsVerified(true);
+      console.log("Customer details verified:", customerData);
+      markVerified(true);
       setIsAccordionOpen(false);
       console.log("Customer details verified:", customerData);
       // You can also save to localStorage here if needed
@@ -33,27 +38,8 @@ const CustomerDetailsForm: React.FC = () => {
   <div className="space-y-4">
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {/* Name Input */}
-      <TextBox
-        label="Name"
-        placeholder="Rajesh Kumar"
-        value={customerData.name}
-        onChange={(value) => updateCustomerField("name", value)}
-        required={true}
-      />
-
-      {/* Date of Birth Input */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Date of Birth <span className="text-red-500 ml-1">*</span>
-        </label>
-        <input
-          type="date"
-          value={customerData.dob}
-          onChange={(e) => updateCustomerField("dob", e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28]"
-          required
-        />
-      </div>
+      <TextBox label="Name" value={customerData?.name || ""} readOnly  onChange={() => {}} />
+      <TextBox label="Date of Birth" value={customerData?.dob || ""} readOnly  onChange={() => {}} />
 
       {/* Email Input */}
       <TextBox

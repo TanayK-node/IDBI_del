@@ -6,12 +6,13 @@ import { EyeSlashIcon } from "@heroicons/react/24/outline";
 
 interface TextBoxProps {
   label: string;
-  placeholder: string;
+  placeholder?: string;
   type?: "text" | "password";
   value: string;
   onChange: (value: string) => void;
   className?: string;
   required?: boolean;
+  readOnly?: boolean; 
 }
 
 const TextBox: React.FC<TextBoxProps> = ({

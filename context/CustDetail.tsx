@@ -12,7 +12,7 @@ interface CustomerContextType {
   customerData: CustomerData;
   isVerified: boolean;
   setCustomerData: (data: CustomerData) => void;
-  setIsVerified: (verified: boolean) => void;
+  markVerified: (verified: boolean) => void;
   updateCustomerField: (field: keyof CustomerData, value: string) => void;
 }
 
@@ -28,7 +28,7 @@ export const CustomerProvider: React.FC<{ children: ReactNode }> = ({ children }
     mobile: "",
   });
   
-  const [isVerified, setIsVerified] = useState(false);
+  const [isVerified, markVerified] = useState(false);
 
   const updateCustomerField = (field: keyof CustomerData, value: string) => {
     setCustomerData(prev => ({
@@ -41,7 +41,7 @@ export const CustomerProvider: React.FC<{ children: ReactNode }> = ({ children }
     customerData,
     isVerified,
     setCustomerData,
-    setIsVerified,
+    markVerified,
     updateCustomerField,
   };
 
@@ -61,11 +61,3 @@ export const useCustomer = () => {
   return context;
 };
 
-// Card Component
-function Card({ children, className = "" }) {
-  return (
-    <div className={`bg-white rounded-lg shadow-md border border-gray-200 w-full max-w-[1150.4px] mx-auto ${className}`}>
-      {children}
-    </div>
-  );
-}
