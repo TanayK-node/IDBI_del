@@ -24,7 +24,7 @@ export default function Home() {
   const [showNominee, setShowNominee] = useState(false);
   const [customerData, setCustomerData] = useState<{ name: string; dob: string } | null>(null);
   const serviceOptions = [
-    { id: "savings", label: "Open Savings Account" },
+    { id: "savings", label: "Savings Account" },
     { id: "loans", label: "Loans" },
     { id: "credit-cards", label: "Credit Cards" },
     { id: "fd", label: "FD" },
@@ -59,7 +59,7 @@ export default function Home() {
         <div className="mb-6">
           <ServiceDropdown
             options={serviceOptions}
-            defaultValue="Open Savings Account"
+            defaultValue="Savings Account"
             onSelect={handleServiceSelect}
             className="w-75"
           />
