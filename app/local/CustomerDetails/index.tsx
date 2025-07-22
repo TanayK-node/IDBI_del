@@ -4,110 +4,85 @@ import TextBox from "../../components/TextBox/index";
 import Button from "../../components/Button/index";
 import Accordion from "../../components/Accord/index";
 
-interface CustomerDetailsProps {
-  onVerify?: (customerData: CustomerData) => void;
-  defaultOpen?: boolean;
-}
+import { useCustomer } from "../../../context/CustDetail"; // Ensure this path is correct
 
-interface CustomerData {
-  name: string;
-  dob: string;
-  email: string;
-}
-
-const CustomerDetails: React.FC<CustomerDetailsProps> = ({
-  onVerify,
-  defaultOpen = false,
-}) => {
-  const [customerData, setCustomerData] = useState<CustomerData>({
-    name: "",
-    dob: "",
-    email: "",
-  });
-
-  const [isVerified, setIsVerified] = useState(false);
-  const [formOpen, setFormOpen] = useState(false);
-
-  const handleInputChange = (field: keyof CustomerData, value: string) => {
-    setCustomerData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
+const CustomerDetailsForm: React.FC = () => {
+  const { customerData, isVerified, updateCustomerField, setIsVerified } = useCustomer();
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const handleVerify = () => {
     // Basic validation
     if (customerData.name && customerData.dob && customerData.email) {
       setIsVerified(true);
-      onVerify?.(customerData);
-      setFormOpen(false);
-      localStorage.setItem("customer_details", "true");
+      setIsAccordionOpen(false);
+      console.log("Customer details verified:", customerData);
+      // You can also save to localStorage here if needed
+      localStorage.setItem("customer_details_verified", "true");
     }
   };
 
-  const isFormValid =
-    customerData.name && customerData.dob && customerData.email;
+  const isFormValid = Boolean(customerData.name && customerData.dob && customerData.email);
+
 
   return (
-    <Accordion
-      title="Customer Details"
-      isVerified={isVerified}
-      isOpen={formOpen}
-      onToggle={setFormOpen}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <TextBox
-              label="Name"
-              placeholder="Rajesh Kumar"
-              value={customerData.name}
-              onChange={(value) => handleInputChange("name", value)}
-              required
-            />
+    <Accordion 
+   title="Enter Customer Details"
+  isVerified={isFormValid}
+  isOpen={isAccordionOpen}
+  onToggle={(open) => setIsAccordionOpen(open)}
+>
+  <div className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Name Input */}
+      <TextBox
+        label="Name"
+        placeholder="Rajesh Kumar"
+        value={customerData.name}
+        onChange={(value) => updateCustomerField("name", value)}
+        required={true}
+      />
 
-            <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Date of Birth <span className="text-red-500 ml-1">*</span>
-            </label>
-            <input
-              type="date"
-              value={customerData.dob}
-              onChange={(e) => handleInputChange("dob", e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28]"
-              required
-            />
-          </div>
-
-            <TextBox
-              label="Email ID"
-              placeholder="Enter email here"
-              type="text"
-              value={customerData.email}
-              onChange={(value) => handleInputChange("email", value)}
-              required
-            />
-          </div>
-
-          <div className="flex justify-end w-full pt-1">
-            <div className="w-1/2 flex justify-end">
-              <Button
-                onClick={handleVerify}
-                disabled={!isFormValid}
-                className={`w-auto px-6 py-3 focus:ring-gray-500 ${
-                  isFormValid
-                    ? "bg-orange-500 hover:bg-orange-600"
-                    : "bg-gray-400 cursor-not-allowed"
-                }`}
-              >
-                Verify
-              </Button>
-            </div>
-          </div>
-        </div>
+      {/* Date of Birth Input */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Date of Birth <span className="text-red-500 ml-1">*</span>
+        </label>
+        <input
+          type="date"
+          value={customerData.dob}
+          onChange={(e) => updateCustomerField("dob", e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28]"
+          required
+        />
       </div>
-    </Accordion>
+
+      {/* Email Input */}
+      <TextBox
+        label="Email ID"
+        placeholder="Enter email here"
+        type="text"
+        value={customerData.email}
+        onChange={(value) => updateCustomerField("email", value)}
+        required={true}
+      />
+
+     
+    </div>
+
+    <div className="flex justify-end w-full pt-1">
+         <Button
+      onClick={handleVerify}
+      disabled={!isFormValid}
+      className={`w-auto px-6 py-3 focus:ring-gray-500  ${
+        isFormValid
+          ? "bg-orange-500 hover:bg-orange-600 text-white"
+          : "bg-gray-400 cursor-not-allowed text-gray-200"
+      }`}
+    >
+      Verify
+    </Button>
+    </div>
+  </div>
+</Accordion>
   );
 };
-
-export default CustomerDetails;
+export default CustomerDetailsForm;

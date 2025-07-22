@@ -6,6 +6,8 @@ import ServiceDropdown from "../components/ServiceDropdown"; // Update path as n
 import Hero from "../components/Hero"; // Update path as needed
 import CustomerId from "./CustomerId/index"; // Update path as needed
 import { PanProvider } from "@/context/panContext"; // Ensure this path is correct
+import CustomerDetailsDisplay from "./CustomerDisplay/index"; // Update path as needed
+import { CustomerProvider } from "@/context/CustDetail";
 
 export default function ReviewDetails() {
   const [selectedService, setSelectedService] = React.useState(
@@ -42,6 +44,10 @@ export default function ReviewDetails() {
         <PanProvider>
           <CustomerId />
         </PanProvider>
+        <CustomerProvider>
+          <CustomerDetailsDisplay />
+        </CustomerProvider>
+        
       </div>
     </div>
   );

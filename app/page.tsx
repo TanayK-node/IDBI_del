@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Hero from "./components/Hero";
 import CustomerIDProofPage from "./local/CustomerPAN";
 import ServiceDropdown from "./components/ServiceDropdown";
-import CustomerDetails from "./local/CustomerDetails";
+import CustomerDetailsForm from "./local/CustomerDetails/index";
 import type { BasicData } from "./local/BasicDetails/index";
 import CompleteForm from "./local/BasicDetails/index";
 import BranchBankCard from "./local/Branch/index";
@@ -15,7 +15,7 @@ import IndianResidentCard from "./local/Resident/index";
 import ProceedFooter from "./components/Proceed/index";
 import PhotoCapture from "./local/Face/index";
 import SignatureCapture from "./local/Sign/index"; // Assuming you have a SignatureCapture component
-
+import { CustomerProvider } from "@/context/CustDetail"; // Ensure this path is correct
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
     "Open Savings Account"
@@ -69,7 +69,12 @@ export default function Home() {
 
         {/* Customer Proof and Details */}
         <CustomerIDProofPage />
-        <CustomerDetails onVerify={handleProceed} defaultOpen={true} />
+
+        <CustomerProvider>
+        <CustomerDetailsForm />
+        </CustomerProvider>
+
+        {/* Photo Capture Section */}
         <div className='mt-4'>
           <PhotoCapture />
         </div>
