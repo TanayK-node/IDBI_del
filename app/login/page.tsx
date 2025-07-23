@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
       // Delay redirect to show success message
       setTimeout(() => {
         router.push("/");
-      }, 1500); // 1.5 second delay
+      }, 1000); // 1.5 second delay
       
     } else {
       // Show error toast

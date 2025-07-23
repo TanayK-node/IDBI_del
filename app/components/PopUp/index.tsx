@@ -78,12 +78,12 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black bg-opacity-50 transition-opacity"
+        className="absolute inset-0 bg-black bg-opacity-20 transition-opacity z-10"
         onClick={status !== 'loading' ? onClose : undefined}
       />
       
       {/* Modal */}
-      <div className="relative bg-white rounded-lg shadow-xl p-6 mx-4 max-w-md w-full transform transition-all">
+      <div className="relative z-20 bg-white rounded-lg shadow-xl p-6 mx-4 max-w-md w-full transform transition-all">
         {/* Close Button */}
         {showCloseButton && status !== 'loading' && onClose && (
           <button

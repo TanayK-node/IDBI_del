@@ -19,7 +19,7 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
 }) => {
   const [pan, setPan] = useState("");
   const [isVerified, setIsVerified] = useState(false);
-  const [formOpen, setFormOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(true);
   const { popup, showLoading, showSuccess, showError, hidePopup } =
     useStatusPopup();
   const { updateCustomerField, markVerified } = useCustomer();
@@ -33,7 +33,7 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
   );
 
   try {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const upperPan = pan.toUpperCase();
     const panDetails = (
@@ -113,7 +113,7 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
         message={popup.message}
         showCloseButton={popup.status !== "loading"}
         autoClose={popup.status === "success"}
-        autoCloseDelay={3000}
+        autoCloseDelay={1500}
         onClose={hidePopup} // <-- Add this
       />
     </div>

@@ -27,12 +27,29 @@ export default function Home() {
   const router = useRouter();
   const [customerData, setCustomerData] = useState<{ name: string; dob: string } | null>(null);
   const serviceOptions = [
-    { id: "savings", label: "Savings Account" },
-    { id: "loans", label: "Loans" },
-    { id: "credit-cards", label: "Credit Cards" },
-    { id: "fd", label: "FD" },
-    { id: "rd", label: "RD" },
-  ];
+  {
+    id: "savings",
+    label: "Savings Account",
+    subOptions: [
+      { id: "regular", label: "Regular" },
+      { id: "corporate", label: "Corporate Salary" },
+      { id: "nre", label: "NRE" },
+      { id: "nro", label: "NRO" }
+    ]
+  },
+  {
+    id: "credit",
+    label: "Credit Cards"
+  },
+  {
+    id: "fd",
+    label: "Fixed Deposits"
+  },
+  {
+    id: "loans",
+    label: "Loans"
+  }
+];
 
   const handleBasicDetailsVerify = (basicData: BasicData) => {
     console.log("Basic details verified:", basicData);
