@@ -83,7 +83,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ onClose, onSubmit }) 
 
         <div className="p-6">
           <p className="text-gray-600 mb-6 text-center">
-            Please enter the OTP received on customer's registered email ID
+            Please enter the OTP received on customer's registered email ID/Phone Number
           </p>
 
           <div className="flex justify-center gap-3 mb-6">
