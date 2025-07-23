@@ -161,7 +161,7 @@ export default function FundingPage() {
 
           {/* Right Sidebar */}
           <div className="lg:col-span-1">
-            <Card className="p-4 bg-gray-300">
+            <Card className="p-4 !bg-gray-200">
               <h2 className="text-md font-semibold text-gray-800 mb-3">
                 Funding Summary
               </h2>
@@ -173,7 +173,7 @@ export default function FundingPage() {
                     {fundingAmount}
                   </span>
                 </div>
-                <hr className="border-gray-200" />
+                <hr className="border-gray-400" />
                 <div className="flex justify-between font-semibold">
                   <span>Total Amount</span>
                   <span>{fundingAmount}</span>
