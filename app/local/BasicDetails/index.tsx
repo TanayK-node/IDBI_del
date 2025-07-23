@@ -356,7 +356,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
             </div>
 
             {/* Professional Details Section */}
-            <div className="mb-6">
+            <div className="mb-24">
               <ProfessionalDetails
                 value={ProfessionalDetailsData}
                 onChange={setProfessionalDetailsData}

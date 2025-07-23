@@ -37,7 +37,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
   };
 
   const isFormValid =
-    formData.customerEmail.trim() !== "" &&
+    
     formData.maritalStatus.trim() !== "" &&
     formData.fatherName.trim() !== "" &&
     formData.motherName.trim() !== "";
@@ -55,15 +55,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
         <h1 className="text-3xl pb-4">Personal Details</h1>
         <div className="space-y-4">
           {/* Customer Email */}
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-            <TextBox
-              label="Customer's Email ID"
-              placeholder="Enter Customer's Email ID"
-              value={formData.customerEmail}
-              onChange={(value) => handleInputChange("customerEmail", value)}
-              required
-            />
-          </div>
+          
 
           {/* Info Box */}
           <InfoBox message="Make sure your email ID is correct as all communication from bank would be done on this email" />

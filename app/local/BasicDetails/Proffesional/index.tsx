@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
 import Dropdown from "../../../components/DropBox/index";
 
-
 interface ProfessionalDetailsProps {
   value: ProfessionalDetailsData;
   onChange: (data: ProfessionalDetailsData) => void;
@@ -25,8 +24,6 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   className = "",
 }) => {
   const [isVerified, setIsVerified] = useState(false);
-
-
 
   const handleInputChange = (
     field: keyof ProfessionalDetailsData,
@@ -98,9 +95,10 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
 
   return (
     <div className={className}>
-      <h1 className="text-3xl pb-4">Proffesional Details</h1>
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <h1 className="text-3xl pb-4">Professional Details</h1>
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="relative overflow-visible">
             <Dropdown
               label="Occupation"
               placeholder="Select Occupation"
@@ -109,24 +107,26 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               onChange={(value) => handleInputChange("occupation", value)}
               required
             />
-            <Dropdown
-              label="Organization Type"
-              placeholder="Select Organization Type"
-              options={organizationTypeOptions}
-              value={value.organizationType}
-              onChange={(value) => handleInputChange("organizationType", value)}
-              required
-            />
-            <TextBox
-              label="Organization Name"
-              placeholder="Enter Organization Name"
-              value={value.organizationName}
-              onChange={(value) => handleInputChange("organizationName", value)}
-              required
-            />
           </div>
+          <Dropdown
+            label="Organization Type"
+            placeholder="Select Organization Type"
+            options={organizationTypeOptions}
+            value={value.organizationType}
+            onChange={(value) => handleInputChange("organizationType", value)}
+            required
+          />
+          <TextBox
+            label="Organization Name"
+            placeholder="Enter Organization Name"
+            value={value.organizationName}
+            onChange={(value) => handleInputChange("organizationName", value)}
+            required
+          />
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="relative overflow-visible">
             <Dropdown
               label="Source of Funds"
               placeholder="Select Organization Type"
@@ -135,15 +135,15 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               onChange={(value) => handleInputChange("sourceOfFunds", value)}
               required
             />
-            <TextBox
-              label="Gross Annual Income"
-              placeholder="Enter Gross Annual Income"
-              value={value.grossAnnualIncome}
-              onChange={(value) =>
-                handleInputChange("grossAnnualIncome", value)
-              }
-              required
-            />
+          </div>
+          <TextBox
+            label="Gross Annual Income"
+            placeholder="Enter Gross Annual Income"
+            value={value.grossAnnualIncome}
+            onChange={(value) => handleInputChange("grossAnnualIncome", value)}
+            required
+          />
+          <div className="relative overflow-visible">
             <Dropdown
               label="Type of Savings Account"
               placeholder="Select Savings Account Type"
@@ -155,10 +155,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               required
             />
           </div>
-
-          
         </div>
-      
+      </div>
     </div>
   );
 };

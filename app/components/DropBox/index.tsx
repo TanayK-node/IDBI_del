@@ -87,7 +87,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                 key={option.value}
                 type="button"
                 onClick={() => handleOptionClick(option.value)}
-                className={`w-full px-4 py-3 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${
+                className={`z-50 w-full px-4 py-3 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${
                   value === option.value 
                     ? 'bg-[#02836C] text-white hover:bg-[#02836C]' 
                     : 'text-gray-900'
