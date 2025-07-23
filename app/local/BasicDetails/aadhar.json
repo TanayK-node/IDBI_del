@@ -1,8 +1,8 @@
 {
   "123456789101": {
-    "name": "Rajan Kumar",
+    "name": "Rajesh Kumar",
     "gender": "Male",
-    "dob": "1987-07-04",
+    "dob": "1990-05-12",
     "addressLine1": "403 Matru Vatsalya",
     "addressLine2": "S.V Road of V.p road",
     "city": "Mumbai",
@@ -13,10 +13,10 @@
     "name": "Sneha Sharma",
     "gender": "Female",
     "dob": "1988-09-23",
-    "addressLine1": "45",
-    "addressLine2": "Park Street",
+    "addressLine1": "1103 C Wing Veda Sangam",
+    "addressLine2": "Gundavali, Andheri East",
     "city": "Mumbai",
     "state": "Maharashtra",
-    "pincode": ""
+    "pincode": "400069"
   }
 }

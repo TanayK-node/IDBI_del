@@ -48,7 +48,11 @@ interface AadhaarRecord {
   name: string;
   gender: string;
   dob: string;
-  address: string;
+  addressLine1: string;
+  addressLine2: string;
+  city: string;
+  state: string;
+  pincode: string;
 }
 
 const aadhaarData = rawAadhaarData as Record<string, AadhaarRecord>;
@@ -137,14 +141,14 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     }
 
     return {
-      success: true,
-      data: {
-        name: record.name,
-        gender: record.gender,
-        dateOfBirth: record.dob,
-        address: record.address,
-      },
-    };
+  success: true,
+  data: {
+    name: record.name,
+    gender: record.gender,
+    dateOfBirth: record.dob,
+    address: `${record.addressLine1}, ${record.addressLine2}`,
+  },
+};
   };
 
   const [personalDetailsData, setPersonalDetailsData] =
