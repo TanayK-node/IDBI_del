@@ -1,9 +1,15 @@
-import React from 'react'
+import React from "react";
+import Header from "../components/Header/index";
+import AddFund from "../local/Fund/index";
 
-const page = () => {
+const AddFunds = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <Header />
 
-export default page
+      <AddFund />
+    </div>
+  );
+};
+
+export default AddFunds;

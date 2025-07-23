@@ -11,6 +11,7 @@ const CongratulationsPage: NextPage = () => {
 
   const handleProceed = () => {
     console.log("Proceeding to next step");
+    router.push("/AddFunds"); // Navigate to the Add Funds page
   };
 
   return (

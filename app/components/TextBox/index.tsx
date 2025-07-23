@@ -12,7 +12,7 @@ interface TextBoxProps {
   onChange: (value: string) => void;
   className?: string;
   required?: boolean;
-  readOnly?: boolean; 
+  readOnly?: boolean;
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
@@ -43,14 +43,14 @@ const TextBox: React.FC<TextBoxProps> = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           required={required}
-           className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28] placeholder-gray-500 ${className}`}
+          className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28] placeholder-gray-500 ${className}`}
         />
-
         {type === "password" && (
           <button
             type="button"
             onClick={togglePasswordVisibility}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-[#2A2A28]"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-[
+#2A2A28]"
           >
             {showPassword ? (
               <EyeSlashIcon className="h-5 w-5 text-gray-600" />
