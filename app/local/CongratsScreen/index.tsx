@@ -30,15 +30,11 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
 }) => {
   return (
     // Main container to center the card on the page
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+    <div className="flex  items-center justify-center bg-slate-50 p-4 pt-20 pb-14">
       <div className="relative w-full max-w-3xl rounded-2xl bg-white p-12 text-center shadow-lg">
-        {/* Decorative confetti elements */}
-        <div className="absolute -top-2 left-1/3 h-2 w-2 rounded-full bg-blue-400"></div>
-        <div className="absolute -top-3 right-1/3 h-3 w-3 rounded-full bg-pink-400"></div>
-        <div className="absolute -top-1 right-1/2 h-1 w-4 rotate-45 rounded-lg bg-red-400"></div>
-
+       
         {/* Success Icon */}
-        <div className="mb-6 flex justify-center">
+        <div className="mb-4 flex justify-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-green-500">
             <svg
               className="h-10 w-10 text-white"
@@ -125,11 +121,5 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
   );
 };
 
-// To use this component in your application:
-// <CongratulationsComponent
-//   accountNumber="1234567894455"
-//   branch="Palace Road Branch"
-//   ifscCode="IDBI123456789"
-// />
 
 export default CongratulationsComponent;

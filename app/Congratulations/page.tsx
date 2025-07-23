@@ -10,19 +10,21 @@ const CongratulationsPage: NextPage = () => {
   const router = useRouter();
 
   const handleProceed = () => {
-    router.push("/Congratulations"); // or your desired route
+    console.log("Proceeding to next step");
   };
 
   return (
     <>
       <Header />
-
+      <div>
       <CongratulationsComponent
         accountNumber="1234567894455"
         branch="Palace Road Branch"
         ifscCode="IDBI23456789"
       />
       <ProceedFooter onProceed={handleProceed} />
+      </div>
+      
     </>
   );
 };

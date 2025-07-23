@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import CustomerIDProofPage from "./local/CustomerPAN";
@@ -16,12 +17,14 @@ import ProceedFooter from "./components/Proceed/index";
 import PhotoCapture from "./local/Face/index";
 import SignatureCapture from "./local/Sign/index"; // Assuming you have a SignatureCapture component
 import { CustomerProvider } from "@/context/CustDetail"; // Ensure this path is correct
+import { Router } from "lucide-react";
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
     "Open Savings Account"
   );
   const [showBranchCard, setShowBranchCard] = useState(false);
   const [showNominee, setShowNominee] = useState(false);
+  const router = useRouter();
   const [customerData, setCustomerData] = useState<{ name: string; dob: string } | null>(null);
   const serviceOptions = [
     { id: "savings", label: "Savings Account" },
@@ -48,6 +51,7 @@ export default function Home() {
 
   const handleProceed = () => {
     console.log("application");
+    router.push("/Congratulations"); // Navigate to the Congratulations page
   };
 
   return (
