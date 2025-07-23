@@ -86,7 +86,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
 
   useEffect(() => {
     const age = calculateAge(nomineeData.dateOfBirth);
-    setShowGuardianSection(age < 18 && age >= 0);
+    setShowGuardianSection(age < 18 && age > 0);
 
     // Reset guardian data if nominee is 18 or older
     if (age >= 18) {
@@ -104,9 +104,16 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
   }, [nomineeData.dateOfBirth]);
 
   const handleInputChange = (field: keyof NomineeData, value: string) => {
+    let filteredValue = value;
+
+    // Apply filtering only for name field
+    if (field === "name") {
+      filteredValue = value.replace(/[0-9]/g, ""); // remove digits
+    }
+
     setNomineeData((prev) => ({
       ...prev,
-      [field]: value,
+      [field]: filteredValue,
     }));
   };
 
@@ -275,7 +282,11 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
           </label>
           <div className="flex">
             <select className="px-3 py-3 border border-gray-300 rounded-l-md bg-gray-50">
-              <option value="+91">+91</option>
+              <option value="+91">+91 (India)</option>
+              <option value="+1">+1 (United States/Canada)</option>
+              <option value="+44">+44 (United Kingdom)</option>
+              <option value="+61">+61 (Australia)</option>
+              <option value="+81">+81 (Japan)</option>
             </select>
             <input
               type="tel"

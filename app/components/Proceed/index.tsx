@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 import Button from "../Button/index";
 
 interface ProceedFooterProps {
   onProceed: () => void;
-  className?:string;
+  className?: string;
 }
 
 const ProceedFooter: React.FC<ProceedFooterProps> = ({ onProceed }) => {
@@ -20,18 +20,15 @@ const ProceedFooter: React.FC<ProceedFooterProps> = ({ onProceed }) => {
       const idproof = localStorage.getItem("idproof_verified") === "true";
       const channel = localStorage.getItem("channel_services_saved") === "true";
       const basicdetails = localStorage.getItem("basic_details") === "true"; // <-- fixed
-      const customerdetails =
-        localStorage.getItem("customer_details") === "true"; // <-- fixed
-      
+      const customerdetails = localStorage.getItem("customer_details_verified") === "true";
+
       const updatedStatus = {
         idproof,
         channel,
         basicdetails,
         customerdetails,
-
       };
 
-      
       setSectionCompletion(updatedStatus);
     };
 

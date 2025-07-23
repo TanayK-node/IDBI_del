@@ -181,7 +181,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     });
 
   const isAllSectionsSaved =
-        personalDetailsData?.customerEmail?.trim() &&
+   
     personalDetailsData?.maritalStatus?.trim() &&
     personalDetailsData?.fatherName?.trim() &&
     personalDetailsData?.motherName?.trim() &&

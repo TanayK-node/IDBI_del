@@ -5,9 +5,7 @@ import Button from "../../components/Button/index";
 import Accordion from "../../components/Accord/index";
 import OTPVerification from "../../components/OTP/index";
 import { useCustomer } from "../../../context/CustDetail"; // Ensure this path is correct
-interface CustomerDetailsProps {
-  customerData: { name: string; dob: string } | null;
-}
+
 
 const CustomerDetailsForm: React.FC = () => {
   const { customerData, isVerified, updateCustomerField, markVerified } =

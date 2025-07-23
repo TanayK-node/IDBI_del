@@ -43,7 +43,7 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
     if (panDetails) {
      
       
-     
+      localStorage.setItem("idproof_verified", "true");
       updateCustomerField("name", panDetails.name);
       updateCustomerField("dob", panDetails.dob);
       console.log("✅ PAN Verified:", upperPan);
