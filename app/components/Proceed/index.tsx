@@ -4,6 +4,7 @@ import Button from "../Button/index";
 
 interface ProceedFooterProps {
   onProceed: () => void;
+  className?:string;
 }
 
 const ProceedFooter: React.FC<ProceedFooterProps> = ({ onProceed }) => {
