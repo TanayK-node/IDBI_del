@@ -26,15 +26,24 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
 }) => {
   const formData = value;
 
-  const handleInputChange = (
-    field: keyof PersonalDetailsData,
-    val: string | boolean
-  ) => {
-    onChange({
-      ...formData,
-      [field]: val,
-    });
-  };
+ const handleInputChange = (
+  field: keyof PersonalDetailsData,
+  val: string | boolean
+) => {
+  if (
+    (field === "fatherName" || field === "motherName") &&
+    typeof val === "string"
+  ) {
+    const isValid = /^[a-zA-Z\s]*$/.test(val);
+    if (!isValid) return; // prevent update if invalid
+  }
+
+  onChange({
+    ...formData,
+    [field]: val,
+  });
+};
+
 
   const isFormValid =
     

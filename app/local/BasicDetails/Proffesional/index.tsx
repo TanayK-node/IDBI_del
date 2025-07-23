@@ -136,9 +136,21 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               required
             />
           </div>
-          <TextBox
+          <Dropdown
             label="Gross Annual Income"
-            placeholder="Enter Gross Annual Income"
+            placeholder="Select Gross Annual Income"
+            options={[
+              { label: "Below ₹2,50,000", value: "Below ₹2,50,000" },
+              {
+                label: "₹2,50,000 - ₹5,00,000",
+                value: "₹2,50,000 - ₹5,00,000",
+              },
+              {
+                label: "₹5,00,000 - ₹10,00,000",
+                value: "₹5,00,000 - ₹10,00,000",
+              },
+              { label: "Above ₹10,00,000", value: "Above ₹10,00,000" },
+            ]}
             value={value.grossAnnualIncome}
             onChange={(value) => handleInputChange("grossAnnualIncome", value)}
             required

@@ -89,7 +89,7 @@ const ChannelServicesComponent: React.FC = () => {
     </div>
 
         {/* Recommendation Message */}
-        <div className="text-sm text-gray-600 bg-gray-50 p-4 rounded-lg">
+        <div className="text-sm text-gray-600  p-4 rounded-lg">
           To unlock the best rewards and discounts on the IDBI Zero Balance
           Saving Account, we recommend the Visa Signature PayWave Debit Card.
         </div>
@@ -163,17 +163,18 @@ const ChannelServicesComponent: React.FC = () => {
 
         {/* Cheque Book Dropdown */}
         <div>
+          <h4 className="text-base font-medium text-gray-900 mb-3">
+            Cheque Book
+          </h4>
           <Dropdown
-            label="Cheque Book"
+            label="No. of Cheque Leaves"
             placeholder="Select number of cheque leaves"
             options={chequeOptions}
             value={servicesData.chequeLeaves}
             onChange={(value) => handleInputChange("chequeLeaves", value)}
             className="w-100 "
           />
-          <div className="text-sm text-gray-600 -mt-4">
-            No. of Cheque Leaves
-          </div>
+          
         </div>
 
         {/* WhatsApp Banking */}
