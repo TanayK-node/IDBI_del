@@ -65,7 +65,7 @@ const ChannelServicesComponent: React.FC = () => {
       <h4 className="text-base font-semibold text-gray-900">
         Debit Card Type
       </h4>
-      <div className="space-y-3">
+      <div className="flex space-x-6">
         {["physical-virtual", "virtual-only"].map((type) => (
           <label key={type} className="flex items-center">
             <input
@@ -89,7 +89,7 @@ const ChannelServicesComponent: React.FC = () => {
     </div>
 
         {/* Recommendation Message */}
-        <div className="text-sm text-gray-600  p-4 rounded-lg">
+        <div className="text-sm text-gray-600  p-1 rounded-lg">
           To unlock the best rewards and discounts on the IDBI Zero Balance
           Saving Account, we recommend the Visa Signature PayWave Debit Card.
         </div>

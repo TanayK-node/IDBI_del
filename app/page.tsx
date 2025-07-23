@@ -117,9 +117,9 @@ export default function Home() {
         {showBranchCard && (
           <div className="mt-4">
             <BranchBankCard
-              branchName="Palace Road Branch"
-              branchCode="IDBI000001"
-              address="123, Jasmine Apartments, Palace Road, Bangalore, Karnataka - 560003"
+              branchName="Main Branch-Mumbai"
+              branchCode="IBKL0000126"
+              address="World Trade Centre, Ground Floor, Cuffe Parade, Mumbai 400 005"
               onChangeClick={() => setShowBranchCard(false)}
             />
           </div>
