@@ -81,7 +81,7 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
   return (
     <div className={className}>
       <div className="space-y-4">
-        <h1 className="text-3xl">Communication Details</h1>
+        <h1 className="text-3xl">Permananet Address</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">

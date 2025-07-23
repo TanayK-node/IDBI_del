@@ -256,6 +256,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                       handleInputChange("aadhaarNumber", value)
                     }
                     required
+                    type="password"
                     className="w-full sm:w-[336px] h-[48px] text-base"
                   />
                 </div>
@@ -331,7 +332,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
           <div className="my-6" />
 
           <Accordion
-            title="Complete Application Form"
+            title="Communication Details"
             isOpen={formOpen}
             onToggle={setFormOpen}
             isVerified={formVerified}

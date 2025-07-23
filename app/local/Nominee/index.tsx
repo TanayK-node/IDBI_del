@@ -182,7 +182,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
       guardianData.dateOfBirth);
   const canSave = isNomineeValid && isGuardianValid;
 
-  if (!isExpanded) {
+  if (!isExpanded && !isNomineeSaved) {
     return (
       <Card className="p-6 pb-4">
         <div className="flex items-center justify-between">
@@ -479,7 +479,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
           <Button
             onClick={() => {
               setIsNomineeSaved(true);
-              setIsExpanded(false);
+              
             }}
             disabled={!canSave}
             className={`w-auto px-6 py-3 focus:ring-gray-500 ${
