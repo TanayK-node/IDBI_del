@@ -4,7 +4,7 @@ import TextBox from "../../../components/TextBox/index";
 import InfoBox from "../../../components/InfoBox/index";
 import dummyDataRaw from "../aadhar.json";
 
-interface CommunicationAddressData {
+export interface CommunicationAddressData {
   address?: string;
   communicationSameAsAadhaar?: boolean;
   addressLine1?: string;

@@ -50,12 +50,15 @@ const CustomerDetailsForm: React.FC = () => {
             value={customerData?.name || ""}
             readOnly
             onChange={() => {}}
+            className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
           />
+
           <TextBox
             label="Date of Birth"
             value={customerData?.dob || ""}
             readOnly
             onChange={() => {}}
+            className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
           />
 
           {/* Email Input */}
