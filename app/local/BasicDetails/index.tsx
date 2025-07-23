@@ -141,14 +141,14 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     }
 
     return {
-  success: true,
-  data: {
-    name: record.name,
-    gender: record.gender,
-    dateOfBirth: record.dob,
-    address: `${record.addressLine1}, ${record.addressLine2}`,
-  },
-};
+      success: true,
+      data: {
+        name: record.name,
+        gender: record.gender,
+        dateOfBirth: record.dob,
+        address: `${record.addressLine1}, ${record.addressLine2}`,
+      },
+    };
   };
 
   const [personalDetailsData, setPersonalDetailsData] =
@@ -181,7 +181,6 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     });
 
   const isAllSectionsSaved =
-   
     personalDetailsData?.maritalStatus?.trim() &&
     personalDetailsData?.fatherName?.trim() &&
     personalDetailsData?.motherName?.trim() &&
@@ -251,12 +250,17 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                   <TextBox
                     label="Aadhaar Number/VID"
                     placeholder="Enter 12-digit Aadhaar Number"
-                    value={basicData.aadhaarNumber}
-                    onChange={(value) =>
-                      handleInputChange("aadhaarNumber", value)
+                    value={
+                      basicData.aadhaarNumber.length === 12
+                        ? "XXXXXXXXXX" + basicData.aadhaarNumber.slice(-2)
+                        : basicData.aadhaarNumber
                     }
+                    onChange={(value) => {
+                      // Allow input only if value contains only numbers and is <= 12
+                      const cleanValue = value.replace(/\D/g, "").slice(0, 12);
+                      handleInputChange("aadhaarNumber", cleanValue);
+                    }}
                     required
-                    type="password"
                     className="w-full sm:w-[336px] h-[48px] text-base"
                   />
                 </div>
@@ -318,7 +322,6 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                   </span>
                   <div className="text-gray-900">{basicData.dateOfBirth}</div>
                 </div>
-                
               </div>
             </>
           )}
