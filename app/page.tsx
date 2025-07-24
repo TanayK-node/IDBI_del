@@ -115,7 +115,7 @@ export default function Home() {
 
         {/* Aadhaar + Complete Form Section */}
         <CompleteForm
-          basicData={{ aadhaarNumber: "" }}
+          basicData={{ aadhaarNumber: "" ,vid:""}}
           onSubmit={handleSubmit}
           onSubmitSuccess={() => {
             setShowBranchCard(true);

@@ -71,7 +71,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
   const [showNominee, setShowNominee] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [idType, setIdType] = useState("aadhaar");
-const [aadhaarType, setAadhaarType] = useState<"aadhaar" | "vid">("aadhaar");
+  const [aadhaarType, setAadhaarType] = useState<"aadhaar" | "vid">("aadhaar");
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(
@@ -95,10 +95,16 @@ const [aadhaarType, setAadhaarType] = useState<"aadhaar" | "vid">("aadhaar");
   };
 
   const isFormValid =
-  (aadhaarType === "aadhaar" && basicData.aadhaarNumber.replace(/\D/g, "").length === 12) ||
-  (aadhaarType === "vid" && basicData.vid?.replace(/\D/g, "").length === 16);
+    (idType === "aadhaar" &&
+      basicData.aadhaarNumber.replace(/\D/g, "").length === 12) ||
+    (idType === "vid" &&
+      (basicData.vid ? basicData.vid.replace(/\D/g, "").length === 16 : false));
 
-// Aadhaar should be 12 digits
+  console.log("aadhaarType:", idType);
+  console.log("Aadhaar Number:", basicData.aadhaarNumber);
+  console.log("VID:", basicData.vid);
+  console.log("isFormValid:", isFormValid);
+  // Aadhaar should be 12 digits
 
   const handleVerify = async () => {
     setIsVerifying(true);
@@ -233,13 +239,13 @@ const [aadhaarType, setAadhaarType] = useState<"aadhaar" | "vid">("aadhaar");
     return masked.replace(/(.{4})(?=.)/g, "$1 ");
   }
   function formatMaskedVid(value?: string): string {
-  if (!value) return ""; // fallback if undefined or empty
+    if (!value) return ""; // fallback if undefined or empty
 
-  const clean = value.replace(/\D/g, "").slice(0, 16);
-  if (clean.length < 16) return clean.replace(/(\d{4})(?=\d)/g, "$1 ");
-  const masked = "XXXXXXXXXXXX" + clean.slice(-4);
-  return masked.replace(/(.{4})(?=.)/g, "$1 ");
-}
+    const clean = value.replace(/\D/g, "").slice(0, 16);
+    if (clean.length < 16) return clean.replace(/(\d{4})(?=\d)/g, "$1 ");
+    const masked = "XXXXXXXXXXXX" + clean.slice(-4);
+    return masked.replace(/(.{4})(?=.)/g, "$1 ");
+  }
 
   /*const handleEditBasicDetails = () => {
     setIsVerified(false);
