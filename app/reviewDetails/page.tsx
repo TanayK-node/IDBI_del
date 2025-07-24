@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import Header from "../components/Header"; // Update path as needed
@@ -8,11 +8,16 @@ import CustomerId from "./CustomerId/index"; // Update path as needed
 import { PanProvider } from "@/context/panContext"; // Ensure this path is correct
 import CustomerDetailsDisplay from "./CustomerDisplay/index"; // Update path as needed
 import { CustomerProvider } from "@/context/CustDetail";
+import DetailsCard from "./BasicDetails";
+import NomineeDetailsCard from "./Nomineedeets";
+import BranchBankCard from "../local/Branch";
+import Channel from "./Channel";
+import ChannelCard from "./Channel";
+
 
 export default function ReviewDetails() {
-  const [selectedService, setSelectedService] = React.useState(
-    "Savings Account"
-  );
+  const [selectedService, setSelectedService] =
+    React.useState("Savings Account");
   const serviceOptions = [
     { id: "savings", label: "Savings Account" },
     { id: "loans", label: "Loans" },
@@ -41,13 +46,24 @@ export default function ReviewDetails() {
         </div>
 
         <Hero />
-        <PanProvider>
-          <CustomerId />
-        </PanProvider>
-        <CustomerProvider>
-          <CustomerDetailsDisplay />
-        </CustomerProvider>
-        
+        <div className="space-y-6">
+          <PanProvider>
+            <CustomerProvider>
+              <CustomerId />
+              <CustomerDetailsDisplay />
+            </CustomerProvider>
+          </PanProvider>
+
+          {/*Context left */}
+          <DetailsCard />
+          <NomineeDetailsCard />
+          <BranchBankCard
+            branchName="Bank Details"
+            branchCode="IBKL0000126"
+            address="World Trade Centre, Ground Floor, Cuffe Parade, Mumbai 400 005"
+          />
+          <ChannelCard/>
+        </div>
       </div>
     </div>
   );

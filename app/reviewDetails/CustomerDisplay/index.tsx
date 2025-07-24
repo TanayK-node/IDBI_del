@@ -1,13 +1,12 @@
 import { useCustomer } from "@/context/CustDetail";
 import Card from "../../components/Card/index"; // Ensure this path is correct
+
+
 const CustomerDetailsDisplay: React.FC = () => {
   const { customerData, isVerified } = useCustomer();
 
   // Only render if customer details are verified
-  if (!isVerified) {
-    return null;
-  }
-
+  
   return (
     <Card className="p-6">
       <div className="space-y-4">
@@ -26,7 +25,7 @@ const CustomerDetailsDisplay: React.FC = () => {
               Name
             </label>
             <div className="text-base font-medium text-gray-900">
-              {customerData.name}
+              {customerData.name || "Not provided"}
             </div>
           </div>
 
@@ -46,7 +45,7 @@ const CustomerDetailsDisplay: React.FC = () => {
               Email ID
             </label>
             <div className="text-base font-medium text-gray-900">
-              {customerData.email}
+              {customerData.email || "Not provided"}
             </div>
           </div>
         </div>
