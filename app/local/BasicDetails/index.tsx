@@ -24,6 +24,7 @@ interface CompleteFormProps {
 
 export interface BasicData {
   aadhaarNumber: string;
+  vid: string;
   name?: string;
   gender?: string;
   dateOfBirth?: string;
@@ -69,6 +70,9 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
   const [formOpen, setFormOpen] = useState(true);
   const [showNominee, setShowNominee] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
+  const [idType, setIdType] = useState("aadhaar");
+const [aadhaarType, setAadhaarType] = useState<"aadhaar" | "vid">("aadhaar");
+
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(
     null
@@ -90,7 +94,11 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     setVerificationError(null);
   };
 
-  const isFormValid = basicData.aadhaarNumber.trim().length >= 12; // Aadhaar should be 12 digits
+  const isFormValid =
+  (aadhaarType === "aadhaar" && basicData.aadhaarNumber.replace(/\D/g, "").length === 12) ||
+  (aadhaarType === "vid" && basicData.vid?.replace(/\D/g, "").length === 16);
+
+// Aadhaar should be 12 digits
 
   const handleVerify = async () => {
     setIsVerifying(true);
@@ -224,8 +232,16 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     const masked = "XXXXXXXX" + clean.slice(-4);
     return masked.replace(/(.{4})(?=.)/g, "$1 ");
   }
+  function formatMaskedVid(value?: string): string {
+  if (!value) return ""; // fallback if undefined or empty
 
-  const handleEditBasicDetails = () => {
+  const clean = value.replace(/\D/g, "").slice(0, 16);
+  if (clean.length < 16) return clean.replace(/(\d{4})(?=\d)/g, "$1 ");
+  const masked = "XXXXXXXXXXXX" + clean.slice(-4);
+  return masked.replace(/(.{4})(?=.)/g, "$1 ");
+}
+
+  /*const handleEditBasicDetails = () => {
     setIsVerified(false);
     setBasicData((prev) => ({
       aadhaarNumber: prev.aadhaarNumber,
@@ -235,7 +251,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       dateOfBirth: undefined,
       address: undefined,
     }));
-  };
+  };*/
 
   return (
     <div
@@ -251,19 +267,69 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
         <div className="space-y-4 pb-4">
           {!isVerified ? (
             <>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Select ID Type <span className="text-red-500">*</span>
+                </label>
+                <div className="flex gap-4">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="idType"
+                      value="aadhaar"
+                      checked={idType === "aadhaar"}
+                      onChange={() => setIdType("aadhaar")}
+                      className="mr-2"
+                    />
+                    Aadhaar
+                  </label>
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="idType"
+                      value="vid"
+                      checked={idType === "vid"}
+                      onChange={() => setIdType("vid")}
+                      className="mr-2"
+                    />
+                    VID
+                  </label>
+                </div>
+              </div>
               <div className="flex items-end justify-between flex-wrap gap-4">
-                <div className="flex-1 min-w-[280px]">
-                  <TextBox
-                    label="Aadhaar Number/VID"
-                    placeholder="Enter 12-digit Aadhaar Number"
-                    value={formatMaskedAadhaar(basicData.aadhaarNumber)}
-                    onChange={(value) => {
-                      const cleanValue = value.replace(/\D/g, "").slice(0, 12); // Keep only digits
-                      handleInputChange("aadhaarNumber", cleanValue);
-                    }}
-                    required
-                    className="w-full sm:w-[336px] h-[48px] text-base"
-                  />
+                {/* Conditional TextBox */}
+                <div className="flex items-end justify-between flex-wrap gap-4">
+                  <div className="flex-1 min-w-[280px]">
+                    {idType === "aadhaar" ? (
+                      <TextBox
+                        label="Aadhaar Number"
+                        placeholder="Enter 12-digit Aadhaar Number"
+                        value={formatMaskedAadhaar(basicData.aadhaarNumber)}
+                        onChange={(value) => {
+                          const cleanValue = value
+                            .replace(/\D/g, "")
+                            .slice(0, 12);
+                          handleInputChange("aadhaarNumber", cleanValue);
+                        }}
+                        required
+                        className="w-full sm:w-[336px] h-[48px] text-base"
+                      />
+                    ) : (
+                      <TextBox
+                        label="VID"
+                        placeholder="Enter 16-digit Virtual ID"
+                        value={formatMaskedVid(basicData.vid ?? "")}
+                        onChange={(value) => {
+                          const cleanValue = value
+                            .replace(/\D/g, "")
+                            .slice(0, 16);
+                          handleInputChange("vid", cleanValue);
+                        }}
+                        required
+                        className="w-full sm:w-[336px] h-[48px] text-base"
+                      />
+                    )}
+                  </div>
                 </div>
 
                 <div className="ml-auto mb-1">
