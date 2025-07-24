@@ -34,7 +34,7 @@ export default function BankBranchCard({
 
         {/* Branch location */}
         <div className="text-gray-800 text-sm font-medium">
-          Palace Road Branch
+          Mumbai Main Branch
         </div>
 
         {/* IFSC Code */}
