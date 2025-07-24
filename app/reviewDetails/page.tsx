@@ -11,7 +11,7 @@ import { CustomerProvider } from "@/context/CustDetail";
 import DetailsCard from "./BasicDetails";
 import NomineeDetailsCard from "./Nomineedeets";
 import BranchBankCard from "../local/Branch";
-import Channel from "./Channel";
+import Resident from "../local/Resident"
 import ChannelCard from "./Channel";
 
 
@@ -63,6 +63,7 @@ export default function ReviewDetails() {
             address="World Trade Centre, Ground Floor, Cuffe Parade, Mumbai 400 005"
           />
           <ChannelCard/>
+          <Resident/>
         </div>
       </div>
     </div>
