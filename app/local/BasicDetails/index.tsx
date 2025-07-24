@@ -24,7 +24,7 @@ interface CompleteFormProps {
 
 export interface BasicData {
   aadhaarNumber: string;
-  vid: string;
+  vid?: string;
   name?: string;
   gender?: string;
   dateOfBirth?: string;
