@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useRef, FC, useEffect } from 'react';
-
+import StatusPopup from "../../components/PopUp/index";
+import { useStatusPopup } from "../../hooks/Popup";
 // --- SVG Icon Components ---
 
 const CameraIcon: FC<{ className?: string }> = ({ className }) => (
@@ -95,6 +96,8 @@ const PhotoCapture: FC = () => {
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { popup, showLoading, showSuccess, showError, hidePopup } =
+      useStatusPopup();
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -160,17 +163,24 @@ const PhotoCapture: FC = () => {
     setPreviewImage(null);
   };
 
-  const handleOk = () => {
-    if (previewImage) {
-        setFinalImage(previewImage);
-        // Estimate file size from base64 string
-        const sizeInBytes = Math.ceil((previewImage.length * 3) / 4);
-        const sizeInKb = (sizeInBytes / 1024).toFixed(1);
-        setFileInfo({ name: 'customer-photo.jpeg', size: `${sizeInKb} KB` });
-    }
-    stopCamera();
-    setPreviewImage(null);
-  };
+  const handleOk = async () => {
+  if (previewImage) {
+    showLoading("Verifying Photo", "Please wait while we process the photo.");
+
+    setTimeout(() => {
+      setFinalImage(previewImage);
+
+      // Estimate file size from base64 string
+      const sizeInBytes = Math.ceil((previewImage.length * 3) / 4);
+      const sizeInKb = (sizeInBytes / 1024).toFixed(1);
+      setFileInfo({ name: 'customer-photo.jpeg', size: `${sizeInKb} KB` });
+
+      showSuccess("Photo Verified", "Customer Photo has been successfully verified.");
+      stopCamera();
+      setPreviewImage(null);
+    }, 1000); // simulate async processing
+  }
+};
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent parent onClick from firing
@@ -248,7 +258,18 @@ const PhotoCapture: FC = () => {
         </div>
       )}
 
+
       <canvas ref={canvasRef} className="hidden" />
+            <StatusPopup
+              isOpen={popup.isOpen}
+              status={popup.status}
+              title={popup.title}
+              message={popup.message}
+              showCloseButton={popup.status !== "loading"}
+              autoClose={popup.status === "success"}
+              autoCloseDelay={1500}
+              onClose={hidePopup} // <-- Add this
+            />
     </>
   );
 };

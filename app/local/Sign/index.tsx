@@ -2,8 +2,7 @@
 
 import React, { useState, useRef, FC } from "react";
 
-// --- SVG Icon Components ---
-
+// --- SVG Icons ---
 const UploadIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -43,16 +42,11 @@ const TrashIcon: FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
-/**
- * @component SignatureCapture
- * @description A component for uploading a signature image.
- */
 const SignatureCapture: FC = () => {
   const [signatureImage, setSignatureImage] = useState<string | null>(null);
-  const [fileInfo, setFileInfo] = useState<{
-    name: string;
-    size: string;
-  } | null>(null);
+  const [fileInfo, setFileInfo] = useState<{ name: string; size: string } | null>(null);
+  const [status, setStatus] = useState<"idle" | "verifying" | "verified">("idle");
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +57,10 @@ const SignatureCapture: FC = () => {
         setSignatureImage(e.target?.result as string);
         const sizeInKb = (file.size / 1024).toFixed(1);
         setFileInfo({ name: file.name, size: `${sizeInKb} KB` });
+
+        // Simulate verification
+        setStatus("verifying");
+        setTimeout(() => setStatus("verified"), 2000); // 2-second fake verification delay
       };
       reader.readAsDataURL(file);
     }
@@ -72,15 +70,12 @@ const SignatureCapture: FC = () => {
     e.stopPropagation();
     setSignatureImage(null);
     setFileInfo(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    setStatus("idle");
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleContainerClick = () => {
-    if (!signatureImage) {
-      fileInputRef.current?.click();
-    }
+    if (!signatureImage) fileInputRef.current?.click();
   };
 
   return (
@@ -101,8 +96,8 @@ const SignatureCapture: FC = () => {
         onClick={handleContainerClick}
       >
         {signatureImage && fileInfo ? (
-          <div className="text-left w-full">
-            <h3 className="text-gray-700 font-semibold text-base mb-4">
+          <div className="text-left w-full space-y-2">
+            <h3 className="text-gray-700 font-semibold text-base mb-2">
               Customer's Signature
             </h3>
             <div className="flex items-center justify-between w-full">
@@ -113,9 +108,7 @@ const SignatureCapture: FC = () => {
                   className="w-14 h-14 rounded-lg object-contain bg-gray-100 shadow-sm p-1"
                 />
                 <div className="ml-4">
-                  <p className="font-semibold text-sm text-gray-800">
-                    {fileInfo.name}
-                  </p>
+                  <p className="font-semibold text-sm text-gray-800">{fileInfo.name}</p>
                   <p className="text-xs text-gray-500">{fileInfo.size}</p>
                 </div>
               </div>
@@ -126,16 +119,23 @@ const SignatureCapture: FC = () => {
                 <TrashIcon className="w-6 h-6 text-red-500 hover:text-red-600" />
               </button>
             </div>
+
+            {/* --- Verification Status Message --- */}
+            <div className="mt-4">
+              {status === "verifying" && (
+                <p className="text-sm text-yellow-600 animate-pulse">Verifying Signature...</p>
+              )}
+              {status === "verified" && (
+                <p className="text-sm text-green-600 font-semibold">Signature Verified ✅</p>
+              )}
+            </div>
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center">
             <UploadIcon className="h-10 w-10 text-teal-500 mb-4" />
-            <h2 className="text-xl font-semibold text-gray-800">
-              Capture Signature
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-800">Capture Signature</h2>
             <p className="text-sm text-gray-500 mt-1 max-w-xs">
-              Take a clear picture of the customer's signature for verification
-              with PAN.
+              Take a clear picture of the customer's signature for verification with PAN.
             </p>
           </div>
         )}
