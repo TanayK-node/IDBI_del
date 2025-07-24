@@ -8,9 +8,10 @@ import { useCustomer } from "../../../context/CustDetail"; // Ensure this path i
 
 
 const CustomerDetailsForm: React.FC = () => {
-  const { customerData, isVerified, updateCustomerField, markVerified } =
+  const { customerData, isVerified, updateCustomerField, markVerified, isAccordionOpen,
+    setAccordionOpen,} =
     useCustomer();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  //const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const handleVerify = () => {
     // Basic validation
@@ -27,7 +28,7 @@ const CustomerDetailsForm: React.FC = () => {
   const handleOtpSubmit = (otp: string) => {
     console.log("OTP verified successfully:", otp);
     setShowOTP(false);
-    setIsAccordionOpen(false); // collapse only after OTP verified
+    setAccordionOpen(false); // collapse only after OTP verified
   };
   const isFormValid = Boolean(
     customerData.name && customerData.dob && customerData.email
@@ -38,7 +39,7 @@ const CustomerDetailsForm: React.FC = () => {
       title="Enter Customer Details"
       isVerified={isFormValid}
       isOpen={isAccordionOpen}
-      onToggle={(open) => setIsAccordionOpen(open)}
+      onToggle={(open) => setAccordionOpen(open)}
     >
       <div className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

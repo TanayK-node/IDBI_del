@@ -14,12 +14,14 @@ interface CustomerContextType {
   setCustomerData: (data: CustomerData) => void;
   markVerified: (verified: boolean) => void;
   updateCustomerField: (field: keyof CustomerData, value: string) => void;
+  isAccordionOpen: boolean;
+  setAccordionOpen: (open: boolean) => void;
 }
 
 // Create Context
 const CustomerContext = createContext<CustomerContextType | undefined>(undefined);
 
-// Context Provider Component
+// Provider
 export const CustomerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [customerData, setCustomerData] = useState<CustomerData>({
     name: "",
@@ -27,8 +29,9 @@ export const CustomerProvider: React.FC<{ children: ReactNode }> = ({ children }
     email: "",
     mobile: "",
   });
-  
+
   const [isVerified, markVerified] = useState(false);
+  const [isAccordionOpen, setAccordionOpen] = useState(false);
 
   const updateCustomerField = (field: keyof CustomerData, value: string) => {
     setCustomerData(prev => ({
@@ -43,6 +46,8 @@ export const CustomerProvider: React.FC<{ children: ReactNode }> = ({ children }
     setCustomerData,
     markVerified,
     updateCustomerField,
+    isAccordionOpen,
+    setAccordionOpen,
   };
 
   return (
@@ -52,7 +57,7 @@ export const CustomerProvider: React.FC<{ children: ReactNode }> = ({ children }
   );
 };
 
-// Custom hook to use context
+// Hook
 export const useCustomer = () => {
   const context = useContext(CustomerContext);
   if (context === undefined) {
@@ -60,4 +65,3 @@ export const useCustomer = () => {
   }
   return context;
 };
-

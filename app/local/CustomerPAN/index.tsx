@@ -22,7 +22,8 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
   const [formOpen, setFormOpen] = useState(true);
   const { popup, showLoading, showSuccess, showError, hidePopup } =
     useStatusPopup();
-  const { updateCustomerField, markVerified } = useCustomer();
+  const { updateCustomerField, markVerified,isAccordionOpen,
+    setAccordionOpen } = useCustomer();
 
   const handleVerify = async () => {
   if (!pan.trim()) return;
@@ -49,7 +50,7 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
       console.log("✅ PAN Verified:", upperPan);
       console.log("✅ Name:", panDetails.name);
       console.log("✅ DOB:", panDetails.dob);
-
+      setAccordionOpen(true); // from useCustomer()
       setIsVerified(true);
       setFormOpen(false);
 
