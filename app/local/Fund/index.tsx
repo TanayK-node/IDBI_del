@@ -14,6 +14,13 @@ export default function FundingPage() {
   const [showQRModal, setShowQRModal] = useState(false);
   const [qrData, setQrData] = useState("");
 
+const [bankName, setBankName] = useState("");
+const [accountNumber, setAccountNumber] = useState("");
+const [ifscCode, setIfscCode] = useState("");
+const [cardNumber, setCardNumber] = useState("");
+const [cardHolderName, setCardHolderName] = useState("");
+const [expiryDate, setExpiryDate] = useState("");
+const [cvv, setCvv] = useState("");
   const quickAmounts = ["₹10,000.00", "₹50,000.00", "₹90,000.00"];
 
   const handleQuickAmountSelect = (amount: string) => {
@@ -138,6 +145,89 @@ export default function FundingPage() {
                       Verify
                     </Button>
                   </div>
+                  <div className="flex justify-end mt-6">
+                <Button
+                  onClick={handleGenerateQRCode}
+                  className="bg-orange-500 text-white"
+                >
+                  Generate QR Code
+                </Button>
+              </div>
+                </div>
+              )}
+
+              {paymentMethod === "netbanking" && (
+                <div className="mb-4 space-y-4">
+                  <TextBox
+                    label="Bank Name"
+                    placeholder="Enter bank name"
+                    type="text"
+                    value={bankName}
+                    onChange={setBankName}
+                    required
+                    className="w-full sm:w-[380px]"
+                  />
+                  <TextBox
+                    label="Account Number"
+                    placeholder="Enter account number"
+                    type="text"
+                    value={accountNumber}
+                    onChange={setAccountNumber}
+                    required
+                    className="w-full sm:w-[380px]"
+                  />
+                  <TextBox
+                    label="IFSC Code"
+                    placeholder="Enter IFSC Code"
+                    type="text"
+                    value={ifscCode}
+                    onChange={setIfscCode}
+                    required
+                    className="w-full sm:w-[380px]"
+                  />
+                </div>
+              )}
+
+              {paymentMethod === "debitcard" && (
+                <div className="mb-4 space-y-4">
+                  <TextBox
+                    label="Card Number"
+                    placeholder="XXXX XXXX XXXX XXXX"
+                    type="text"
+                    value={cardNumber}
+                    onChange={setCardNumber}
+                    required
+                    className="w-full sm:w-[380px]"
+                  />
+                  <TextBox
+                    label="Cardholder Name"
+                    placeholder="Enter name on card"
+                    type="text"
+                    value={cardHolderName}
+                    onChange={setCardHolderName}
+                    required
+                    className="w-full sm:w-[380px]"
+                  />
+                  <div className="flex gap-4 flex-wrap">
+                    <TextBox
+                      label="Expiry Date"
+                      placeholder="MM/YY"
+                      type="text"
+                      value={expiryDate}
+                      onChange={setExpiryDate}
+                      required
+                      className="w-full sm:w-[180px]"
+                    />
+                    <TextBox
+                      label="CVV"
+                      placeholder="XXX"
+                      type="password"
+                      value={cvv}
+                      onChange={setCvv}
+                      required
+                      className="w-full sm:w-[180px]"
+                    />
+                  </div>
                 </div>
               )}
 
@@ -148,14 +238,7 @@ export default function FundingPage() {
                 <span className="bg-gray-100 px-2 py-1 rounded">@phonepe</span>
               </div>
 
-              <div className="flex justify-end mt-6">
-                <Button
-                  onClick={handleGenerateQRCode}
-                  className="bg-orange-500 text-white"
-                >
-                  Generate QR Code
-                </Button>
-              </div>
+              
             </Card>
           </div>
 

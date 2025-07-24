@@ -18,6 +18,8 @@ import PhotoCapture from "./local/Face/index";
 import SignatureCapture from "./local/Sign/index"; // Assuming you have a SignatureCapture component
 import { CustomerProvider } from "@/context/CustDetail"; // Ensure this path is correct
 import { Router } from "lucide-react";
+import Toast from "./components/Toast/index";
+
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
     "Open Savings Account"
@@ -25,31 +27,39 @@ export default function Home() {
   const [showBranchCard, setShowBranchCard] = useState(false);
   const [showNominee, setShowNominee] = useState(false);
   const router = useRouter();
-  const [customerData, setCustomerData] = useState<{ name: string; dob: string } | null>(null);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<
+    "success" | "error" | "warning" | "info"
+  >("info");
+  const [showToast, setShowToast] = useState(false);
+  const [customerData, setCustomerData] = useState<{
+    name: string;
+    dob: string;
+  } | null>(null);
   const serviceOptions = [
-  {
-    id: "savings",
-    label: "Savings Account",
-    subOptions: [
-      { id: "regular", label: "Regular" },
-      { id: "corporate", label: "Corporate Salary" },
-      { id: "nre", label: "NRE" },
-      { id: "nro", label: "NRO" }
-    ]
-  },
-  {
-    id: "credit",
-    label: "Credit Cards"
-  },
-  {
-    id: "fd",
-    label: "Fixed Deposits"
-  },
-  {
-    id: "loans",
-    label: "Loans"
-  }
-];
+    {
+      id: "savings",
+      label: "Savings Account",
+      subOptions: [
+        { id: "regular", label: "Regular" },
+        { id: "corporate", label: "Corporate Salary" },
+        { id: "nre", label: "NRE" },
+        { id: "nro", label: "NRO" },
+      ],
+    },
+    {
+      id: "credit",
+      label: "Credit Cards",
+    },
+    {
+      id: "fd",
+      label: "Fixed Deposits",
+    },
+    {
+      id: "loans",
+      label: "Loans",
+    },
+  ];
 
   const handleBasicDetailsVerify = (basicData: BasicData) => {
     console.log("Basic details verified:", basicData);
@@ -67,8 +77,11 @@ export default function Home() {
   };
 
   const handleProceed = () => {
+    
     console.log("application");
-    router.push("/Congratulations"); // Navigate to the Congratulations page
+    setTimeout(() => {
+      router.push("/Congratulations");
+    }, 1000); // 1.5 seconds delay
   };
 
   return (
@@ -89,19 +102,16 @@ export default function Home() {
         <Hero />
 
         {/* Customer Proof and Details */}
-        
-        
 
         <CustomerProvider>
           <CustomerIDProofPage setCustomerData={setCustomerData} />
-        <CustomerDetailsForm />
+          <CustomerDetailsForm />
         </CustomerProvider>
 
         {/* Photo Capture Section */}
-        <div className='mt-4'>
+        <div className="mt-4">
           <PhotoCapture />
         </div>
-        
 
         {/* Aadhaar + Complete Form Section */}
         <CompleteForm
@@ -136,14 +146,15 @@ export default function Home() {
           <IndianResidentCard />
         </div>
         <div className="mt-4">
-          <SignatureCapture/>
+          <SignatureCapture />
         </div>
         {/* Proceed Footer */}
         <div className="mt-6">
           <ProceedFooter onProceed={handleProceed} />
         </div>
-        
       </div>
+          
     </div>
+    
   );
 }
