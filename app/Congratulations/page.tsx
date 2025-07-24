@@ -19,8 +19,8 @@ const CongratulationsPage: NextPage = () => {
       <Header />
       <div>
       <CongratulationsComponent
-        accountNumber="1234567894455"
-        branch="Palace Road Branch"
+        accountNumber="12345678944"
+        branch="Mumbai Main Branch"
         ifscCode="IDBI23456789"
       />
       <ProceedFooter onProceed={handleProceed} />

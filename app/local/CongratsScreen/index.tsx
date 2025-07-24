@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React , {useState} from "react";
+import Toast from  "../../components/Toast/index"
 
 // Define the props for the component
 interface CongratulationsProps {
@@ -10,24 +11,30 @@ interface CongratulationsProps {
 }
 
 // Handle the copy to clipboard functionality
-const handleCopy = (text: string) => {
-  navigator.clipboard.writeText(text).then(
-    () => {
-      // Optional: Show a success message to the user
-      alert("Account number copied to clipboard!");
-    },
-    (err) => {
-      // Optional: Handle errors
-      console.error("Could not copy text: ", err);
-    }
-  );
-};
-
 const CongratulationsComponent: React.FC<CongratulationsProps> = ({
   accountNumber,
   branch,
   ifscCode,
 }) => {
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<'success' | 'error' | 'warning' | 'info'>('info');
+  const [showToast, setShowToast] = useState(false);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        setToastMessage("Account Number Copied successfully");
+        setToastType("success");
+        setShowToast(true);
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+        setToastMessage("Could not copy Account number");
+        setToastType("error");
+        setShowToast(true);
+      }
+    );
+  };
   return (
     // Main container to center the card on the page
     <div className="flex  items-center justify-center bg-slate-50 p-4 pt-20 pb-14">
@@ -75,13 +82,14 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    
+                    width="20"
+                    height="20"
+                    strokeWidth="1.5"
+                    stroke="orange"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"
                     />
                   </svg>
@@ -107,7 +115,15 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
           </div>
         </div>
       </div>
+      {showToast && (
+  <Toast
+    message={toastMessage}
+    type={toastType}
+    onClose={() => setShowToast(false)}
+  />
+)}
     </div>
+    
   );
 };
 

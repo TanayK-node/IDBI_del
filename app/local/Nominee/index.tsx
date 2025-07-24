@@ -479,6 +479,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
           <Button
             onClick={() => {
               setIsNomineeSaved(true);
+              setIsExpanded(false); // 👈 closes the accordion
               
             }}
             disabled={!canSave}
