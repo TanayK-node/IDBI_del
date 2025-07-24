@@ -63,7 +63,6 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   // Dropdown options
   const occupationOptions = [
     { value: "employed", label: "Employed" },
-    { value: "self-employed", label: "Self Employed" },
     { value: "business", label: "Business" },
     { value: "student", label: "Student" },
     { value: "retired", label: "Retired" },

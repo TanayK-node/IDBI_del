@@ -15,27 +15,28 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState("");
   const router = useRouter();
   const [toastMessage, setToastMessage] = useState("");
-    const [toastType, setToastType] = useState<'success' | 'error' | 'warning' | 'info'>('info');
-    const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState<
+    "success" | "error" | "warning" | "info"
+  >("info");
+  const [showToast, setShowToast] = useState(false);
 
-   const handleProceed = () => {
+  const handleProceed = () => {
     const user = users.find(
       (u) => u.username === username && u.password === password
     );
 
     if (user) {
       console.log("Login successful:", { username });
-      
+
       // Show success toast
       setToastMessage("Login successful! Redirecting...");
       setToastType("success");
       setShowToast(true);
-      
+
       // Delay redirect to show success message
       setTimeout(() => {
         router.push("/");
       }, 1000); // 1.5 second delay
-      
     } else {
       // Show error toast
       setToastMessage("Invalid login credentials");
@@ -47,9 +48,9 @@ const LoginPage: React.FC = () => {
     // Handle login logic here
     console.log("Forgot Password:");
   };
-   const handleCloseToast = () => {
+  const handleCloseToast = () => {
     setShowToast(false);
-    setToastMessage(''); // Clear message when toast is closed
+    setToastMessage(""); // Clear message when toast is closed
   };
 
   return (
@@ -72,7 +73,7 @@ const LoginPage: React.FC = () => {
 
           {/* Welcome text */}
           <h1 className="text-white text-[32px] font-light leading-snug tracking-normal text-left mb-4 pl-8">
-            Welcome to the
+            Welcome to 
             <br />
             <span className="font-medium">IDBI Bank</span>
           </h1>
@@ -129,16 +130,17 @@ const LoginPage: React.FC = () => {
                     Forgot Password
                   </p>
                 </div>
-                <DownloadApp />
-                 {/* Toast Component */}
-      {showToast && (
-        <Toast
-          message={toastMessage}
-          type={toastType}
-          duration={toastType === 'success' ? 2000 : 5000} // Shorter duration for success
-          onClose={handleCloseToast}
-          isVisible={showToast}
-        />)}
+                
+                {/* Toast Component */}
+                {showToast && (
+                  <Toast
+                    message={toastMessage}
+                    type={toastType}
+                    duration={toastType === "success" ? 2000 : 5000} // Shorter duration for success
+                    onClose={handleCloseToast}
+                    isVisible={showToast}
+                  />
+                )}
               </div>
             </form>
           </div>

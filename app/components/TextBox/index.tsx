@@ -7,7 +7,7 @@ import { EyeSlashIcon } from "@heroicons/react/24/outline";
 interface TextBoxProps {
   label: string;
   placeholder?: string;
-  type?: "text" | "password";
+  type?: "text" | "password" | "email";
   value: string;
   onChange: (value: string) => void;
   className?: string;

@@ -72,7 +72,7 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Accordion
-        title="Customer ID Proof"
+        title="PAN Card Details"
         isVerified={isVerified}
         isOpen={formOpen}
         onToggle={setFormOpen}

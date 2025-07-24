@@ -4,9 +4,10 @@ import { X } from 'lucide-react';
 interface OTPVerificationProps {
   onClose: () => void;
   onSubmit: (otp: string) => void;
+  message?: string;
 }
 
-const OTPVerification: React.FC<OTPVerificationProps> = ({ onClose, onSubmit }) => {
+const OTPVerification: React.FC<OTPVerificationProps> = ({ onClose, onSubmit,message }) => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
   const [countdown, setCountdown] = useState<number>(10);
   const [generatedOTP, setGeneratedOTP] = useState<string>('');
@@ -83,7 +84,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ onClose, onSubmit }) 
 
         <div className="p-6">
           <p className="text-gray-600 mb-6 text-center">
-            Please enter the OTP received on customer's registered email ID/Phone Number
+              {message || "Please enter the OTP received on customer's registered email ID/Phone Number"}
           </p>
 
           <div className="flex justify-center gap-3 mb-6">

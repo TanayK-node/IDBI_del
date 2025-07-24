@@ -6,16 +6,24 @@ import Accordion from "../../components/Accord/index";
 import OTPVerification from "../../components/OTP/index";
 import { useCustomer } from "../../../context/CustDetail"; // Ensure this path is correct
 
-
 const CustomerDetailsForm: React.FC = () => {
-  const { customerData, isVerified, updateCustomerField, markVerified, isAccordionOpen,
-    setAccordionOpen,} =
-    useCustomer();
+  const {
+    customerData,
+    isVerified,
+    updateCustomerField,
+    markVerified,
+    isAccordionOpen,
+    setAccordionOpen,
+  } = useCustomer();
   //const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const handleVerify = () => {
+     console.log("Button clicked");
     // Basic validation
-    if (customerData.name && customerData.dob && customerData.email) {
+    if (customerData.name && customerData.dob && isEmailValid) {
       console.log("Customer details verified:", customerData);
       markVerified(true);
       setShowOTP(true); // Show the OTP input
@@ -30,8 +38,15 @@ const CustomerDetailsForm: React.FC = () => {
     setShowOTP(false);
     setAccordionOpen(false); // collapse only after OTP verified
   };
+
+ const validateEmail = (value: string) => {
+  setEmail(value);
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  setIsEmailValid(isValid);
+  setEmailError(isValid ? "" : "Please enter a valid email address.");
+};
   const isFormValid = Boolean(
-    customerData.name && customerData.dob && customerData.email
+    customerData.name && customerData.dob && isEmailValid
   );
 
   return (
@@ -64,11 +79,14 @@ const CustomerDetailsForm: React.FC = () => {
           <TextBox
             label="Email ID"
             placeholder="Enter email here"
-            type="text"
-            value={customerData.email}
-            onChange={(value) => updateCustomerField("email", value)}
+            type="email"
+            value={email}
+            onChange={validateEmail}
             required={true}
           />
+          {emailError && (
+            <p className="text-red-500 text-sm mt-1">{emailError}</p>
+          )}
         </div>
 
         <div className="flex justify-end w-full pt-1">
@@ -88,6 +106,7 @@ const CustomerDetailsForm: React.FC = () => {
           <OTPVerification
             onSubmit={handleOtpSubmit}
             onClose={() => setShowOTP(false)}
+            message="Enter the 6-digit OTP sent to the user's Email to continue."
           />
         )}
       </div>
