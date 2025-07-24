@@ -102,7 +102,12 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
       setGuardianSameAsNominee(false);
     }
   }, [nomineeData.dateOfBirth]);
-
+  const [mobileError, setMobileError] = useState("");
+  const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cleaned = e.target.value.replace(/\D/g, "").slice(0, 10);
+    handleInputChange("mobileNumber", cleaned);
+    setMobileError(cleaned.length === 10 ? "" : "Invalid mobile number");
+  };
   const handleInputChange = (field: keyof NomineeData, value: string) => {
     let filteredValue = value;
 
@@ -240,7 +245,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <TextBox
             label="Name"
-            placeholder="Input Text"
+            placeholder="Enter Name"
             value={nomineeData.name}
             onChange={(value) => handleInputChange("name", value)}
             required
@@ -276,29 +281,56 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
         </div>
 
         {/* Mobile Number */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Mobile Number <span className="text-red-500 ml-1">*</span>
-          </label>
-          <div className="flex">
-            <select className="px-3 py-3 border border-gray-300 rounded-l-md bg-gray-50">
-              <option value="+91">+91 (India)</option>
-              <option value="+1">+1 (United States/Canada)</option>
-              <option value="+44">+44 (United Kingdom)</option>
-              <option value="+61">+61 (Australia)</option>
-              <option value="+81">+81 (Japan)</option>
-            </select>
-            <input
-              type="tel"
-              placeholder="Enter Mobile Number"
-              value={nomineeData.mobileNumber}
-              onChange={(e) =>
-                handleInputChange("mobileNumber", e.target.value)
-              }
-              className="flex-1 px-4 py-3 border border-l-0 border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-[#02836C] text-[#2A2A28] placeholder-gray-500"
-            />
-          </div>
-        </div>
+       <div>
+  <label className="block text-sm font-medium text-gray-700 mb-1">
+    Mobile Number <span className="text-red-500">*</span>
+  </label>
+
+  <div className="flex">
+    {/* Wrapper for positioning dropdown arrow */}
+    <div className="relative">
+      <select
+        className="h-[48px] pr-10 pl-4 border border-gray-300 rounded-l-md bg-gray-50 text-[#2A2A28] text-base focus:outline-none focus:ring-2 focus:ring-[#02836C] appearance-none"
+      >
+        <option value="+91">+91 (IND)</option>
+        <option value="+1">+1 (USA)</option>
+        <option value="+44">+44 (UK)</option>
+        <option value="+61">+61 (AUS)</option>
+        <option value="+81">+81 (JAP)</option>
+      </select>
+
+      {/* Custom arrow using SVG */}
+      <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+        <svg
+          className="w-4 h-4 text-gray-500"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+    </div>
+
+    {/* Input Field + Error */}
+    <div className="flex flex-col w-full">
+      <input
+        type="tel"
+        placeholder="Enter Mobile Number"
+        value={nomineeData.mobileNumber}
+        onChange={handleMobileChange}
+        className="h-[48px] px-4 border border-l-0 border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-[#02836C] text-[#2A2A28] placeholder-gray-500 text-base"
+      />
+
+      {mobileError && (
+        <p className="text-red-500 text-sm mt-2">{mobileError}</p>
+      )}
+    </div>
+  </div>
+</div>
+
+
 
         {/* Address Same As Customer */}
         <div className="flex items-center">
@@ -480,7 +512,6 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
             onClick={() => {
               setIsNomineeSaved(true);
               setIsExpanded(false); // 👈 closes the accordion
-              
             }}
             disabled={!canSave}
             className={`w-auto px-6 py-3 focus:ring-gray-500 ${

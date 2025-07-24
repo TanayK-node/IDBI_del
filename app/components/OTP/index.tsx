@@ -9,7 +9,7 @@ interface OTPVerificationProps {
 
 const OTPVerification: React.FC<OTPVerificationProps> = ({ onClose, onSubmit,message }) => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(''));
-  const [countdown, setCountdown] = useState<number>(10);
+  const [countdown, setCountdown] = useState<number>(30);
   const [generatedOTP, setGeneratedOTP] = useState<string>('');
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -50,7 +50,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({ onClose, onSubmit,mes
     setGeneratedOTP(newOTP);
     console.log('Resent OTP:', newOTP);
     setOtp(Array(6).fill(''));
-    setCountdown(10);
+    setCountdown(30);
     inputRefs.current[0]?.focus();
   };
 

@@ -218,6 +218,12 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       localStorage.setItem("basic_details", "true");
     }
   };
+  function formatMaskedAadhaar(value: string): string {
+    const clean = value.replace(/\D/g, "").slice(0, 12);
+    if (clean.length < 12) return clean.replace(/(\d{4})(?=\d)/g, "$1 ");
+    const masked = "XXXXXXXX" + clean.slice(-4);
+    return masked.replace(/(.{4})(?=.)/g, "$1 ");
+  }
 
   const handleEditBasicDetails = () => {
     setIsVerified(false);
@@ -250,14 +256,9 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                   <TextBox
                     label="Aadhaar Number/VID"
                     placeholder="Enter 12-digit Aadhaar Number"
-                    value={
-                      basicData.aadhaarNumber.length === 12
-                        ? "XXXXXXXXXX" + basicData.aadhaarNumber.slice(-2)
-                        : basicData.aadhaarNumber
-                    }
+                    value={formatMaskedAadhaar(basicData.aadhaarNumber)}
                     onChange={(value) => {
-                      // Allow input only if value contains only numbers and is <= 12
-                      const cleanValue = value.replace(/\D/g, "").slice(0, 12);
+                      const cleanValue = value.replace(/\D/g, "").slice(0, 12); // Keep only digits
                       handleInputChange("aadhaarNumber", cleanValue);
                     }}
                     required
@@ -284,6 +285,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                 <OTPVerification
                   onSubmit={handleOtpSubmit}
                   onClose={() => setShowOTP(false)}
+                  message="UIDAI has sent a temporary OTP to your mobile number (Valid for 10 mins)"
                 />
               )}
 
