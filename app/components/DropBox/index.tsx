@@ -82,25 +82,26 @@ const Dropdown: React.FC<DropdownProps> = ({
           </div>
         </button>
 
-        {/* Dropdown Menu */}
         {isOpen && !disabled && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
-            {options.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => handleOptionClick(option.value)}
-                className={`z-50 w-full px-4 py-3 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${
-                  value === option.value
-                    ? "bg-[#02836C] text-white hover:bg-[#02836C]"
-                    : "text-gray-900"
-                }`}
-              >
-                <div className="text-base font-medium text-gray-900 mb-3">
-                  {option.label}
-                </div>
-              </button>
-            ))}
+          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg">
+            <div className="max-h-[180px] overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-gray-300 hover:scrollbar-thumb-gray-400">
+              {options.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => handleOptionClick(option.value)}
+                  className={`w-full px-4 py-3 text-left hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${
+                    value === option.value
+                      ? "bg-[#02836C] text-white hover:bg-[#02836C]"
+                      : "text-gray-900"
+                  }`}
+                >
+                  <div className="text-base font-medium text-gray-900 ">
+                    {option.label}
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>

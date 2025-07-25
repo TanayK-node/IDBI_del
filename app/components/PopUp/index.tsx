@@ -78,7 +78,7 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black bg-opacity-20 transition-opacity z-10"
+        className="absolute inset-0 bg-black/75  transition-opacity z-10"
         onClick={status !== 'loading' ? onClose : undefined}
       />
       
