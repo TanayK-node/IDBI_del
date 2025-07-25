@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface FeatureCardProps {
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   title: string;
   description: string;
   href?: string; // Optional link prop
@@ -13,7 +13,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, hre
   className="w-[165px] h-[114px] bg-black/40 backdrop-blur-md rounded-lg p-2.5 text-white text-center hover:bg-black/60 transition-all duration-200"
 >
   <div className="flex justify-center mb-2">
-    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+    <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
       {icon}
     </div>
   </div>
