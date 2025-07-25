@@ -1,18 +1,27 @@
 // components/UserMenu.tsx
+'use client'
 import { useState, useRef, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
+import { useRouter } from "next/navigation"; // if using Next.js
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const handleClickOutside = (e: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
       setIsOpen(false);
     }
   };
-
+  const handleLogout = () => {
+    const confirmed = window.confirm("Do you want to logout of the system?");
+    if (confirmed) {
+      // Optionally clear tokens/session here
+      router.push("/login"); // Navigate to login page
+    }
+  };
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -42,7 +51,7 @@ export default function UserMenu() {
             </button>
             <button
               className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-              onClick={() => alert("Logout")}
+              onClick={handleLogout}
             >
               Logout
             </button>
