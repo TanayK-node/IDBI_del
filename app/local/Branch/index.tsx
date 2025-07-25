@@ -24,12 +24,7 @@ export default function BankBranchCard({
           <h3 className="font-semibold text-gray-900 text-base">
             {branchName}
           </h3>
-          <button
-            onClick={onChangeClick}
-            className="text-orange-500 hover:text-orange-600 text-sm font-medium transition-colors"
-          >
-            Change
-          </button>
+          
         </div>
 
         {/* Branch location */}

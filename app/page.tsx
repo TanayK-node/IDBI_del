@@ -77,7 +77,6 @@ export default function Home() {
   };
 
   const handleProceed = () => {
-    
     console.log("application");
     setTimeout(() => {
       router.push("/Congratulations");
@@ -115,7 +114,7 @@ export default function Home() {
 
         {/* Aadhaar + Complete Form Section */}
         <CompleteForm
-          basicData={{ aadhaarNumber: "" ,vid:""}}
+          basicData={{ aadhaarNumber: "", vid: "" }}
           onSubmit={handleSubmit}
           onSubmitSuccess={() => {
             setShowBranchCard(true);
@@ -149,12 +148,10 @@ export default function Home() {
           <SignatureCapture />
         </div>
         {/* Proceed Footer */}
-        <div className="mt-6">
+        <div className="w-full flex justify-center mt-6">
           <ProceedFooter onProceed={handleProceed} />
         </div>
       </div>
-          
     </div>
-    
   );
 }

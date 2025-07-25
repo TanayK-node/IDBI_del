@@ -452,7 +452,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                     : "bg-gray-400 cursor-not-allowed"
                 }`}
               >
-                Submit Application
+                {isVerifying ? "Verifying..." : "Verify"}
               </Button>
             </div>
           </Accordion>

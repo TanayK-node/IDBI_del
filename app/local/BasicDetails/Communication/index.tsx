@@ -174,13 +174,13 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
               <TextBox
                 label="Address Line 1"
                 placeholder="Enter Address Line 1"
-                value={""}
+                value={value.addressLine1 ||""}
                 onChange={(val) => handleInputChange("addressLine1", val)}
               />
               <TextBox
                 label="Address Line 2"
                 placeholder="Enter Address Line 2"
-                value={""}
+                value={value.addressLine2 ||""}
                 onChange={(val) => handleInputChange("addressLine2", val)}
               />
             </div>
@@ -189,19 +189,19 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
               <TextBox
                 label="City"
                 placeholder="Enter City"
-                value={""}
+                value={value.city || ""}
                 onChange={(val) => handleInputChange("city", val)}
               />
               <TextBox
                 label="State"
                 placeholder="Enter State"
-                value={""}
+                value={value.state || ""}
                 onChange={(val) => handleInputChange("state", val)}
               />
               <TextBox
                 label="Pincode"
                 placeholder="Enter Pincode"
-                value={""}
+                value={value.pincode || ""}
                 onChange={(val) => handleInputChange("pincode", val)}
               />
             </div>
