@@ -55,7 +55,7 @@ const Accordion: React.FC<AccordionProps> = ({
       </div> {/* ✅ This was the missing closing tag */}
 
       {/* Accordion Content */}
-      <div className={`transition-all duration-300 ease-in-out overflow-visible ${
+      <div className={`transition-all duration-300 ease-in-out overflow-hidden ${
         isOpen ? 'max-h-500 opacity-100 pointer-events-auto' : 'max-h-0 opacity-0'
       }`}>
         <div className="px-4 pb-4 border-t border-gray-100">
