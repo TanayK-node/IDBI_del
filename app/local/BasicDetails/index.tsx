@@ -100,7 +100,6 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     (idType === "vid" &&
       (basicData.vid ? basicData.vid.replace(/\D/g, "").length === 16 : false));
 
-
   // Aadhaar should be 12 digits
 
   const handleVerify = async () => {
@@ -381,7 +380,13 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                   <span className="font-medium text-gray-700">
                     Aadhaar Number:
                   </span>
-                  <div className="text-gray-900">{basicData.aadhaarNumber}</div>
+                  <div className="text-gray-900">
+                    {basicData.aadhaarNumber
+                      ? ("X".repeat(8) + basicData.aadhaarNumber.slice(-4))
+                          .match(/.{1,4}/g)
+                          ?.join(" ")
+                      : ""}
+                  </div>
                 </div>
                 <div>
                   <span className="font-medium text-gray-700">Gender:</span>
@@ -449,7 +454,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                     : "bg-gray-400 cursor-not-allowed"
                 }`}
               >
-                {isVerifying ? "Verifying..." : "Verify"}
+                Submit
               </Button>
             </div>
           </Accordion>

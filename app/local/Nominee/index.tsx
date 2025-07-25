@@ -281,56 +281,57 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
         </div>
 
         {/* Mobile Number */}
-       <div>
-  <label className="block text-sm font-medium text-gray-700 mb-1">
-    Mobile Number <span className="text-red-500">*</span>
-  </label>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Mobile Number <span className="text-red-500">*</span>
+          </label>
 
-  <div className="flex">
-    {/* Wrapper for positioning dropdown arrow */}
-    <div className="relative">
-      <select
-        className="h-[48px] pr-10 pl-4 border border-gray-300 rounded-l-md bg-gray-50 text-[#2A2A28] text-base focus:outline-none focus:ring-2 focus:ring-[#02836C] appearance-none"
-      >
-        <option value="+91">+91 (IND)</option>
-        <option value="+1">+1 (USA)</option>
-        <option value="+44">+44 (UK)</option>
-        <option value="+61">+61 (AUS)</option>
-        <option value="+81">+81 (JAP)</option>
-      </select>
+          <div className="flex">
+            {/* Wrapper for positioning dropdown arrow */}
+            <div className="relative">
+              <select className="h-[48px] pr-10 pl-4 border border-gray-300 rounded-l-md bg-gray-50 text-[#2A2A28] text-base focus:outline-none focus:ring-2 focus:ring-[#02836C] appearance-none">
+                <option value="+91">+91 (IND)</option>
+                <option value="+1">+1 (USA)</option>
+                <option value="+44">+44 (UK)</option>
+                <option value="+61">+61 (AUS)</option>
+                <option value="+81">+81 (JAP)</option>
+              </select>
 
-      {/* Custom arrow using SVG */}
-      <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
-        <svg
-          className="w-4 h-4 text-gray-500"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </div>
-    </div>
+              {/* Custom arrow using SVG */}
+              <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center">
+                <svg
+                  className="w-4 h-4 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+            </div>
 
-    {/* Input Field + Error */}
-    <div className="flex flex-col w-full">
-      <input
-        type="tel"
-        placeholder="Enter Mobile Number"
-        value={nomineeData.mobileNumber}
-        onChange={handleMobileChange}
-        className="h-[48px] px-4 border border-l-0 border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-[#02836C] text-[#2A2A28] placeholder-gray-500 text-base"
-      />
+            {/* Input Field + Error */}
+            <div className="flex flex-col w-full">
+              <input
+                type="tel"
+                placeholder="Enter Mobile Number"
+                value={nomineeData.mobileNumber}
+                onChange={handleMobileChange}
+                className="h-[48px] px-4 border border-l-0 border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-[#02836C] text-[#2A2A28] placeholder-gray-500 text-base"
+              />
 
-      {mobileError && (
-        <p className="text-red-500 text-sm mt-2">{mobileError}</p>
-      )}
-    </div>
-  </div>
-</div>
-
-
+              {mobileError && (
+                <p className="text-red-500 text-sm mt-2">{mobileError}</p>
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* Address Same As Customer */}
         <div className="flex items-center">
