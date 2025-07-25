@@ -124,7 +124,7 @@ export default function Home() {
           <div className="mt-4">
             <BranchBankCard
               branchName="Bank Details"
-              branchCode="IBKL0000126"
+              branchCode="IBKL0000004"
               address="World Trade Centre, Ground Floor, Cuffe Parade, Mumbai 400 005"
               onChangeClick={() => setShowBranchCard(false)}
             />

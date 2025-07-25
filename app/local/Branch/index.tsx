@@ -29,7 +29,7 @@ export default function BankBranchCard({
 
         {/* Branch location */}
         <div className="text-gray-800 text-sm font-medium">
-          Mumbai Main Branch
+          Nariman Point Branch
         </div>
 
         {/* IFSC Code */}

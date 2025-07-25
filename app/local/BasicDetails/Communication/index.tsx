@@ -81,7 +81,7 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
   return (
     <div className={className}>
       <div className="space-y-4">
-        <h1 className="text-3xl">Permananet Address</h1>
+        <h1 className="text-3xl">Permanent Address</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -174,13 +174,13 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
               <TextBox
                 label="Address Line 1"
                 placeholder="Enter Address Line 1"
-                value={value.addressLine1 ||""}
+                value={value.addressLine1 || ""}
                 onChange={(val) => handleInputChange("addressLine1", val)}
               />
               <TextBox
                 label="Address Line 2"
                 placeholder="Enter Address Line 2"
-                value={value.addressLine2 ||""}
+                value={value.addressLine2 || ""}
                 onChange={(val) => handleInputChange("addressLine2", val)}
               />
             </div>
@@ -202,7 +202,11 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
                 label="Pincode"
                 placeholder="Enter Pincode"
                 value={value.pincode || ""}
-                onChange={(val) => handleInputChange("pincode", val)}
+                onChange={(val) => {
+                  if (/^\d*$/.test(val)) {
+                    handleInputChange("pincode", val);
+                  }
+                }}
               />
             </div>
           </>

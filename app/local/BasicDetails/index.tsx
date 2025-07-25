@@ -406,7 +406,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
           <div className="my-6" />
 
           <Accordion
-            title="Communication Details"
+            title="Additional Details"
             isOpen={formOpen}
             onToggle={setFormOpen}
             isVerified={formVerified}

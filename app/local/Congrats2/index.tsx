@@ -1,11 +1,17 @@
 import React from "react";
 import Button from "../../components/Button/index";
+import { useRouter } from "next/navigation";
 
 const TransferSuccessful = ({
   successImage = null,
   fundingAmount = "90,000.00",
   onGoHome = () => console.log("Go to Home clicked"),
 }) => {
+  const router = useRouter();
+   const handleGoHome = () => {
+    onGoHome(); // optional callback
+    router.push("/login"); // ✅ redirect only on button click
+  };
   const getCurrentDateTime = () => {
     const now = new Date();
     const date = now.toLocaleDateString("en-GB");
@@ -66,7 +72,7 @@ const TransferSuccessful = ({
               <div className="flex items-center gap-1">
                 <p className="font-medium">{transactionId}</p>
                 <button>
-                  <img src="/assets/images/copy.png"/>
+                  <img src="/assets/images/copy.png" />
                 </button>
               </div>
             </div>
@@ -94,7 +100,7 @@ const TransferSuccessful = ({
         {/* FOOTER */}
         <div className="pt-2 flex justify-center">
           <Button
-            onClick={onGoHome}
+            onClick={handleGoHome}
             className="bg-orange-500 hover:bg-orange-600 text-white px-4 rounded-lg font-medium transition-colors duration-200"
           >
             Go to Home
