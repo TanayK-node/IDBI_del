@@ -22,16 +22,12 @@ import Toast from "./components/Toast/index";
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
-    "Open Savings Account"
+    "Savings Account"
   );
   const [showBranchCard, setShowBranchCard] = useState(false);
   const [showNominee, setShowNominee] = useState(false);
   const router = useRouter();
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState<
-    "success" | "error" | "warning" | "info"
-  >("info");
-  const [showToast, setShowToast] = useState(false);
+ 
   const [customerData, setCustomerData] = useState<{
     name: string;
     dob: string;
