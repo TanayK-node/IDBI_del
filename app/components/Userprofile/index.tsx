@@ -4,10 +4,12 @@ import { useState, useRef, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
 import { useRouter } from "next/navigation"; // if using Next.js
+import LogoutPopup from "../Logoutpop/index";
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+   const [showLogoutPopup, setShowLogoutPopup] = useState(false);
   const router = useRouter();
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -16,11 +18,12 @@ export default function UserMenu() {
     }
   };
   const handleLogout = () => {
-    const confirmed = window.confirm("Do you want to logout of the system?");
-    if (confirmed) {
-      // Optionally clear tokens/session here
-      router.push("/login"); // Navigate to login page
-    }
+    setShowLogoutPopup(true);
+    
+  };
+  const confirmLogout = () => {
+    setShowLogoutPopup(false);
+    router.push("/login");
   };
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -58,6 +61,14 @@ export default function UserMenu() {
           </div>
         </div>
       )}
+      <LogoutPopup
+        isOpen={showLogoutPopup}
+        onConfirm={confirmLogout}
+        onCancel={() => setShowLogoutPopup(false)}
+      />
+
+
+
     </div>
   );
 }

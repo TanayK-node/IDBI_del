@@ -100,10 +100,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     (idType === "vid" &&
       (basicData.vid ? basicData.vid.replace(/\D/g, "").length === 16 : false));
 
-  console.log("aadhaarType:", idType);
-  console.log("Aadhaar Number:", basicData.aadhaarNumber);
-  console.log("VID:", basicData.vid);
-  console.log("isFormValid:", isFormValid);
+
   // Aadhaar should be 12 digits
 
   const handleVerify = async () => {
