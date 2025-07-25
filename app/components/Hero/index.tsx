@@ -9,7 +9,7 @@ export default function Hero() {
     <div className="w-full h-full px-4 sm:px-6 lg:px-0 py-8 lg:py-0">
       <div className="pl-6 grid grid-cols-1 lg:grid-cols-2 items-start gap-6 lg:gap-0 h-full">
         {/* Left side - Content */}
-        <div>
+        <div className="z-10">
           <h1 className="text-white text-2xl mb-4 lg:mb-6 pt-4">
             IDBI Bank Savings Account
           </h1>

@@ -85,12 +85,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
     { value: "other", label: "Other" },
   ];
 
-  const savingsAccountTypeOptions = [
-    { value: "regular", label: "Regular Savings" },
-    { value: "premium", label: "Premium Savings" },
-    { value: "salary", label: "Salary Account" },
-    { value: "senior", label: "Senior Citizen" },
-  ];
+
 
   return (
     <div className={className}>
@@ -154,18 +149,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
             onChange={(value) => handleInputChange("grossAnnualIncome", value)}
             required
           />
-          <div className="relative overflow-visible">
-            <Dropdown
-              label="Type of Savings Account"
-              placeholder="Select Savings Account Type"
-              options={savingsAccountTypeOptions}
-              value={value.savingsAccountType}
-              onChange={(value) =>
-                handleInputChange("savingsAccountType", value)
-              }
-              required
-            />
-          </div>
+          
         </div>
       </div>
     </div>
