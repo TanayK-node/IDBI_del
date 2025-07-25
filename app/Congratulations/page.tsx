@@ -17,15 +17,19 @@ const CongratulationsPage: NextPage = () => {
   return (
     <>
       <Header />
-      <div>
-      <CongratulationsComponent
-        accountNumber="12345678944"
-        branch="Mumbai Main Branch"
-        ifscCode="IDBI23456789"
-      />
-      <ProceedFooter onProceed={handleProceed} />
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-1 overflow-auto">
+          <CongratulationsComponent
+            accountNumber="12345678944"
+            branch="Mumbai Main Branch"
+            ifscCode="IDBI23456789"
+          />
+        </div>
+        <div className="justify-center flex pb-18">
+          <ProceedFooter onProceed={handleProceed} />
+        </div>
+        
       </div>
-      
     </>
   );
 };

@@ -37,8 +37,8 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
   };
   return (
     // Main container to center the card on the page
-    <div className="flex  items-center justify-center bg-slate-50 p-4 pt-20 pb-14">
-      <div className="relative w-full max-w-3xl rounded-2xl bg-white p-12 text-center shadow-lg">
+    <div className="flex  items-center justify-center bg-slate-50 p-4 pt-5 pb-6">
+      <div className="relative w-full max-w-3xl rounded-2xl bg-white p-6 text-center shadow-lg">
         {/* Success Icon */}
         <div className="mb-4 flex justify-center">
           <div className="flex justify-center mb-4">
