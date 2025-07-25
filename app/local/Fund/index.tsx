@@ -14,13 +14,13 @@ export default function FundingPage() {
   const [showQRModal, setShowQRModal] = useState(false);
   const [qrData, setQrData] = useState("");
 
-const [bankName, setBankName] = useState("");
-const [accountNumber, setAccountNumber] = useState("");
-const [ifscCode, setIfscCode] = useState("");
-const [cardNumber, setCardNumber] = useState("");
-const [cardHolderName, setCardHolderName] = useState("");
-const [expiryDate, setExpiryDate] = useState("");
-const [cvv, setCvv] = useState("");
+  const [bankName, setBankName] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+  const [ifscCode, setIfscCode] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardHolderName, setCardHolderName] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
   const quickAmounts = ["₹10,000.00", "₹50,000.00", "₹90,000.00"];
 
   const handleQuickAmountSelect = (amount: string) => {
@@ -120,7 +120,7 @@ const [cvv, setCvv] = useState("");
               {paymentMethod === "upi" && (
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    UPI ID 
+                    UPI ID
                   </label>
                   <div className="flex flex-wrap gap-2 items-center">
                     <TextBox
@@ -140,21 +140,14 @@ const [cvv, setCvv] = useState("");
                     </Button>
                   </div>
                   <div className="flex justify-end mt-6">
-                <Button
-                  onClick={handleGenerateQRCode}
-                  className="bg-orange-500 text-white"
-                >
-                  Generate QR Code
-                </Button>
-              </div>
-               <div className="flex items-center gap-2 mt-3 text-xs text-gray-600">
-                Supported:
-                <span className="bg-gray-100 px-2 py-1 rounded">@ybl</span>
-                <span className="bg-gray-100 px-2 py-1 rounded">@paytm</span>
-                <span className="bg-gray-100 px-2 py-1 rounded">@phonepe</span>
-              </div>
+                    <Button
+                      onClick={handleGenerateQRCode}
+                      className="bg-orange-500 text-white"
+                    >
+                      Generate QR Code
+                    </Button>
+                  </div>
                 </div>
-                
               )}
 
               {paymentMethod === "netbanking" && (
@@ -231,10 +224,6 @@ const [cvv, setCvv] = useState("");
                   </div>
                 </div>
               )}
-
-             
-
-              
             </Card>
           </div>
 

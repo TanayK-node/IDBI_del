@@ -175,7 +175,7 @@ const PhotoCapture: FC = () => {
       const sizeInKb = (sizeInBytes / 1024).toFixed(1);
       setFileInfo({ name: 'customer-photo.jpeg', size: `${sizeInKb} KB` });
 
-      showSuccess("Photo Verified", "Customer Photo has been successfully verified.");
+      showSuccess("Photo Verified", "Customers photo  matched Aadhaar with 60% accuracy.");
       stopCamera();
       setPreviewImage(null);
     }, 1000); // simulate async processing

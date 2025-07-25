@@ -9,7 +9,7 @@ export default function ProdHero() {
           <div className="pl-6 grid grid-cols-1 lg:grid-cols-2 items-start gap-6 lg:gap-0 h-full">
             <div>
               <h1 className="text-white text-2xl mb-4 lg:mb-6 pt-4">
-                Welcome to IDBI Assisted Onboarding Portal
+                IDBI Assisted Customer Onboarding Portal
               </h1>
               <Features />
             </div>
