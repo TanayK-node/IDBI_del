@@ -53,9 +53,10 @@ const TextBox: React.FC<TextBoxProps> = ({
 #2A2A28]"
           >
             {showPassword ? (
-              <EyeSlashIcon className="h-5 w-5 text-gray-600" />
-            ) : (
               <EyeIcon className="h-5 w-5 text-current" />
+            ) : (
+              
+              <EyeSlashIcon className="h-5 w-5 text-gray-600" />
             )}
           </button>
         )}

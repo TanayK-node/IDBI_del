@@ -104,9 +104,7 @@ export default function Home() {
         </CustomerProvider>
 
         {/* Photo Capture Section */}
-        <div className="mt-4">
-          <PhotoCapture />
-        </div>
+        
 
         {/* Aadhaar + Complete Form Section */}
         <CompleteForm
@@ -117,6 +115,9 @@ export default function Home() {
             setShowNominee(true);
           }}
         />
+        <div className="mt-4">
+          <PhotoCapture />
+        </div>
 
         {/* Render Branch Card only after form submitted */}
         {showBranchCard && (
