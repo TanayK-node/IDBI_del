@@ -17,11 +17,19 @@ const CustomerDetailsForm: React.FC = () => {
   } = useCustomer();
   //const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
+  const [showMobileOTP, setShowMobileOTP] = useState(false);
+  const [isMobileOtpVerified, setIsMobileOtpVerified] = useState(false);
+
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
+
+  const [mobile, setMobile] = useState("");
+  const [mobileError, setMobileError] = useState("");
+  const [isMobileValid, setIsMobileValid] = useState(false);
+
   const handleVerify = () => {
-     console.log("Button clicked");
+    console.log("Button clicked");
     // Basic validation
     if (customerData.name && customerData.dob && isEmailValid) {
       console.log("Customer details verified:", customerData);
@@ -39,14 +47,56 @@ const CustomerDetailsForm: React.FC = () => {
     setAccordionOpen(false); // collapse only after OTP verified
   };
 
- const validateEmail = (value: string) => {
-  setEmail(value);
-  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-  setIsEmailValid(isValid);
-  setEmailError(isValid ? "" : "Please enter a valid email address.");
-};
+  const handleVerifyMobile = () => {
+    console.log("Verify button clicked");
+    console.log("mobile value:", mobile);
+    console.log("Length:", mobile.length);
+
+    const isValidMobile = /^[0-9]{10}$/.test(mobile);
+
+    if (mobile && isValidMobile) {
+      console.log("Mobile number verified:", mobile);
+
+      // Callback to mark as verified (if needed)
+      setShowMobileOTP(true); // Show OTP input field
+      localStorage.setItem("mobile_verified", "true");
+      setMobileError(""); // clear error
+    } else {
+      console.log("Invalid mobile number");
+      setMobileError("Please enter a valid 10-digit mobile number.");
+    }
+  };
+
+  const handleOtpSubmitMobile = (otp: string) => {
+    console.log("Mobile OTP verified successfully:", otp);
+
+    // Simulate successful OTP verification (or replace with real logic)
+    setIsMobileOtpVerified(true); // ✅ Mark OTP as verified
+    setShowMobileOTP(false); // ✅ Hide OTP field
+  };
+
+  const validateEmail = (value: string) => {
+    setEmail(value);
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    setIsEmailValid(isValid);
+    setEmailError(isValid ? "" : "Please enter a valid email address.");
+  };
+
+  const validateMobile = (value: string) => {
+    setMobile(value);
+
+    const isValid = /^[0-9]{10}$/.test(value);
+    setIsMobileValid(isValid);
+    setMobileError(
+      isValid || value === ""
+        ? ""
+        : "Please enter a valid mobile number. (10 digits)"
+    );
+  };
+  const isMobileFormValid = isMobileValid;
+  const isMobilOtpFormValid = isMobileValid && isMobileOtpVerified;
   const isFormValid = Boolean(
-    customerData.name && customerData.dob && isEmailValid
+    customerData.name && customerData.dob && isEmailValid && isMobilOtpFormValid
   );
 
   return (
@@ -76,24 +126,55 @@ const CustomerDetailsForm: React.FC = () => {
           />
 
           {/* Email Input */}
-          <TextBox
-            label="Email ID"
-            placeholder="Enter email here"
-            type="email"
-            value={email}
-            onChange={validateEmail}
-            required={true}
-          />
-          {emailError && (
-            <p className="text-red-500 text-sm mt-1">{emailError}</p>
-          )}
+          <div className="flex flex-col">
+            <TextBox
+              label="Email ID"
+              placeholder="Enter email here"
+              type="text"
+              value={email}
+              onChange={validateEmail}
+              required={true}
+            />
+            {emailError && (
+              <p className="text-red-500 text-sm mt-1">{emailError}</p>
+            )}
+          </div>
+
+          <div>
+            <div className="flex flex-col">
+              <TextBox
+                label="Phone no."
+                placeholder="Enter number here"
+                type="text"
+                value={mobile}
+                onChange={validateMobile}
+                required={true}
+              />
+              {mobileError && (
+                <p className="text-red-500 text-sm mt-1">{mobileError}</p>
+              )}
+            </div>
+          </div>
+          <div className="pt-6">
+          <Button
+            onClick={handleVerifyMobile}
+            disabled={!isMobileFormValid}
+            className={`pt-px-2 py-1 text-sm focus:ring-gray-500 ${
+              isMobileFormValid
+                ? "bg-orange-500 hover:bg-orange-600 text-white"
+                : "bg-gray-400 cursor-not-allowed text-gray-200"
+            }`}
+          >
+            Verify Number
+          </Button>
+          </div>
         </div>
 
         <div className="flex justify-end w-full pt-1">
           <Button
             onClick={handleVerify}
             disabled={!isFormValid}
-            className={`w-auto px-6 py-3 focus:ring-gray-500  ${
+            className={`w-0.1 px-6 py-3 focus:ring-gray-500 ${
               isFormValid
                 ? "bg-orange-500 hover:bg-orange-600 text-white"
                 : "bg-gray-400 cursor-not-allowed text-gray-200"
@@ -107,6 +188,13 @@ const CustomerDetailsForm: React.FC = () => {
             onSubmit={handleOtpSubmit}
             onClose={() => setShowOTP(false)}
             message="Enter the 6-digit OTP sent to the user's Email to continue."
+          />
+        )}
+        {showMobileOTP && (
+          <OTPVerification
+            onSubmit={handleOtpSubmitMobile}
+            onClose={() => setShowOTP(false)}
+            message="Enter the 6-digit OTP sent to the user's Phone Number to continue."
           />
         )}
       </div>
