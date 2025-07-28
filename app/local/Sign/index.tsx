@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useRef, FC } from "react";
-
+import StatusPopup from "../../components/PopUp/index";
+import { useStatusPopup } from "../../hooks/Popup";
 // --- SVG Icons ---
 const UploadIcon: FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -46,25 +47,53 @@ const SignatureCapture: FC = () => {
   const [signatureImage, setSignatureImage] = useState<string | null>(null);
   const [fileInfo, setFileInfo] = useState<{ name: string; size: string } | null>(null);
   const [status, setStatus] = useState<"idle" | "verifying" | "verified">("idle");
-
+const { popup, showLoading, showSuccess, showUploaded,showError, hidePopup } =
+      useStatusPopup();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setSignatureImage(e.target?.result as string);
-        const sizeInKb = (file.size / 1024).toFixed(1);
-        setFileInfo({ name: file.name, size: `${sizeInKb} KB` });
+ const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const file = event.target.files?.[0];
 
-        // Simulate verification
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const base64 = e.target?.result as string;
+      setSignatureImage(base64);
+
+      const sizeInKb = (file.size / 1024).toFixed(1);
+      setFileInfo({ name: file.name, size: `${sizeInKb} KB` });
+
+      // Step 1: Show Uploaded Popup
+      showUploaded("Signature has been successfully uploaded");
+
+      // Step 2: Show Loading after 1.5s
+      setTimeout(() => {
+        showLoading(
+          "Matching Customers Signature",
+          "Please wait while we compare the signature with PAN records."
+        );
         setStatus("verifying");
-        setTimeout(() => setStatus("verified"), 2000); // 2-second fake verification delay
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+
+        // Step 3: Show Success after another 1.5s (total 3s after upload)
+        setTimeout(() => {
+          showSuccess(
+            "Signature Verified",
+            "Customer's signature matches pan with 80% accuracy, You can proceed."
+          );
+          setStatus("verified");
+        }, 1500);
+      }, 1500);
+    };
+
+    reader.readAsDataURL(file);
+  }
+};
+
+
+
+ 
+
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -121,14 +150,7 @@ const SignatureCapture: FC = () => {
             </div>
 
             {/* --- Verification Status Message --- */}
-            <div className="mt-4">
-              {status === "verifying" && (
-                <p className="text-sm text-yellow-600 animate-pulse">Verifying Signature...</p>
-              )}
-              {status === "verified" && (
-                <p className="text-sm text-green-600 font-semibold">Signature Verified ✅</p>
-              )}
-            </div>
+            
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center">
@@ -140,6 +162,16 @@ const SignatureCapture: FC = () => {
           </div>
         )}
       </div>
+      <StatusPopup
+  isOpen={popup.isOpen}
+  status={popup.status}
+  title={popup.title}
+  message={popup.message}
+  showCloseButton={popup.status !== "loading"}
+  autoClose={popup.status === "success"}
+  autoCloseDelay={2000}
+  onClose={hidePopup}
+/>
     </>
   );
 };

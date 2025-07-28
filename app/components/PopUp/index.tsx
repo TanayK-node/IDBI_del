@@ -1,8 +1,13 @@
 "use client";
-import React from 'react';
-import { CheckCircleIcon, XCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import React from "react";
+import {
+  CheckCircleIcon,
+  XCircleIcon,
+  XMarkIcon,
+  ArrowUpOnSquareStackIcon,
+} from "@heroicons/react/24/outline";
 
-export type PopupStatus = 'loading' | 'success' | 'error';
+export type PopupStatus = "loading" | "success" | "error" | "uploaded";
 
 interface StatusPopupProps {
   isOpen: boolean;
@@ -26,7 +31,7 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
   autoCloseDelay = 3000,
 }) => {
   React.useEffect(() => {
-    if (isOpen && autoClose && status !== 'loading') {
+    if (isOpen && autoClose && status !== "loading") {
       const timer = setTimeout(() => {
         onClose?.();
       }, autoCloseDelay);
@@ -39,35 +44,44 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
 
   const getStatusConfig = () => {
     switch (status) {
-      case 'loading':
+      case "loading":
         return {
           icon: (
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
           ),
-          iconBgColor: 'bg-orange-50',
-          titleColor: 'text-gray-900',
-          messageColor: 'text-gray-600',
+          iconBgColor: "bg-orange-50",
+          titleColor: "text-gray-900",
+          messageColor: "text-gray-600",
         };
-      case 'success':
+      case "uploaded":
+        return {
+          icon: (
+            <ArrowUpOnSquareStackIcon className="h-6 w-6 text-blue-500" />
+          ),
+          iconBgColor: "bg-blue-50",
+          titleColor: "text-gray-800",
+          messageColor: "text-gray-600",
+        };
+      case "success":
         return {
           icon: <CheckCircleIcon className="h-12 w-12 text-green-500" />,
-          iconBgColor: 'bg-green-50',
-          titleColor: 'text-gray-900',
-          messageColor: 'text-gray-600',
+          iconBgColor: "bg-green-50",
+          titleColor: "text-gray-900",
+          messageColor: "text-gray-600",
         };
-      case 'error':
+      case "error":
         return {
           icon: <XCircleIcon className="h-12 w-12 text-red-500" />,
-          iconBgColor: 'bg-red-50',
-          titleColor: 'text-gray-900',
-          messageColor: 'text-gray-600',
+          iconBgColor: "bg-red-50",
+          titleColor: "text-gray-900",
+          messageColor: "text-gray-600",
         };
       default:
         return {
           icon: null,
-          iconBgColor: 'bg-gray-50',
-          titleColor: 'text-gray-900',
-          messageColor: 'text-gray-600',
+          iconBgColor: "bg-gray-50",
+          titleColor: "text-gray-900",
+          messageColor: "text-gray-600",
         };
     }
   };
@@ -77,15 +91,15 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/75  transition-opacity z-10"
-        onClick={status !== 'loading' ? onClose : undefined}
+        onClick={status !== "loading" ? onClose : undefined}
       />
-      
+
       {/* Modal */}
       <div className="relative z-20 bg-white rounded-lg shadow-xl p-6 mx-4 max-w-md w-full transform transition-all">
         {/* Close Button */}
-        {showCloseButton && status !== 'loading' && onClose && (
+        {showCloseButton && status !== "loading" && onClose && (
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
@@ -97,7 +111,9 @@ const StatusPopup: React.FC<StatusPopupProps> = ({
         {/* Content */}
         <div className="text-center">
           {/* Icon */}
-          <div className={`mx-auto flex items-center justify-center h-16 w-16 rounded-full ${config.iconBgColor} mb-4`}>
+          <div
+            className={`mx-auto flex items-center justify-center h-16 w-16 rounded-full ${config.iconBgColor} mb-4`}
+          >
             {config.icon}
           </div>
 

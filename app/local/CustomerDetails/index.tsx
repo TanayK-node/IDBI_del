@@ -143,8 +143,8 @@ const CustomerDetailsForm: React.FC = () => {
           <div>
             <div className="flex flex-col">
               <TextBox
-                label="Phone no."
-                placeholder="Enter number here"
+                label="Mobile Number"
+                placeholder="Enter Mobile Number"
                 type="text"
                 value={mobile}
                 onChange={validateMobile}

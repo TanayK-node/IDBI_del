@@ -96,7 +96,7 @@ const PhotoCapture: FC = () => {
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { popup, showLoading, showSuccess, showError, hidePopup } =
+  const { popup, showLoading, showSuccess, showUploaded,showError, hidePopup } =
       useStatusPopup();
 
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -165,7 +165,11 @@ const PhotoCapture: FC = () => {
 
   const handleOk = async () => {
   if (previewImage) {
-    showLoading("Verifying Photo", "Please wait while we process the photo.");
+    showUploaded("Photo has been successfully uploaded");
+
+    setTimeout(() => {
+      showLoading("Matching Customer Photo", "Please wait while we compare the photo with your aadhar records.");
+    }, 1500); // Delay to allow "uploaded" popup to be visible
 
     setTimeout(() => {
       setFinalImage(previewImage);
@@ -175,12 +179,13 @@ const PhotoCapture: FC = () => {
       const sizeInKb = (sizeInBytes / 1024).toFixed(1);
       setFileInfo({ name: 'customer-photo.jpeg', size: `${sizeInKb} KB` });
 
-      showSuccess("Photo Verified", "Customers photo  matched Aadhaar with 60% accuracy.");
+      showSuccess("Photo Match Succesful", "Customer's photo matched Aadhaar with 60% accuracy, You can proceed.");
       stopCamera();
       setPreviewImage(null);
-    }, 1000); // simulate async processing
+    }, 3000); // total delay (uploaded + loading)
   }
 };
+
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent parent onClick from firing
@@ -267,7 +272,7 @@ const PhotoCapture: FC = () => {
               message={popup.message}
               showCloseButton={popup.status !== "loading"}
               autoClose={popup.status === "success"}
-              autoCloseDelay={1500}
+              autoCloseDelay={2000}
               onClose={hidePopup} // <-- Add this
             />
     </>

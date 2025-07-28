@@ -37,6 +37,9 @@ export const useStatusPopup = () => {
   const showLoading = (title: string = 'Loading...', message: string = 'Please wait while we process your request.') => {
     showPopup('loading', title, message);
   };
+  const showUploaded = (title: string = 'Uploaded!', message: string = 'Image Uploaded Succesfully.') => {
+    showPopup('uploaded', title, message);
+  };
 
   const showSuccess = (title: string = 'Success!', message: string = 'Operation completed successfully.') => {
     showPopup('success', title, message);
@@ -52,6 +55,7 @@ export const useStatusPopup = () => {
     hidePopup,
     showLoading,
     showSuccess,
+    showUploaded,
     showError,
   };
 };
