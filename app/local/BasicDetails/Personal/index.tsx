@@ -67,8 +67,7 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
           
 
           {/* Info Box */}
-          <InfoBox message="Make sure your email ID is correct as all communication from bank would be done on this email" />
-
+          
           {/* Marital Status, Father's, and Mother's Name */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Dropdown

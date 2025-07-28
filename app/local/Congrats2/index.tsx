@@ -1,6 +1,8 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Button from "../../components/Button/index";
 import { useRouter } from "next/navigation";
+import Toast from "../../components/Toast/index";
 
 const TransferSuccessful = ({
   successImage = null,
@@ -8,7 +10,7 @@ const TransferSuccessful = ({
   onGoHome = () => console.log("Go to Home clicked"),
 }) => {
   const router = useRouter();
-   const handleGoHome = () => {
+  const handleGoHome = () => {
     onGoHome(); // optional callback
     router.push("/login"); // ✅ redirect only on button click
   };
@@ -23,6 +25,27 @@ const TransferSuccessful = ({
     return `${date}, ${time}`;
   };
 
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<
+    "success" | "error" | "warning" | "info"
+  >("info");
+  const [showToast, setShowToast] = useState(false);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        setToastMessage("Transaction ID Copied successfully");
+        setToastType("success");
+        setShowToast(true);
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+        setToastMessage("Could not copy Account number");
+        setToastType("error");
+        setShowToast(true);
+      }
+    );
+  };
   const generateTransactionId = () => {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let result = "";
@@ -71,7 +94,11 @@ const TransferSuccessful = ({
               <p className="text-xs text-gray-500 mb-1">Transaction ID</p>
               <div className="flex items-center gap-1">
                 <p className="font-medium">{transactionId}</p>
-                <button>
+                <button
+                  onClick={() => handleCopy(transactionId)}
+                  className="text-green-600 transition-transform duration-200 hover:scale-110"
+                  aria-label="Copy account number"
+                >
                   <img src="/assets/images/copy.png" />
                 </button>
               </div>
@@ -107,6 +134,11 @@ const TransferSuccessful = ({
           </Button>
         </div>
       </div>
+      <Toast
+        message={toastMessage}
+        type={toastType}
+        onClose={() => setShowToast(false)}
+      />
     </div>
   );
 };

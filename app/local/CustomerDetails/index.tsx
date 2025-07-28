@@ -5,6 +5,7 @@ import Button from "../../components/Button/index";
 import Accordion from "../../components/Accord/index";
 import OTPVerification from "../../components/OTP/index";
 import { useCustomer } from "../../../context/CustDetail"; // Ensure this path is correct
+import InfoBox from "../../components/InfoBox";
 
 const CustomerDetailsForm: React.FC = () => {
   const {
@@ -126,22 +127,14 @@ const CustomerDetailsForm: React.FC = () => {
           />
 
           {/* Email Input */}
-          <div className="flex flex-col">
-            <TextBox
-              label="Email ID"
-              placeholder="Enter email here"
-              type="text"
-              value={email}
-              onChange={validateEmail}
-              required={true}
-            />
-            {emailError && (
-              <p className="text-red-500 text-sm mt-1">{emailError}</p>
-            )}
+
+          <div className="col-span-full">
+            <InfoBox message="Make sure your email ID is correct as all communication from bank would be done on this email" />
           </div>
 
-          <div>
-            <div className="flex flex-col">
+          {/* Mobile Number + Verify Button */}
+          <div className="md:col-span-2 grid grid-cols-3 gap-4 items-end">
+            <div className="col-span-2">
               <TextBox
                 label="Mobile Number"
                 placeholder="Enter Mobile Number"
@@ -154,35 +147,52 @@ const CustomerDetailsForm: React.FC = () => {
                 <p className="text-red-500 text-sm mt-1">{mobileError}</p>
               )}
             </div>
+            <div className="pb-6">
+              <Button
+                onClick={handleVerifyMobile}
+                disabled={!isMobileFormValid}
+                className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
+                  isMobileFormValid
+                    ? "bg-orange-500 hover:bg-orange-600 text-white"
+                    : "bg-gray-400 cursor-not-allowed text-gray-200"
+                }`}
+              >
+                Verify Number
+              </Button>
+            </div>
           </div>
-          <div className="pt-6">
-          <Button
-            onClick={handleVerifyMobile}
-            disabled={!isMobileFormValid}
-            className={`pt-px-2 py-1 text-sm focus:ring-gray-500 ${
-              isMobileFormValid
-                ? "bg-orange-500 hover:bg-orange-600 text-white"
-                : "bg-gray-400 cursor-not-allowed text-gray-200"
-            }`}
-          >
-            Verify Number
-          </Button>
+
+          {/* Email ID + Verify Button */}
+          <div className="md:col-span-2 grid grid-cols-3 gap-4 items-end mt-4">
+            <div className="col-span-2">
+              <TextBox
+                label="Email ID"
+                placeholder="Enter email here"
+                type="text"
+                value={email}
+                onChange={validateEmail}
+                required={true}
+              />
+              {emailError && (
+                <p className="text-red-500 text-sm mt-1">{emailError}</p>
+              )}
+            </div>
+            <div className="pb-6">
+              <Button
+                onClick={handleVerify}
+                disabled={!isFormValid}
+                className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
+                  isFormValid
+                    ? "bg-orange-500 hover:bg-orange-600 text-white"
+                    : "bg-gray-400 cursor-not-allowed text-gray-200"
+                }`}
+              >
+                Verify Email
+              </Button>
+            </div>
           </div>
         </div>
 
-        <div className="flex justify-end w-full pt-1">
-          <Button
-            onClick={handleVerify}
-            disabled={!isFormValid}
-            className={`w-0.1 px-6 py-3 focus:ring-gray-500 ${
-              isFormValid
-                ? "bg-orange-500 hover:bg-orange-600 text-white"
-                : "bg-gray-400 cursor-not-allowed text-gray-200"
-            }`}
-          >
-            Verify
-          </Button>
-        </div>
         {showOTP && (
           <OTPVerification
             onSubmit={handleOtpSubmit}
