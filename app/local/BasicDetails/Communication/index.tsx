@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import TextBox from "../../../components/TextBox/index";
 import InfoBox from "../../../components/InfoBox/index";
 import dummyDataRaw from "../aadhar.json";
+import rawPinCodeMaster from "./pinCodeMaster.json"
 
 export interface CommunicationAddressData {
   address?: string;
@@ -43,7 +44,16 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
   className = "",
 }) => {
   const [isVerified, setIsVerified] = useState(false);
+   const [pincode, setPincode] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
 
+  type PinCodeMasterType = {
+  [pincode: string]: {
+    city: string;
+    state: string;
+  };
+};
   useEffect(() => {
     if (
       aadhaarNumber &&
@@ -66,6 +76,21 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
       setIsVerified(true);
     }
   }, [aadhaarNumber, value.communicationSameAsAadhaar]);
+
+  const pinCodeMaster = rawPinCodeMaster as PinCodeMasterType;
+  const handlePincodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const value = e.target.value;
+  setPincode(value);
+
+  const matched = pinCodeMaster[value];
+  if (matched) {
+    setCity(matched.city);
+    setState(matched.state);
+  } else {
+    setCity("");
+    setState("");
+  }
+};
 
   const handleInputChange = (
     field: keyof CommunicationAddressData,
@@ -186,28 +211,41 @@ const CommunicationAddress: React.FC<CommunicationAddressProps> = ({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <TextBox
-                label="City"
-                placeholder="Enter City"
-                value={value.city || ""}
-                onChange={(val) => handleInputChange("city", val)}
-              />
-              <TextBox
-                label="State"
-                placeholder="Enter State"
-                value={value.state || ""}
-                onChange={(val) => handleInputChange("state", val)}
-              />
-              <TextBox
-                label="Pincode"
-                placeholder="Enter Pincode"
-                value={value.pincode || ""}
-                onChange={(val) => {
-                  if (/^\d*$/.test(val)) {
-                    handleInputChange("pincode", val);
-                  }
-                }}
-              />
+              <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Pincode
+            </label>
+            <input
+              type="text"
+              value={pincode}
+              onChange={handlePincodeChange}
+              className="w-full border border-gray-300 rounded px-3 py-2"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              City
+            </label>
+            <input
+              type="text"
+              value={city}
+              readOnly
+              className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              State
+            </label>
+            <input
+              type="text"
+              value={state}
+              readOnly
+              className="w-full border border-gray-300 rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
+            />
+          </div>
             </div>
           </>
         )}
