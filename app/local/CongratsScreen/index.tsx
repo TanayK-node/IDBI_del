@@ -8,6 +8,7 @@ interface CongratulationsProps {
   accountNumber: string;
   branch: string;
   ifscCode: string;
+  cifno:string;
 }
 
 // Handle the copy to clipboard functionality
@@ -65,7 +66,7 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
 
         {/* Account Details Box */}
         <div className="rounded-xl border border-gray-200">
-          <div className="grid grid-cols-1 md:grid-cols-3 md:divide-x md:divide-y-0 divide-y divide-gray-200">
+          <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-y-3 divide-y md:divide-y-0 md:divide-x divide-gray-200">
             {/* Account Number */}
             <div className="p-6 text-left">
               <div className="mb-1 text-xs text-gray-500">Account Number</div>
@@ -82,7 +83,13 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
                 </button>
               </div>
             </div>
-
+            {/* cif */}
+            <div className="p-6 text-left">
+              <div className="mb-1 text-xs text-gray-500">CIF no.</div>
+              <div className="text-base font-semibold text-gray-800">
+                XXXXXXXXXXX
+              </div>
+            </div>
             {/* Branch */}
             <div className="p-6 text-left">
               <div className="mb-1 text-xs text-gray-500">Branch</div>

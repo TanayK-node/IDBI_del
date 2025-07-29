@@ -22,6 +22,7 @@ export default function UserMenu() {
     
   };
   const confirmLogout = () => {
+    console.log("Loggin off- to login page")
     setShowLogoutPopup(false);
     router.push("/login");
   };
