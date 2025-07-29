@@ -19,16 +19,6 @@ const AddFunds = () => {
       <Header />
       <div className="flex flex-col min-h-screen">
         <AddFund />
-
-        {/* Place button just below AddFund */}
-        <div className="self-end mt-4 mr-4 pb-2">
-          <Button
-            onClick={handleProceed}
-            className="px-3 py-1.5 text-sm rounded-2xl bg-orange-500 text-white hover:bg-orange-600"
-          >
-            Proceed
-          </Button>
-        </div>
       </div>
     </div>
   );

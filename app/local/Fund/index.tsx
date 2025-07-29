@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import Card from "../../components/Card/index";
 import Button from "../../components/Button/index";
-import InfoBox from "../../components/InfoBox/index";
 import TextBox from "../../components/TextBox/index";
 import QRCodeGenerator from "../Qr/index";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function FundingPage() {
-  const [fundingAmount, setFundingAmount] = useState("₹s");
+  const [fundingAmount, setFundingAmount] = useState("₹");
   const [paymentMethod, setPaymentMethod] = useState("upi");
   const [upiId, setUpiId] = useState("");
   const [showQRModal, setShowQRModal] = useState(false);
@@ -22,9 +22,9 @@ export default function FundingPage() {
     return upiRegex.test(upi);
   };
   const handleUpiChange = (value: string) => {
-  setUpiId(value);
-  setIsUpiValid(isValidUpiId(value));
-};
+    setUpiId(value);
+    setIsUpiValid(isValidUpiId(value));
+  };
   const handleQuickAmountSelect = (amount: string) => {
     setFundingAmount(amount);
   };
@@ -57,6 +57,11 @@ export default function FundingPage() {
       default:
         return method;
     }
+  };
+  const router = useRouter();
+  const handleProceed = () => {
+    console.log("Proceeding to next step");
+    router.push("/Congratulations2"); // Navigate to the Add Funds page
   };
 
   return (
@@ -155,10 +160,10 @@ export default function FundingPage() {
                       onClick={handleGenerateQRCode}
                       disabled={!isUpiValid}
                       className={`px-4 py-2 rounded-md text-white ${
-                            isUpiValid
-                              ? "bg-orange-500 hover:bg-orange-600"
-                              : "bg-gray-400 cursor-not-allowed"
-                          }`}
+                        isUpiValid
+                          ? "bg-orange-500 hover:bg-orange-600"
+                          : "bg-gray-400 cursor-not-allowed"
+                      }`}
                     >
                       Generate QR Code
                     </Button>
@@ -222,6 +227,19 @@ export default function FundingPage() {
           </div>
         </div>
       )}
+      <div className="w-full flex justify-end mt-6 px-4">
+        <button
+          disabled={!isUpiValid}
+          onClick={handleProceed}
+          className={`w-1/6   px-4 py-3 rounded-3xl text-white ${
+            isUpiValid
+              ? "bg-orange-500 hover:bg-orange-600"
+              : "bg-gray-400 cursor-not-allowed"
+          }`}
+        >
+          Proceed
+        </button>
+      </div>
     </div>
   );
 }

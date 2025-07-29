@@ -285,12 +285,12 @@ const PhotoCapture: FC = () => {
             </div>
             {verificationStatus === "verifying" && (
               <p className="text-sm text-yellow-600 animate-pulse mt-2">
-                Verifying Signature...
+                Verifying Photo...
               </p>
             )}
             {verificationStatus === "verified" && (
               <p className="text-sm text-green-600 font-semibold mt-2">
-                Signature Verified ✅
+                Photo Verified ✅
               </p>
             )}
           </div>

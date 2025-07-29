@@ -134,11 +134,13 @@ const TransferSuccessful = ({
           </Button>
         </div>
       </div>
-      <Toast
-        message={toastMessage}
-        type={toastType}
-        onClose={() => setShowToast(false)}
-      />
+      {showToast && (
+  <Toast
+    message={toastMessage}
+    type={toastType}
+    onClose={() => setShowToast(false)}
+  />
+)}
     </div>
   );
 };
