@@ -21,7 +21,7 @@ const CongratulationsPage: NextPage = () => {
         <div className="flex-1 overflow-auto">
           <CongratulationsComponent
             accountNumber="12345678944"
-            branch="Mumbai Main Branch"
+            branch="Nariman Point Branch"
             ifscCode="IDBI23456789"
           />
         </div>

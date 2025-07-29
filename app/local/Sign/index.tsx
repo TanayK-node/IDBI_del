@@ -45,55 +45,61 @@ const TrashIcon: FC<{ className?: string }> = ({ className }) => (
 
 const SignatureCapture: FC = () => {
   const [signatureImage, setSignatureImage] = useState<string | null>(null);
-  const [fileInfo, setFileInfo] = useState<{ name: string; size: string } | null>(null);
-  const [status, setStatus] = useState<"idle" | "verifying" | "verified">("idle");
-const { popup, showLoading, showSuccess, showUploaded,showError, hidePopup } =
-      useStatusPopup();
+  const [fileInfo, setFileInfo] = useState<{
+    name: string;
+    size: string;
+  } | null>(null);
+  const [status, setStatus] = useState<"idle" | "verifying" | "verified">(
+    "idle"
+  );
+  const {
+    popup,
+    showLoading,
+    showSuccess,
+    showUploaded,
+    showError,
+    hidePopup,
+  } = useStatusPopup();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
- const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  const file = event.target.files?.[0];
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
-  if (file) {
-    const reader = new FileReader();
+    if (file) {
+      const reader = new FileReader();
 
-    reader.onload = (e) => {
-      const base64 = e.target?.result as string;
-      setSignatureImage(base64);
+      reader.onload = (e) => {
+        const base64 = e.target?.result as string;
+        setSignatureImage(base64);
 
-      const sizeInKb = (file.size / 1024).toFixed(1);
-      setFileInfo({ name: file.name, size: `${sizeInKb} KB` });
+        const sizeInKb = (file.size / 1024).toFixed(1);
+        setFileInfo({ name: file.name, size: `${sizeInKb} KB` });
 
-      // Step 1: Show Uploaded Popup
-      showUploaded("Signature has been successfully uploaded");
+        // Step 1: Show Uploaded Popup
+        showUploaded("Signature has been successfully uploaded");
 
-      // Step 2: Show Loading after 1.5s
-      setTimeout(() => {
-        showLoading(
-          "Matching Customers Signature",
-          "Please wait while we compare the signature with PAN records."
-        );
-        setStatus("verifying");
-
-        // Step 3: Show Success after another 1.5s (total 3s after upload)
+        // Step 2: Show Loading after 1.5s
         setTimeout(() => {
-          showSuccess(
-            "Signature Verified",
-            "Customer's signature matches pan with 80% accuracy, You can proceed."
+          showLoading(
+            "Matching Customers Signature",
+            "Please wait while we compare the signature with PAN records."
           );
-          setStatus("verified");
+          setStatus("verifying");
+
+          // Step 3: Show Success after another 1.5s (total 3s after upload)
+          setTimeout(() => {
+            showSuccess(
+              "Signature Verified",
+              "Customer's signature matches pan with 80% accuracy, You can proceed."
+            );
+            setStatus("verified");
+          }, 1500);
         }, 1500);
-      }, 1500);
-    };
+      };
 
-    reader.readAsDataURL(file);
-  }
-};
-
-
-
- 
-
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -137,7 +143,9 @@ const { popup, showLoading, showSuccess, showUploaded,showError, hidePopup } =
                   className="w-14 h-14 rounded-lg object-contain bg-gray-100 shadow-sm p-1"
                 />
                 <div className="ml-4">
-                  <p className="font-semibold text-sm text-gray-800">{fileInfo.name}</p>
+                  <p className="font-semibold text-sm text-gray-800">
+                    {fileInfo.name}
+                  </p>
                   <p className="text-xs text-gray-500">{fileInfo.size}</p>
                 </div>
               </div>
@@ -150,28 +158,40 @@ const { popup, showLoading, showSuccess, showUploaded,showError, hidePopup } =
             </div>
 
             {/* --- Verification Status Message --- */}
-            
+            {status === "verifying" && (
+              <p className="text-sm text-yellow-600 animate-pulse mt-2">
+                Verifying Signature...
+              </p>
+            )}
+            {status === "verified" && (
+              <p className="text-sm text-green-600 font-semibold mt-2">
+                Signature Verified ✅
+              </p>
+            )}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center">
             <UploadIcon className="h-10 w-10 text-teal-500 mb-4" />
-            <h2 className="text-xl font-semibold text-gray-800">Capture Signature</h2>
+            <h2 className="text-xl font-semibold text-gray-800">
+              Capture Signature
+            </h2>
             <p className="text-sm text-gray-500 mt-1 max-w-xs">
-              Take a clear picture of the customer's signature for verification with PAN.
+              Take a clear picture of the customer's signature for verification
+              with PAN.
             </p>
           </div>
         )}
       </div>
       <StatusPopup
-  isOpen={popup.isOpen}
-  status={popup.status}
-  title={popup.title}
-  message={popup.message}
-  showCloseButton={popup.status !== "loading"}
-  autoClose={popup.status === "success"}
-  autoCloseDelay={2000}
-  onClose={hidePopup}
-/>
+        isOpen={popup.isOpen}
+        status={popup.status}
+        title={popup.title}
+        message={popup.message}
+        showCloseButton={popup.status !== "loading"}
+        autoClose={popup.status === "success"}
+        autoCloseDelay={2000}
+        onClose={hidePopup}
+      />
     </>
   );
 };
