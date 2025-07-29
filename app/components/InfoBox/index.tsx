@@ -49,17 +49,20 @@ const InfoBox: React.FC<InfoBoxProps> = ({
   const styles = getTypeStyles();
 
   return (
-    <div className={`flex items-start gap-3 p-4 rounded-lg border ${styles.container} ${className}`}>
-      {showIcon && (
-        <div className="flex-shrink-0 mt-0.5">
-          <InformationCircleIcon className={`h-5 w-5 ${styles.icon}`} />
-        </div>
-      )}
-      <div className="text-sm leading-relaxed">
-        {message}
+  <div
+    className={`inline-flex items-start gap-3 p-4 rounded-lg border ${styles.container} ${className}`}
+  >
+    {showIcon && (
+      <div className="flex-shrink-0 mt-0.5">
+        <InformationCircleIcon className={`h-5 w-5 ${styles.icon}`} />
       </div>
+    )}
+    <div className="text-sm leading-relaxed">
+      {message}
     </div>
-  );
+  </div>
+);
+
 };
 
 export default InfoBox;

@@ -2,8 +2,8 @@
 import React from "react";
 import Header from "../components/Header/index";
 import AddFund from "../local/Fund/index";
-import ProceedFooter from "../components/Proceed";
 
+import Button from "../components/Button/index";
 import { useRouter } from "next/navigation";
 
 const AddFunds = () => {
@@ -22,10 +22,12 @@ const AddFunds = () => {
 
         {/* Place button just below AddFund */}
         <div className="self-end mt-4 mr-4 pb-2">
-          <ProceedFooter
-            onProceed={handleProceed}
-            className="px-3 py-1.5 text-sm rounded-md"
-          />
+          <Button
+            onClick={handleProceed}
+            className="px-3 py-1.5 text-sm rounded-2xl bg-orange-500 text-white hover:bg-orange-600"
+          >
+            Proceed
+          </Button>
         </div>
       </div>
     </div>
