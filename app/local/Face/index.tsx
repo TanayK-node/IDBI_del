@@ -110,7 +110,9 @@ const PhotoCapture: FC = () => {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
-  const [verificationStatus, setVerificationStatus] = useState<"idle" | "verifying" | "verified">("idle");
+  const [verificationStatus, setVerificationStatus] = useState<
+    "idle" | "verifying" | "verified"
+  >("idle");
   const [error, setError] = useState<string | null>(null);
   const {
     popup,
@@ -282,15 +284,15 @@ const PhotoCapture: FC = () => {
               </button>
             </div>
             {verificationStatus === "verifying" && (
-  <p className="text-sm text-yellow-600 animate-pulse mt-2">
-    Verifying Signature...
-  </p>
-)}
-{verificationStatus === "verified" && (
-  <p className="text-sm text-green-600 font-semibold mt-2">
-    Signature Verified ✅
-  </p>
-)}
+              <p className="text-sm text-yellow-600 animate-pulse mt-2">
+                Verifying Signature...
+              </p>
+            )}
+            {verificationStatus === "verified" && (
+              <p className="text-sm text-green-600 font-semibold mt-2">
+                Signature Verified ✅
+              </p>
+            )}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center text-center">
@@ -356,7 +358,6 @@ const PhotoCapture: FC = () => {
           </div>
         </div>
       )}
-      
 
       <canvas ref={canvasRef} className="hidden" />
       <StatusPopup

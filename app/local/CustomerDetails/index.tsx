@@ -24,6 +24,7 @@ const CustomerDetailsForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const [mobile, setMobile] = useState("");
   const [mobileError, setMobileError] = useState("");
@@ -45,6 +46,7 @@ const CustomerDetailsForm: React.FC = () => {
   const handleOtpSubmit = (otp: string) => {
     console.log("OTP verified successfully:", otp);
     setShowOTP(false);
+    setIsEmailVerified(true);
     setAccordionOpen(false); // collapse only after OTP verified
   };
 
@@ -150,14 +152,16 @@ const CustomerDetailsForm: React.FC = () => {
             <div className="pb-6">
               <Button
                 onClick={handleVerifyMobile}
-                disabled={!isMobileFormValid}
+                disabled={!isMobileFormValid || isMobileOtpVerified}
                 className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
-                  isMobileFormValid
+                  isMobileOtpVerified
+                    ? "bg-green-500 text-white cursor-default"
+                    : isMobileFormValid
                     ? "bg-orange-500 hover:bg-orange-600 text-white"
                     : "bg-gray-400 cursor-not-allowed text-gray-200"
                 }`}
               >
-                Verify Number
+                {isMobileOtpVerified ? "Phone No. Verified" : "Verify Number"}
               </Button>
             </div>
           </div>
@@ -180,14 +184,16 @@ const CustomerDetailsForm: React.FC = () => {
             <div className="pb-6">
               <Button
                 onClick={handleVerify}
-                disabled={!isFormValid}
+                disabled={!isFormValid || isEmailVerified}
                 className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
-                  isFormValid
+                  isEmailVerified
+                    ? "bg-green-500 text-white cursor-default"
+                    : isFormValid
                     ? "bg-orange-500 hover:bg-orange-600 text-white"
                     : "bg-gray-400 cursor-not-allowed text-gray-200"
                 }`}
               >
-                Verify Email
+                {isEmailVerified ? "Email Verified" : "Verify Email"}
               </Button>
             </div>
           </div>
