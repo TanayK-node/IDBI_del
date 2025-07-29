@@ -138,10 +138,9 @@ const CustomerDetailsForm: React.FC = () => {
           />
         </div>
 
-        {/* ✅ Row 2: Country Code + Phone Number (2/3 width, left-aligned) */}
-        {/* ✅ Row 2: Country Code + Phone Number */}
+        
         {/* Mobile Number Row */}
-        <div className="md:col-span-1 grid grid-cols-12 gap-4 items-end mt-4">
+        <div className="md:col-span-1 grid grid-cols-13 gap-4 items-end mt-4">
           {/* Country Code Dropdown (2 columns) */}
           <div className="col-span-2 pb-8">
             <Dropdown

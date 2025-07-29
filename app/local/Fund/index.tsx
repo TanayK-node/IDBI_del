@@ -15,6 +15,8 @@ export default function FundingPage() {
   const [qrData, setQrData] = useState("");
 
   const [isUpiValid, setIsUpiValid] = useState(false);
+  const [proBut, setProBut] = useState(false);
+  
   const quickAmounts = ["₹10,000.00", "₹50,000.00", "₹90,000.00"];
 
   const isValidUpiId = (upi: string) => {
@@ -35,6 +37,7 @@ export default function FundingPage() {
 
   const handleGenerateQRCode = () => {
     setQrData(`Pay ₹${fundingAmount} to Fund Your Account`);
+    setProBut(true)
     setShowQRModal(true);
   };
 
@@ -149,7 +152,7 @@ export default function FundingPage() {
                               : "bg-gray-400 cursor-not-allowed"
                           }`}
                         >
-                          Verify
+                          Request Payement
                         </Button>
                       </div>
                     </div>
@@ -158,12 +161,9 @@ export default function FundingPage() {
                   <div className="flex justify-end mt-6">
                     <Button
                       onClick={handleGenerateQRCode}
-                      disabled={!isUpiValid}
-                      className={`px-4 py-2 rounded-md text-white ${
-                        isUpiValid
-                          ? "bg-orange-500 hover:bg-orange-600"
-                          : "bg-gray-400 cursor-not-allowed"
-                      }`}
+                     
+                      className={"px-4 py-2 rounded-md text-white bg-orange-500"                        
+                      }
                     >
                       Generate QR Code
                     </Button>
@@ -229,10 +229,10 @@ export default function FundingPage() {
       )}
       <div className="w-full flex justify-end mt-6 px-4">
         <button
-          disabled={!isUpiValid}
+          disabled={!isUpiValid && !proBut} 
           onClick={handleProceed}
           className={`w-1/6   px-4 py-3 rounded-3xl text-white ${
-            isUpiValid
+            isUpiValid || proBut
               ? "bg-orange-500 hover:bg-orange-600"
               : "bg-gray-400 cursor-not-allowed"
           }`}
