@@ -8,21 +8,23 @@ import QRCodeGenerator from "../Qr/index";
 import { X } from "lucide-react";
 
 export default function FundingPage() {
-  const [fundingAmount, setFundingAmount] = useState("₹90,000.00");
+  const [fundingAmount, setFundingAmount] = useState("₹s");
   const [paymentMethod, setPaymentMethod] = useState("upi");
   const [upiId, setUpiId] = useState("");
   const [showQRModal, setShowQRModal] = useState(false);
   const [qrData, setQrData] = useState("");
 
-  const [bankName, setBankName] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
-  const [ifscCode, setIfscCode] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardHolderName, setCardHolderName] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
-  const [cvv, setCvv] = useState("");
+  const [isUpiValid, setIsUpiValid] = useState(false);
   const quickAmounts = ["₹10,000.00", "₹50,000.00", "₹90,000.00"];
 
+  const isValidUpiId = (upi: string) => {
+    const upiRegex = /^[\w.-]{2,256}@[a-zA-Z]{2,64}$/;
+    return upiRegex.test(upi);
+  };
+  const handleUpiChange = (value: string) => {
+  setUpiId(value);
+  setIsUpiValid(isValidUpiId(value));
+};
   const handleQuickAmountSelect = (amount: string) => {
     setFundingAmount(amount);
   };
@@ -47,11 +49,11 @@ export default function FundingPage() {
   const formatPaymentMethodLabel = (method: string) => {
     switch (method) {
       case "upi":
-        return "UPI ID (Recommended)";
-      case "netbanking":
-        return "Net Banking";
-      case "debitcard":
-        return "Debit Card";
+        return "UPI ID";
+      case "Cheque":
+        return "Cheque";
+      case "Link":
+        return "Link";
       default:
         return method;
     }
@@ -100,7 +102,7 @@ export default function FundingPage() {
               </h2>
 
               <div className="flex gap-4 mb-4">
-                {["upi", "netbanking", "debitcard"].map((method) => (
+                {["upi", "Cheque", "Link"].map((method) => (
                   <label key={method} className="flex items-center">
                     <input
                       type="radio"
@@ -119,108 +121,47 @@ export default function FundingPage() {
 
               {paymentMethod === "upi" && (
                 <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    UPI ID
-                  </label>
-                  <div className="flex flex-wrap gap-2 items-center">
-                    <TextBox
-                      label=""
-                      placeholder="Enter UPI ID"
-                      type="text"
-                      value={upiId}
-                      onChange={setUpiId}
-                      required
-                      className="w-full sm:w-[380px]"
-                    />
-                    <Button
-                      onClick={handleVerify}
-                      className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"
-                    >
-                      Verify
-                    </Button>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      UPI ID <span className="text-red-500">*</span>
+                    </label>
+                    <div className="flex flex-wrap gap-2 items-center">
+                      <TextBox
+                        label=""
+                        placeholder="Enter UPI ID"
+                        type="text"
+                        value={upiId}
+                        onChange={handleUpiChange}
+                        className="w-full sm:w-[380px]"
+                      />
+                      <div className="pb-5">
+                        <Button
+                          onClick={handleVerify}
+                          disabled={!isUpiValid}
+                          className={`px-4 py-2 rounded-3xl  w-1/2 text-white ${
+                            isUpiValid
+                              ? "bg-orange-500 hover:bg-orange-600"
+                              : "bg-gray-400 cursor-not-allowed"
+                          }`}
+                        >
+                          Verify
+                        </Button>
+                      </div>
+                    </div>
                   </div>
+
                   <div className="flex justify-end mt-6">
                     <Button
                       onClick={handleGenerateQRCode}
-                      className="bg-orange-500 text-white"
+                      disabled={!isUpiValid}
+                      className={`px-4 py-2 rounded-md text-white ${
+                            isUpiValid
+                              ? "bg-orange-500 hover:bg-orange-600"
+                              : "bg-gray-400 cursor-not-allowed"
+                          }`}
                     >
                       Generate QR Code
                     </Button>
-                  </div>
-                </div>
-              )}
-
-              {paymentMethod === "netbanking" && (
-                <div className="mb-4 space-y-4">
-                  <TextBox
-                    label="Bank Name"
-                    placeholder="Enter bank name"
-                    type="text"
-                    value={bankName}
-                    onChange={setBankName}
-                    required
-                    className="w-full sm:w-[380px]"
-                  />
-                  <TextBox
-                    label="Account Number"
-                    placeholder="Enter account number"
-                    type="text"
-                    value={accountNumber}
-                    onChange={setAccountNumber}
-                    required
-                    className="w-full sm:w-[380px]"
-                  />
-                  <TextBox
-                    label="IFSC Code"
-                    placeholder="Enter IFSC Code"
-                    type="text"
-                    value={ifscCode}
-                    onChange={setIfscCode}
-                    required
-                    className="w-full sm:w-[380px]"
-                  />
-                </div>
-              )}
-
-              {paymentMethod === "debitcard" && (
-                <div className="mb-4 space-y-4">
-                  <TextBox
-                    label="Card Number"
-                    placeholder="XXXX XXXX XXXX XXXX"
-                    type="text"
-                    value={cardNumber}
-                    onChange={setCardNumber}
-                    required
-                    className="w-full sm:w-[380px]"
-                  />
-                  <TextBox
-                    label="Cardholder Name"
-                    placeholder="Enter name on card"
-                    type="text"
-                    value={cardHolderName}
-                    onChange={setCardHolderName}
-                    required
-                    className="w-full sm:w-[380px]"
-                  />
-                  <div className="flex gap-4 flex-wrap">
-                    <TextBox
-                      label="Expiry Date"
-                      placeholder="MM/YY"
-                      type="text"
-                      value={expiryDate}
-                      onChange={setExpiryDate}
-                      required
-                      className="w-full sm:w-[180px]"
-                    />
-                    <TextBox
-                      label="CVV"
-                      placeholder="XXX"
-                      type="password"
-                      value={cvv}
-                      onChange={setCvv}
-                      required
-                      className="w-full sm:w-[180px]"
-                    />
                   </div>
                 </div>
               )}

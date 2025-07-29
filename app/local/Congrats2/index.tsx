@@ -12,7 +12,7 @@ const TransferSuccessful = ({
   const router = useRouter();
   const handleGoHome = () => {
     onGoHome(); // optional callback
-    router.push("/login"); // ✅ redirect only on button click
+    router.push("/"); // ✅ redirect only on button click
   };
   const getCurrentDateTime = () => {
     const now = new Date();

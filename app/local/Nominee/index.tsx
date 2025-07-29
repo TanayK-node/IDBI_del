@@ -317,7 +317,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
             </div>
 
             {/* Input Field + Error */}
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-1/4 col-span-2">
               <input
                 type="tel"
                 placeholder="Enter Mobile Number"
@@ -325,7 +325,6 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
                 onChange={handleMobileChange}
                 className="h-[48px] px-4 border border-l-0 border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-[#02836C] text-[#2A2A28] placeholder-gray-500 text-base"
               />
-
               {mobileError && (
                 <p className="text-red-500 text-sm mt-2">{mobileError}</p>
               )}
