@@ -102,8 +102,13 @@ export default function DetailsCard() {
     aadhaarNumber: "XXXXXXXXXXXX34",
     gender: "Male",
     dateOfBirth: "05/07/1997",
-    address:
-      "123, Jasmine Apartments, Palace Road, Bangalore, Karnataka - 560003",
+
+    // Address Details
+    addressLine1: "403 Matru Vatsalya",
+    addressLine2: "S.V Road of V.p road",
+    city: "Mumbai",
+    state: "Maharashtra",
+    pincode: "400058",
 
     // Communication Address
     communicationOption: "bank", // "bank" or "aadhaar"
@@ -141,7 +146,22 @@ export default function DetailsCard() {
               label="Date of Birth"
               value={customerData.dateOfBirth}
             />
-            <FieldDisplay className="w-[300px]" label="Address" value={customerData.address} />
+            <div>
+              <SectionHeader title="Permanent Address" />
+              <div className="flex flex-wrap gap-x-16 gap-y-6">
+                <FieldDisplay
+                  label="Address Line 1"
+                  value={customerData.addressLine1}
+                />
+                <FieldDisplay
+                  label="Address Line 2"
+                  value={customerData.addressLine2}
+                />
+                <FieldDisplay label="City" value={customerData.city} />
+                <FieldDisplay label="State" value={customerData.state} />
+                <FieldDisplay label="Pincode" value={customerData.pincode} />
+              </div>
+            </div>
           </div>
         </div>
         <hr className="bg-gray-600"></hr>

@@ -10,8 +10,6 @@ import ProfessionalDetails, {
 } from "./Proffesional/index";
 import TextBox from "../../components/TextBox/index"; // Adjust path as needed
 import Button from "../../components/Button/index"; // Adjust path as needed
-import Dummy from "../CustomerPAN/dummy.json";
-import { useCustomer } from "../../../context/CustDetail";
 import rawAadhaarData from "./aadhar.json";
 import OTPVerification from "../../components/OTP/index";
 
