@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import Card from "../../components/Card/index";
 import Button from "../../components/Button/index";
@@ -8,9 +9,11 @@ import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ChequeUpload from "./Cheque/index";
 import PaymentLink from "./PaymentLink";
+import { useFunding } from "../../../context/Funding";
+
 
 export default function FundingPage() {
-  const [fundingAmount, setFundingAmount] = useState("₹");
+const { fundingAmount, setFundingAmount } = useFunding();
   const [paymentMethod, setPaymentMethod] = useState("upi");
   const [upiId, setUpiId] = useState("");
   const [showQRModal, setShowQRModal] = useState(false);
@@ -64,9 +67,13 @@ export default function FundingPage() {
     }
   };
   const router = useRouter();
+
+  
   const handleProceed = () => {
     console.log("Proceeding to next step");
     router.push("/Congratulations2"); // Navigate to the Add Funds page
+    console.log(`addfund page:${ fundingAmount }`)
+    query: { fundingAmount }
   };
 
   return (
@@ -85,7 +92,7 @@ export default function FundingPage() {
                 label="Amount"
                 placeholder="Enter funding amount"
                 value={fundingAmount}
-                onChange={setFundingAmount}
+                onChange={(val: string) => setFundingAmount(val)}
                 required
               />
 

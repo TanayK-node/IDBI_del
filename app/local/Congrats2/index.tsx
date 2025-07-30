@@ -3,16 +3,20 @@ import React, { useState } from "react";
 import Button from "../../components/Button/index";
 import { useRouter } from "next/navigation";
 import Toast from "../../components/Toast/index";
+import { useSearchParams } from "next/navigation";
+import { useFunding } from "../../../context/Funding";
 
 const TransferSuccessful = ({
   successImage = null,
-  fundingAmount = "90,000.00",
+
   onGoHome = () => console.log("Go to Home clicked"),
 }) => {
   const router = useRouter();
+  const { fundingAmount } = useFunding();
+  console.log({ fundingAmount });
   const handleGoHome = () => {
     onGoHome(); // optional callback
-    router.push("/"); // ✅ redirect only on button click
+    router.push("/Product");
   };
   const getCurrentDateTime = () => {
     const now = new Date();
@@ -107,7 +111,8 @@ const TransferSuccessful = ({
             {/* Funding Amount */}
             <div>
               <p className="text-xs text-gray-500 mb-1">Funding Amount</p>
-              <p className="font-medium">₹{fundingAmount}</p>
+
+              <p className="font-medium">{fundingAmount}</p>
             </div>
 
             {/* Completed On */}
@@ -135,12 +140,12 @@ const TransferSuccessful = ({
         </div>
       </div>
       {showToast && (
-  <Toast
-    message={toastMessage}
-    type={toastType}
-    onClose={() => setShowToast(false)}
-  />
-)}
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };
