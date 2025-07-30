@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Button from "../../components/Button/index";
 import { useRouter } from "next/navigation";
 import Toast from "../../components/Toast/index";
-import { useSearchParams } from "next/navigation";
 import { useFunding } from "../../../context/Funding";
 
 const TransferSuccessful = ({

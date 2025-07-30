@@ -16,7 +16,7 @@ const CongratulationsPage: NextPage = () => {
     <>
       <Header />
       <TransferSuccessful
-        fundingAmount="90,000.00"
+        
         onGoHome={handleGoHome}
         
       />
