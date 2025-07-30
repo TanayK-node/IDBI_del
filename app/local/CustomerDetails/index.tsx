@@ -163,9 +163,7 @@ const CustomerDetailsForm: React.FC = () => {
                 onChange={validateMobile}
                 required={true}
               />
-              {mobileError && (
-                <p className="text-red-500 text-sm mt-1">{mobileError}</p>
-              )}
+              
             </div>
 
             {/* Verify Button (3 columns) */}
@@ -185,6 +183,9 @@ const CustomerDetailsForm: React.FC = () => {
               </Button>
             </div>
           </div>
+          {mobileError && (
+                <p className="text-red-500 text-sm mt-1">{mobileError}</p>
+              )}
 
           {/* Email Info Box */}
           <div className="col-span-full mt-4">
