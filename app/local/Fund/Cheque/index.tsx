@@ -1,0 +1,189 @@
+"use client";
+
+import React, { useState, useRef, FC } from "react";
+import StatusPopup from "../../../components/PopUp/index";
+import { useStatusPopup } from "../../../hooks/Popup";
+
+interface ChequeUploadProps {
+  onUploadSuccess?: () => void;
+}
+
+
+const UploadIcon: FC<{ className?: string }> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+    <polyline points="17 8 12 3 7 8" />
+    <line x1="12" y1="3" x2="12" y2="15" />
+  </svg>
+);
+
+const TrashIcon: FC<{ className?: string }> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <polyline points="3 6 5 6 21 6"></polyline>
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    <line x1="10" y1="11" x2="10" y2="17"></line>
+    <line x1="14" y1="11" x2="14" y2="17"></line>
+  </svg>
+);
+
+const ChequeUpload: FC<ChequeUploadProps> = ({ onUploadSuccess }) => {
+  const [chequeImage, setChequeImage] = useState<string | null>(null);
+  const [fileInfo, setFileInfo] = useState<{ name: string; size: string } | null>(null);
+  const [status, setStatus] = useState<"idle" | "verifying" | "verified">("idle");
+
+  const {
+    popup,
+    showLoading,
+    showSuccess,
+    showUploaded,
+    showError,
+    hidePopup,
+  } = useStatusPopup();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const base64 = e.target?.result as string;
+        setChequeImage(base64);
+        const sizeInKb = (file.size / 1024).toFixed(1);
+        setFileInfo({ name: file.name, size: `${sizeInKb} KB` });
+
+        showUploaded("Cheque has been successfully uploaded");
+         if (onUploadSuccess) onUploadSuccess();
+        setTimeout(() => {
+          showLoading("Verifying Cheque Details", "Please wait while we verify the cheque information.");
+          setStatus("verifying");
+
+          setTimeout(() => {
+            showSuccess("Cheque Verified", "Bank account details match successfully. You can proceed.");
+            setStatus("verified");
+          }, 1500);
+        }, 1500);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setChequeImage(null);
+    setFileInfo(null);
+    setStatus("idle");
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleContainerClick = () => {
+    if (!chequeImage) fileInputRef.current?.click();
+  };
+
+  return (
+    <>
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept="image/*"
+        className="hidden"
+      />
+      <div
+        className={`relative w-full max-w-6xl mx-auto bg-white border-2 rounded-xl p-6 transition-all duration-300 ease-in-out ${
+          chequeImage
+            ? "border-solid border-gray-200"
+            : "border-dashed border-gray-300 hover:border-teal-500 flex flex-col justify-center items-center min-h-[125px] cursor-pointer"
+        }`}
+        onClick={handleContainerClick}
+      >
+        {chequeImage && fileInfo ? (
+          <div className="text-left w-full space-y-2">
+            <h3 className="text-gray-700 font-semibold text-base mb-2">
+              Uploaded Cancelled Cheque
+            </h3>
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center">
+                <img
+                  src={chequeImage}
+                  alt="Cheque"
+                  className="w-20 h-14 rounded-lg object-contain bg-gray-100 shadow-sm p-1"
+                />
+                <div className="ml-4">
+                  <p className="font-semibold text-sm text-gray-800">
+                    {fileInfo.name}
+                  </p>
+                  <p className="text-xs text-gray-500">{fileInfo.size}</p>
+                </div>
+              </div>
+              <button
+                onClick={handleDelete}
+                className="p-2 rounded-full hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-200"
+              >
+                <TrashIcon className="w-6 h-6 text-red-500 hover:text-red-600" />
+              </button>
+            </div>
+
+            {status === "verifying" && (
+              <p className="text-sm text-yellow-600 animate-pulse mt-2">
+                Verifying Cheque...
+              </p>
+            )}
+            {status === "verified" && (
+              <p className="text-sm text-green-600 font-semibold mt-2">
+                Cheque Verified ✅
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center text-center">
+            <UploadIcon className="h-10 w-10 text-teal-500 mb-4" />
+            <h2 className="text-xl font-semibold text-gray-800">
+              Upload Cancelled Cheque
+            </h2>
+            <p className="text-sm text-gray-500 mt-1 max-w-xs">
+              Upload a clear image of the customer's cancelled cheque for account verification.
+            </p>
+          </div>
+        )}
+      </div>
+
+      <StatusPopup
+        isOpen={popup.isOpen}
+        status={popup.status}
+        title={popup.title}
+        message={popup.message}
+        showCloseButton={popup.status !== "loading"}
+        autoClose={popup.status === "success"}
+        autoCloseDelay={2000}
+        onClose={hidePopup}
+      />
+    </>
+  );
+};
+
+export default ChequeUpload;

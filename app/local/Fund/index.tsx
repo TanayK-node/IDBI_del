@@ -6,6 +6,8 @@ import TextBox from "../../components/TextBox/index";
 import QRCodeGenerator from "../Qr/index";
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ChequeUpload from "./Cheque/index";
+import PaymentLink from "./PaymentLink";
 
 export default function FundingPage() {
   const [fundingAmount, setFundingAmount] = useState("₹");
@@ -55,8 +57,8 @@ export default function FundingPage() {
         return "UPI ID";
       case "Cheque":
         return "Cheque";
-      case "Link":
-        return "Link";
+      case "Payment Link":
+        return "Payment Link";
       default:
         return method;
     }
@@ -110,7 +112,7 @@ export default function FundingPage() {
               </h2>
 
               <div className="flex gap-4 mb-4">
-                {["upi", "Cheque", "Link"].map((method) => (
+                {["upi", "Cheque", "Payment Link"].map((method) => (
                   <label key={method} className="flex items-center">
                     <input
                       type="radio"
@@ -169,6 +171,16 @@ export default function FundingPage() {
                     </Button>
                   </div>
                 </div>
+              )}
+              {paymentMethod === "Cheque" && (
+               <div>
+                  <ChequeUpload onUploadSuccess={() => setProBut(true)}/>
+               </div>
+              )}
+              {paymentMethod === "Payment Link" && (
+               <div>
+                  <PaymentLink setProBut={setProBut}/>
+               </div>
               )}
             </Card>
           </div>
