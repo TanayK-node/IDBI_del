@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../../components/Card/index";
 import InfoBox from "../../components/InfoBox/index";
 import { useBasicData } from "../../../context/Basic";
-
+import { usePersonalDetails } from "../../../context/personal";
 
 // FieldDisplay Props
 interface FieldDisplayProps {
@@ -108,6 +108,7 @@ export { FieldDisplay, SectionHeader, RadioOption, CheckboxOption };
 // Main Component
 export default function DetailsCard() {
   const { basicData } = useBasicData();
+   const { personalData } = usePersonalDetails();
   // Sample data - this will be replaced with context data
   const customerData = {
     // Basic Details
@@ -203,18 +204,18 @@ export default function DetailsCard() {
         <div>
           <SectionHeader title="Personal Details" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
-            <FieldDisplay label="Email ID" value={customerData.emailId} />
+            
             <FieldDisplay
               label="Marital Status"
-              value={customerData.maritalStatus}
+              value={personalData.maritalStatus || "Not selected"}
             />
             <FieldDisplay
               label="Father's Name"
-              value={customerData.fatherName}
+              value={personalData.fatherName || "Not selected"}
             />
             <FieldDisplay
               label="Mother's Name"
-              value={customerData.motherName}
+              value={personalData.motherName || "Not selected"}
             />
           </div>
         </div>

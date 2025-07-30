@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import TextBox from "../../../components/TextBox/index"; 
 import Dropdown from "../../../components/DropBox/index";
 import InfoBox from "../../../components/InfoBox/index"; 
+import { usePersonalDetails } from "../../../../context/personal";
 
 interface PersonalDetailsProps {
   value: PersonalDetailsData;
@@ -44,12 +45,12 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
   });
 };
 
-
+  const { personalData, updatePersonalField } = usePersonalDetails();
   const isFormValid =
     
-    formData.maritalStatus.trim() !== "" &&
-    formData.fatherName.trim() !== "" &&
-    formData.motherName.trim() !== "";
+    personalData.maritalStatus.trim() !== "" &&
+    personalData.fatherName.trim() !== "" &&
+    personalData.motherName.trim() !== "";
 
   // Dropdown options
   const maritalStatusOptions = [
@@ -64,32 +65,29 @@ const PersonalDetails: React.FC<PersonalDetailsProps> = ({
         <h1 className="text-3xl pb-4">Personal Details</h1>
         <div className="space-y-4">
           {/* Customer Email */}
-          
 
-          {/* Info Box */}
-          
           {/* Marital Status, Father's, and Mother's Name */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Dropdown
               label="Marital Status"
               placeholder="Select Status"
               options={maritalStatusOptions}
-              value={formData.maritalStatus}
-              onChange={(value) => handleInputChange("maritalStatus", value)}
+              value={personalData.maritalStatus}
+               onChange={(value) => updatePersonalField("maritalStatus", value)}
               required
             />
             <TextBox
               label="Father's Name"
               placeholder="Enter Father's name"
-              value={formData.fatherName}
-              onChange={(value) => handleInputChange("fatherName", value)}
+              value={personalData.fatherName}
+              onChange={(value) => updatePersonalField("fatherName", value)}
               required
             />
             <TextBox
               label="Mother's Name"
               placeholder="Enter Mother's name"
-              value={formData.motherName}
-              onChange={(value) => handleInputChange("motherName", value)}
+              value={personalData.motherName}
+              onChange={(value) => updatePersonalField("motherName", value)}
               required
             />
           </div>
