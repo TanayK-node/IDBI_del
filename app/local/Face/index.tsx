@@ -111,7 +111,7 @@ const PhotoCapture: FC = () => {
   const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [verificationStatus, setVerificationStatus] = useState<
-    "idle" | "verifying" | "verified"
+    "idle" | "verifying" | "verified" | "not-verified"
   >("idle");
   const [error, setError] = useState<string | null>(null);
   const {
@@ -199,36 +199,53 @@ const PhotoCapture: FC = () => {
   };
 
   const handleOk = async () => {
-    if (previewImage) {
-      showUploaded("Photo has been successfully uploaded");
+  if (previewImage) {
+    showUploaded("Photo has been successfully uploaded");
 
-      setTimeout(() => {
-        showLoading(
-          "Matching Customer Photo",
-          "Please wait while we compare the photo with your aadhar records."
-        );
-        setVerificationStatus("verifying");
-      }, 1500); // Delay to allow "uploaded" popup to be visible
+    setTimeout(() => {
+      showLoading(
+        "Matching Customer Photo",
+        "Please wait while we compare the photo with your Aadhaar records."
+      );
+      setVerificationStatus("verifying");
+    }, 1500);
 
-      setTimeout(() => {
-        setFinalImage(previewImage);
+    setTimeout(() => {
+      setFinalImage(previewImage);
 
-        // Estimate file size from base64 string
-        const sizeInBytes = Math.ceil((previewImage.length * 3) / 4);
-        const sizeInKb = (sizeInBytes / 1024).toFixed(1);
-        setFileInfo({ name: "customer-photo.jpeg", size: `${sizeInKb} KB` });
+      // Estimate file size
+      const sizeInBytes = Math.ceil((previewImage.length * 3) / 4);
+      const sizeInKb = (sizeInBytes / 1024).toFixed(1);
+      setFileInfo({ name: "customer-photo.jpeg", size: `${sizeInKb} KB` });
 
+      // Simulate verification result (for now use random logic)
+      const isMatch = Math.random() > 0.4; // 60% chance of success
+
+      if (isMatch) {
         showSuccess(
-          "Photo Match Succesful",
-          "Customer's photo matched Aadhaar with 60% accuracy, You can proceed."
+          "Photo Match Successful",
+          "Customer's photo matched Aadhaar with 60% accuracy. You can proceed."
         );
         setVerificationStatus("verified");
-        stopCamera();
-        setPreviewImage(null);
-      }, 3000); // total delay (uploaded + loading)
-    }
-  };
+      } else {
+        showError(
+          "Photo Match Failed",
+          "Customer's photo did not match Aadhaar. You may retry or verify manually."
+        );
+        setVerificationStatus("not-verified");
+      }
 
+      stopCamera();
+      setPreviewImage(null);
+    }, 3000);
+  }
+};
+
+  const handleManualVerify = () => {
+    // Simulate manual verification logic
+    setVerificationStatus("verified");
+    console.log("Photo manually verified.");
+  };
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent parent onClick from firing
     setFinalImage(null);
@@ -292,6 +309,18 @@ const PhotoCapture: FC = () => {
               <p className="text-sm text-green-600 font-semibold mt-2">
                 Photo Verified ✅
               </p>
+            )}
+
+            {/* Manual verification option */}
+            {verificationStatus !== "verified" && (
+              <div className="mt-2">
+                <button
+                  onClick={handleManualVerify} // define this function
+                  className="text-xs px-3 py-1 rounded-2xl bg-orange-500 text-white hover:bg-orange-600 transition"
+                >
+                  Manually Verify Photo
+                </button>
+              </div>
             )}
           </div>
         ) : (
