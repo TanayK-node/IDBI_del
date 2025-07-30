@@ -22,7 +22,7 @@ import Toast from "./components/Toast/index";
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
-    "Savings Account"
+    "Savings Account (Regular)"
   );
   const [showBranchCard, setShowBranchCard] = useState(false);
   const [showNominee, setShowNominee] = useState(false);
@@ -88,7 +88,7 @@ export default function Home() {
         <div className="mb-6">
           <ServiceDropdown
             options={serviceOptions}
-            defaultValue="Savings Account"
+            defaultValue="Savings Account (Regular)"
             onSelect={handleServiceSelect}
             className="w-75"
           />

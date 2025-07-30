@@ -99,7 +99,7 @@ const TransferSuccessful = ({
                   className="text-green-600 transition-transform duration-200 hover:scale-110"
                   aria-label="Copy account number"
                 >
-                  <img src="/assets/images/copy.png" />
+                  <img src="/assets/images/Copy.png" />
                 </button>
               </div>
             </div>

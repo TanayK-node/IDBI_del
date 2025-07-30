@@ -23,7 +23,7 @@ const CongratulationsPage: NextPage = () => {
             accountNumber="12345678944"
             branch="Nariman Point Branch"
             ifscCode="IDBI23456789"
-            cifno="12345678910"
+            cifno="12343434787"
           />
         </div>
         <div className="justify-center flex pb-18">

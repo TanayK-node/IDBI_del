@@ -152,7 +152,7 @@ export default function FundingPage() {
                               : "bg-gray-400 cursor-not-allowed"
                           }`}
                         >
-                          Request Payement
+                          Verify
                         </Button>
                       </div>
                     </div>

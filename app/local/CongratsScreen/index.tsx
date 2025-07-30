@@ -16,6 +16,7 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
   accountNumber,
   branch,
   ifscCode,
+  cifno,
 }) => {
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<'success' | 'error' | 'warning' | 'info'>('info');
@@ -79,7 +80,7 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
                   className="text-green-600 transition-transform duration-200 hover:scale-110"
                   aria-label="Copy account number"
                 >
-                  <img src="/assets/images/copy.png"/>
+                  <img src="/assets/images/Copy.png"/>
                 </button>
               </div>
             </div>
@@ -87,7 +88,7 @@ const CongratulationsComponent: React.FC<CongratulationsProps> = ({
             <div className="p-6 text-left">
               <div className="mb-1 text-xs text-gray-500">CIF no.</div>
               <div className="text-base font-semibold text-gray-800">
-                XXXXXXXXXXX
+                {cifno}
               </div>
             </div>
             {/* Branch */}
