@@ -149,15 +149,15 @@ export default function DetailsCard() {
         <div>
           <SectionHeader title="Basic Details" />
           <div className="flex flex-wrap gap-x-16 gap-y-6">
-            <FieldDisplay label="Name" value={customerData.name} />
+            <FieldDisplay label="Name" value={basicData.name || "Not Provided"} />
             <FieldDisplay
               label="Aadhaar Number"
               value={formatMaskedAadhaar(basicData.aadhaarNumber)}
             />
-            <FieldDisplay label="Gender" value={customerData.gender} />
+            <FieldDisplay label="Gender" value={basicData.gender || "Not Provided"} />
             <FieldDisplay
               label="Date of Birth"
-              value={customerData.dateOfBirth}
+              value={basicData.dateOfBirth || "Not Provided"} 
             />
             <div>
               <SectionHeader title="Permanent Address" />
