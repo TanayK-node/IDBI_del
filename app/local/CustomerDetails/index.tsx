@@ -138,90 +138,91 @@ const CustomerDetailsForm: React.FC = () => {
           />
         </div>
 
-        
-        {/* Mobile Number Row */}
-        <div className="md:col-span-1 grid grid-cols-13 gap-4 items-end mt-4">
-          {/* Country Code Dropdown (2 columns) */}
-          <div className="col-span-2 pb-8">
-            <Dropdown
-              label="Country Code"
-              placeholder="+91 (IND)"
-              options={countryCodes} // ✅ use the array here
-              value={countryCode}
-              onChange={handleCountryCodeChange}
-            />
+        {/* --- MOBILE + EMAIL WRAPPER --- */}
+        <div className="w-full md:w-2/3">
+          {/* Mobile Number Row */}
+          <div className="grid grid-cols-9 gap-4 items-end mt-4">
+            {/* Country Code Dropdown (2 columns) */}
+            <div className="col-span-2 pb-8">
+              <Dropdown
+                label="Country Code"
+                placeholder="+91 (IND)"
+                options={countryCodes}
+                value={countryCode}
+                onChange={handleCountryCodeChange}
+              />
+            </div>
+
+            {/* Mobile Number TextBox (4 columns) */}
+            <div className="col-span-4">
+              <TextBox
+                label="Mobile Number"
+                placeholder="Enter Mobile Number"
+                type="text"
+                value={mobile}
+                onChange={validateMobile}
+                required={true}
+              />
+              {mobileError && (
+                <p className="text-red-500 text-sm mt-1">{mobileError}</p>
+              )}
+            </div>
+
+            {/* Verify Button (3 columns) */}
+            <div className="col-span-3 pb-6 flex justify-end">
+              <Button
+                onClick={handleVerifyMobile}
+                disabled={!isMobileValid || isMobileOtpVerified}
+                className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
+                  isMobileOtpVerified
+                    ? "bg-green-500 text-white cursor-default"
+                    : isMobileValid
+                    ? "bg-orange-500 hover:bg-orange-600 text-white"
+                    : "bg-gray-400 cursor-not-allowed text-gray-200"
+                }`}
+              >
+                {isMobileOtpVerified ? "Verified" : "Verify Number"}
+              </Button>
+            </div>
           </div>
 
-          {/* Mobile Number TextBox (7 columns) */}
-          <div className="col-span-4">
-            <TextBox
-              label="Mobile Number"
-              placeholder="Enter Mobile Number"
-              type="text"
-              value={mobile}
-              onChange={validateMobile}
-              required={true}
-            />
-            {mobileError && (
-              <p className="text-red-500 text-sm mt-1">{mobileError}</p>
-            )}
+          {/* Email Info Box */}
+          <div className="col-span-full mt-4">
+            <InfoBox message="Make sure your email ID is correct as all communication from bank would be done on this email" />
           </div>
 
-          {/* Verify Button (3 columns) */}
-          <div className="col-span-3 pb-6 flex justify-end w-3/4">
-            <Button
-              onClick={handleVerifyMobile}
-              disabled={!isMobileValid || isMobileOtpVerified}
-              className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
-                isMobileOtpVerified
-                  ? "bg-green-500 text-white cursor-default"
-                  : isMobileValid
-                  ? "bg-orange-500 hover:bg-orange-600 text-white"
-                  : "bg-gray-400 cursor-not-allowed text-gray-200"
-              }`}
-            >
-              {isMobileOtpVerified ? "Verified" : "Verify Number"}
-            </Button>
-          </div>
-        </div>
+          {/* Email Row */}
+          <div className="grid grid-cols-9 gap-4 items-end mt-4">
+            {/* Email TextBox (6 columns) */}
+            <div className="col-span-6">
+              <TextBox
+                label="Email ID"
+                placeholder="Enter email here"
+                type="text"
+                value={email}
+                onChange={validateEmail}
+                required={true}
+              />
+              {emailError && (
+                <p className="text-red-500 text-sm mt-1">{emailError}</p>
+              )}
+            </div>
 
-        {/* Email Info Box */}
-        <div className="col-span-full">
-          <InfoBox message="Make sure your email ID is correct as all communication from bank would be done on this email" />
-        </div>
-
-        {/* Email Row */}
-        <div className="w-full flex justify-start">
-          <div className="w-full md:w-2/3">
-            <div className="grid grid-cols-3 gap-4 items-end mt-4">
-              <div className="col-span-2">
-                <TextBox
-                  label="Email ID"
-                  placeholder="Enter email here"
-                  type="text"
-                  value={email}
-                  onChange={validateEmail}
-                  required={true}
-                />
-                {emailError && (
-                  <p className="text-red-500 text-sm mt-1">{emailError}</p>
-                )}
-              </div>
-              <div className="pb-6 flex justify-end w-4/5">
-                <Button
-                  onClick={handleVerify}
-                  disabled={!isFormValid || isEmailVerified}
-                  className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
-                    isEmailVerified
-                      ? "bg-green-500 text-white cursor-default"
-                      : isFormValid
-                      ? "bg-orange-500 hover:bg-orange-600 text-white"
-                      : "bg-gray-400 cursor-not-allowed text-gray-200"
-                  }`}
-                >
-                  {isEmailVerified ? "Email Verified" : "Verify Email"}
-                </Button>
-              </div>
+            {/* Verify Email Button (3 columns) */}
+            <div className="col-span-3 pb-6 flex justify-end">
+              <Button
+                onClick={handleVerify}
+                disabled={!isFormValid || isEmailVerified}
+                className={`w-full px-4 py-2 mt-1 text-sm focus:ring-gray-500 ${
+                  isEmailVerified
+                    ? "bg-green-500 text-white cursor-default"
+                    : isFormValid
+                    ? "bg-orange-500 hover:bg-orange-600 text-white"
+                    : "bg-gray-400 cursor-not-allowed text-gray-200"
+                }`}
+              >
+                {isEmailVerified ? "Email Verified" : "Verify Email"}
+              </Button>
             </div>
           </div>
         </div>
