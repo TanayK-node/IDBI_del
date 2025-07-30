@@ -30,7 +30,7 @@ export default function ReviewDetails() {
     setSelectedService(option.label);
     console.log("Selected service:", option);
   };
-   const handleProceed = () => {
+  const handleProceed = () => {
     console.log("Congrats proceed");
     setTimeout(() => {
       router.push("/Congratulations");
@@ -60,17 +60,21 @@ export default function ReviewDetails() {
 
           {/*Context left */}
           <DetailsCard />
+
           <NomineeDetailsCard />
+
           <BranchBankCard
             branchName="Bank Details"
             branchCode="IBKL0000126"
             address="World Trade Centre, Ground Floor, Cuffe Parade, Mumbai 400 005"
           />
+
           <ChannelCard />
+
           <Resident />
           <div className="w-full flex justify-center mt-6">
-                    <ProceedFooter onProceed={handleProceed} />
-                  </div>
+            <ProceedFooter onProceed={handleProceed} />
+          </div>
         </div>
       </div>
     </div>

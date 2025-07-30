@@ -1,11 +1,13 @@
+"use client"
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Types
 interface CustomerData {
   name: string;
-  dob: string;
+  mobile: string;
   email: string;
-  mobile?: string;
+  dob?: string;
 }
 
 interface CustomerContextType {

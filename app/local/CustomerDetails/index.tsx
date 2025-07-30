@@ -7,6 +7,8 @@ import OTPVerification from "../../components/OTP/index";
 import { useCustomer } from "../../../context/CustDetail"; // Ensure this path is correct
 import InfoBox from "../../components/InfoBox";
 import Dropdown from "./drop";
+
+
 const CustomerDetailsForm: React.FC = () => {
   const {
     customerData,
@@ -49,6 +51,10 @@ const CustomerDetailsForm: React.FC = () => {
     setShowOTP(false);
     setIsEmailVerified(true);
     setAccordionOpen(false); // collapse only after OTP verified
+    console.log(customerData.email)
+    console.log(customerData.mobile)
+    console.log(customerData.name)
+
   };
 
   const handleVerifyMobile = () => {
@@ -84,6 +90,7 @@ const CustomerDetailsForm: React.FC = () => {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
     setIsEmailValid(isValid);
     setEmailError(isValid ? "" : "Please enter a valid email address.");
+    updateCustomerField("email", value); // Update context
   };
   const countryCodes: string[] = [
     "+91 (IND)",
@@ -99,6 +106,7 @@ const CustomerDetailsForm: React.FC = () => {
 
     const isValid = /^[0-9]{10}$/.test(value);
     setIsMobileValid(isValid);
+    updateCustomerField("mobile", value); // Update context
     setMobileError(
       isValid || value === ""
         ? ""
