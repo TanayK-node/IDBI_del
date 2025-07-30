@@ -115,7 +115,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
             placeholder="Enter Organization Name"
             value={value.organizationName}
             onChange={(value) => handleInputChange("organizationName", value)}
-            required
+            
           />
         </div>
 

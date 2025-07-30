@@ -13,6 +13,7 @@ interface TextBoxProps {
   className?: string;
   required?: boolean;
   readOnly?: boolean;
+  disabled?:boolean;
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
@@ -23,6 +24,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   onChange,
   required = false,
   className = "",
+  disabled=false,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -43,7 +45,8 @@ const TextBox: React.FC<TextBoxProps> = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           required={required}
-          className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28] placeholder-gray-500 ${className}`}
+          disabled={disabled}
+          className={`w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#02836C] focus:border-transparent text-[#2A2A28] placeholder-gray-500 ${className}${disabled ? "bg-gray-100 cursor-not-allowed" : ""}`}
         />
         {type === "password" && (
           <button

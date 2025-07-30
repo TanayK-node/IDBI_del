@@ -1,27 +1,41 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-
-const PaymentLink = ({ setProBut }: { setProBut: (value: boolean) => void }) => {
+import Toast from "../../../components/Toast/index";
+const PaymentLink = ({
+  setProBut,
+}: {
+  setProBut: (value: boolean) => void;
+}) => {
   const [link] = useState("https://pay.example.com/txn/ABC123");
-
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<
+    "success" | "error" | "warning" | "info"
+  >("info");
+  const [showToast, setShowToast] = useState(false);
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(link);
-      alert("Link copied to clipboard!");
+      setToastMessage("Link Copied Succesfully!");
+      setToastType("success");
+      setShowToast(true);
       setProBut(true);
     } catch (err) {
       console.error("Failed to copy link:", err);
     }
   };
-
+  const handleCloseToast = () => {
+    setShowToast(false);
+    setToastMessage(""); // Clear message when toast is closed
+  };
   const handleSend = () => {
-    alert("Link sent successfully!"); // Replace with actual logic
+    setToastMessage("Link Sent Succesfully!");
+    setToastType("success");
+    setShowToast(true);
     setProBut(true);
   };
 
   return (
     <div className="flex flex-col space-y-4 p-4  rounded-xl  bg-white">
-      
       <input
         type="text"
         value={link}
@@ -42,6 +56,16 @@ const PaymentLink = ({ setProBut }: { setProBut: (value: boolean) => void }) => 
           Copy Link
         </button>
       </div>
+      {/* Toast Component */}
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          duration={toastType === "success" ? 2000 : 5000} // Shorter duration for success
+          onClose={handleCloseToast}
+          isVisible={showToast}
+        />
+      )}
     </div>
   );
 };

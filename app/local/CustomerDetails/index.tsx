@@ -162,6 +162,8 @@ const CustomerDetailsForm: React.FC = () => {
                 value={mobile}
                 onChange={validateMobile}
                 required={true}
+                disabled={isMobileOtpVerified}
+                
               />
               
             </div>
@@ -203,6 +205,7 @@ const CustomerDetailsForm: React.FC = () => {
                 value={email}
                 onChange={validateEmail}
                 required={true}
+                
               />
               {emailError && (
                 <p className="text-red-500 text-sm mt-1">{emailError}</p>
@@ -222,7 +225,7 @@ const CustomerDetailsForm: React.FC = () => {
                     : "bg-gray-400 cursor-not-allowed text-gray-200"
                 }`}
               >
-                {isEmailVerified ? "Email Verified" : "Verify Email"}
+                {isEmailVerified ? "Verified" : "Verify Email"}
               </Button>
             </div>
           </div>
