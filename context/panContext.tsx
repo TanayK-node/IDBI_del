@@ -1,27 +1,29 @@
-// context/PanContext.tsx
-"use client"; // required for context in app directory
+// context/UserContext.tsx
+"use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
-type PanContextType = {
+interface UserContextType {
   pan: string;
   setPan: (value: string) => void;
-};
+}
 
-const PanContext = createContext<PanContextType | undefined>(undefined);
+const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const PanProvider = ({ children }: { children: React.ReactNode }) => {
+export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [pan, setPan] = useState("");
 
   return (
-    <PanContext.Provider value={{ pan, setPan }}>
+    <UserContext.Provider value={{ pan, setPan }}>
       {children}
-    </PanContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-export const usePan = () => {
-  const context = useContext(PanContext);
-  if (!context) throw new Error("usePan must be used within PanProvider");
+export const useUser = () => {
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
   return context;
 };

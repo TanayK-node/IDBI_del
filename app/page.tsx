@@ -17,8 +17,7 @@ import ProceedFooter from "./components/Proceed/index";
 import PhotoCapture from "./local/Face/index";
 import SignatureCapture from "./local/Sign/index"; // Assuming you have a SignatureCapture component
 import { CustomerProvider } from "@/context/CustDetail"; // Ensure this path is correct
-import { Router } from "lucide-react";
-import Toast from "./components/Toast/index";
+
 
 export default function Home() {
   const [selectedService, setSelectedService] = useState(
@@ -75,7 +74,7 @@ export default function Home() {
   const handleProceed = () => {
     console.log("application");
     setTimeout(() => {
-      router.push("/Congratulations");
+      router.push("/reviewDetails");
     }, 1000); // 1.5 seconds delay
   };
 

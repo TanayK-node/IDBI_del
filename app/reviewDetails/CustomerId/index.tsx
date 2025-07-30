@@ -1,10 +1,10 @@
 'use client'
 import React, {useState}from 'react'
 import Card from "../../components/Card/index"; 
-import { usePan } from "../../../context/panContext";
+import { useUser } from "../../../context/panContext";
 
 const CustomerId = () => {
-    const { pan } = usePan();
+      const { pan } = useUser();
   return (
         <Card className="p-6">
           <div className="space-y-4">

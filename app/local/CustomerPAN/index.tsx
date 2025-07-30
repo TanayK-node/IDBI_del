@@ -9,6 +9,9 @@ import StatusPopup from "../../components/PopUp/index";
 import { useStatusPopup } from "../../hooks/Popup";
 import dummy from "./dummy.json"; // Assuming this is the path to your dummy data
 import { useCustomer } from "../../../context/CustDetail";
+import { useUser } from "../../../context/panContext";
+
+
 
 interface CustomerIdProofPageProps {
   setCustomerData: (data: { name: string; dob: string }) => void;
@@ -17,7 +20,7 @@ interface CustomerIdProofPageProps {
 const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
   setCustomerData,
 }) => {
-  const [pan, setPan] = useState("");
+    const { pan, setPan } = useUser();
   const [isVerified, setIsVerified] = useState(false);
   const [formOpen, setFormOpen] = useState(true);
   const { popup, showLoading, showSuccess, showError, hidePopup } =
@@ -84,7 +87,7 @@ const CustomerIdProofPage: React.FC<CustomerIdProofPageProps> = ({
               label="Permanent Account Number (PAN)"
               placeholder="Enter PAN"
               value={pan}
-              onChange={setPan}
+               onChange={(val: string) => setPan(val)}
               className="w-full sm:w-[336px] h-[48px]"
               required
             />
