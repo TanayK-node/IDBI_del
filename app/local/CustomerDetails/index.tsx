@@ -239,7 +239,7 @@ const CustomerDetailsForm: React.FC = () => {
         {showMobileOTP && (
           <OTPVerification
             onSubmit={handleOtpSubmitMobile}
-            onClose={() => setShowOTP(false)}
+            onClose={() => setShowMobileOTP(false)}
             message="Enter the 6-digit OTP sent to the user's Phone Number to continue."
           />
         )}
