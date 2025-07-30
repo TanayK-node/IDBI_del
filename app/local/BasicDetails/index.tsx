@@ -12,6 +12,7 @@ import TextBox from "../../components/TextBox/index"; // Adjust path as needed
 import Button from "../../components/Button/index"; // Adjust path as needed
 import rawAadhaarData from "./aadhar.json";
 import OTPVerification from "../../components/OTP/index";
+import { useBasicData  } from "../../../context/Basic";
 
 interface CompleteFormProps {
   basicData: BasicData;
@@ -76,7 +77,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     null
   );
 
-  const [basicData, setBasicData] = useState<BasicData>(initialBasicData);
+  const { basicData, updateBasicField } = useBasicData();
 
   const handleOtpSubmit = (otp: string) => {
     console.log("OTP verified successfully:", otp);
@@ -85,10 +86,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
     setIsAccordionOpen(true); // collapse only after OTP verified
   };
   const handleInputChange = (field: keyof BasicData, value: string) => {
-    setBasicData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
+    updateBasicField(field, value);
     setVerificationError(null);
   };
 
@@ -100,34 +98,32 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
 
   // Aadhaar should be 12 digits
 
-  const handleVerify = async () => {
-    setIsVerifying(true);
-    setVerificationError(null);
+ const handleVerify = async () => {
+  setIsVerifying(true);
+  setVerificationError(null);
 
-    try {
-      const response = await mockVerifyAadhaar(basicData.aadhaarNumber);
+  try {
+    const response = await mockVerifyAadhaar(basicData.aadhaarNumber);
 
-      if (response.success) {
-        setBasicData((prev) => ({
-          ...prev,
-          name: response.data!.name,
-          gender: response.data!.gender,
-          dateOfBirth: response.data!.dateOfBirth,
-          address: response.data!.address,
-        }));
-        setShowOTP(true); // Show OTP after success
-      } else {
-        setVerificationError(
-          response.error || "Verification failed. Please try again."
-        );
-      }
-    } catch (error) {
-      setVerificationError("Network error. Please try again.");
-      console.error("Verification failed:", error);
-    } finally {
-      setIsVerifying(false);
+    if (response.success && response.data) {
+      handleInputChange("name", response.data.name);
+      handleInputChange("gender", response.data.gender);
+      handleInputChange("dateOfBirth", response.data.dateOfBirth);
+      handleInputChange("address", response.data.address);
+
+      setShowOTP(true); // Show OTP after success
+    } else {
+      setVerificationError(
+        response.error || "Verification failed. Please try again."
+      );
     }
-  };
+  } catch (error) {
+    setVerificationError("Network error. Please try again.");
+    console.error("Verification failed:", error);
+  } finally {
+    setIsVerifying(false);
+  }
+};
 
   // Mock verification function - replace with your actual API call
   const mockVerifyAadhaar = async (
@@ -309,7 +305,7 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
                           const cleanValue = value
                             .replace(/\D/g, "")
                             .slice(0, 12);
-                          handleInputChange("aadhaarNumber", cleanValue);
+                          updateBasicField("aadhaarNumber", cleanValue);
                         }}
                         required
                         className="w-full sm:w-[336px] h-[48px] text-base"

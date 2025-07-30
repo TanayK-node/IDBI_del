@@ -1,6 +1,8 @@
 import React from "react";
 import Card from "../../components/Card/index";
 import InfoBox from "../../components/InfoBox/index";
+import { useBasicData } from "../../../context/Basic";
+
 
 // FieldDisplay Props
 interface FieldDisplayProps {
@@ -90,11 +92,22 @@ function CheckboxOption({ label, isSelected }: CheckboxOptionProps) {
     </div>
   );
 }
+function formatMaskedAadhaar(aadhaar: string): string {
+  const clean = aadhaar.replace(/\D/g, "").slice(0, 12);
+  const masked = clean
+    .split("")
+    .map((digit, i) => (i < 8 ? "X" : digit))
+    .join("");
+
+  return masked.replace(/(.{4})/g, "$1 ").trim(); // adds spaces every 4 digits
+}
+   
 
 export { FieldDisplay, SectionHeader, RadioOption, CheckboxOption };
 
 // Main Component
 export default function DetailsCard() {
+  const { basicData } = useBasicData();
   // Sample data - this will be replaced with context data
   const customerData = {
     // Basic Details
@@ -139,7 +152,7 @@ export default function DetailsCard() {
             <FieldDisplay label="Name" value={customerData.name} />
             <FieldDisplay
               label="Aadhaar Number"
-              value={customerData.aadhaarNumber}
+              value={formatMaskedAadhaar(basicData.aadhaarNumber)}
             />
             <FieldDisplay label="Gender" value={customerData.gender} />
             <FieldDisplay
