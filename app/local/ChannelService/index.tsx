@@ -9,6 +9,8 @@ import {
 import Accordion from "../../components/Accord/index";
 import Dropdown from "../../components/DropBox/index";
 import Button from "../../components/Button/index";
+import { useServices } from "../../../context/Service";
+
 
 interface ChannelServicesData {
   debitCardType: string;
@@ -17,11 +19,11 @@ interface ChannelServicesData {
 }
 
 const ChannelServicesComponent: React.FC = () => {
-  const [servicesData, setServicesData] = useState<ChannelServicesData>({
+  /*const [servicesData, setServicesData] = useState<ChannelServicesData>({
     debitCardType: "physical-virtual",
     chequeLeaves: "10",
     whatsappBanking: false,
-  });
+  });*/
 
   const chequeOptions = [
     { value: "10", label: "10" },
@@ -32,8 +34,10 @@ const ChannelServicesComponent: React.FC = () => {
 
   const [isServicesSaved, setIsServicesSaved] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const handleInputChange = (
+   const { servicesData, handleInputChange } = useServices();
+ 
+ 
+ /*  const handleInputChange = (
     field: keyof ChannelServicesData,
     value: string | boolean
   ) => {
@@ -41,7 +45,7 @@ const ChannelServicesComponent: React.FC = () => {
       ...prev,
       [field]: value,
     }));
-  };
+  };*/
 
   const handleSave = () => {
   // You can add validation here if needed

@@ -1,5 +1,7 @@
 import React from 'react';
 import Card from "../../components/Card/index";
+import { useServices } from "../../../context/Service";
+
 
 // Using your existing Card component
 interface FieldDisplayProps {
@@ -56,6 +58,7 @@ function CheckboxOption({ label, isSelected }: CheckboxOptionProps) {
 
 // Main Channel Services Component
 export default function ChannelCard() {
+    const { servicesData } = useServices();
   // Sample data - this will be replaced with context data
   const channelServicesData = {
     debitCardType: "Physical + Virtual",
@@ -77,25 +80,19 @@ export default function ChannelCard() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <FieldDisplay 
               label="Debit Card Type" 
-              value={channelServicesData.debitCardType} 
+              value={servicesData.debitCardType} 
             />
-            <FieldDisplay 
-              label="Debit Card Name" 
-              value={channelServicesData.debitCardName} 
-            />
+           
           </div>
 
           {/* Cheque Book Section */}
           <div className="mb-6">
             <SectionHeader title="Cheque Book" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FieldDisplay 
-                label="No. of Cheque Books" 
-                value={channelServicesData.numberOfChequeBooks} 
-              />
+              
               <FieldDisplay 
                 label="No. of Cheque Leaves" 
-                value={channelServicesData.numberOfChequeLeaves} 
+                value={servicesData.chequeLeaves} 
               />
             </div>
           </div>
