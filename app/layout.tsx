@@ -6,6 +6,9 @@ import { UserProvider } from "../context/panContext";
 import { CustomerProvider } from "../context/CustDetail"; // adjust path as needed
 import { BasicDataProvider } from "../context/Basic";
 import {PersonalDetailsProvider } from "../context/personal"
+import {ProfessionalDetailsProvider } from "../context/Proffesional"
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -40,7 +43,9 @@ export default function RootLayout({
         <FundingProvider>
           <UserProvider>
             <BasicDataProvider>
-              <PersonalDetailsProvider> {children} </PersonalDetailsProvider>
+              <PersonalDetailsProvider> 
+                    <ProfessionalDetailsProvider>{children} </ProfessionalDetailsProvider>
+                </PersonalDetailsProvider>
              
               </BasicDataProvider>
           </UserProvider>

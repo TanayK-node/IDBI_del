@@ -3,6 +3,7 @@ import Card from "../../components/Card/index";
 import InfoBox from "../../components/InfoBox/index";
 import { useBasicData } from "../../../context/Basic";
 import { usePersonalDetails } from "../../../context/personal";
+import { useProfessionalDetails } from "../../../context/Proffesional";
 
 // FieldDisplay Props
 interface FieldDisplayProps {
@@ -101,21 +102,17 @@ function formatMaskedAadhaar(aadhaar: string): string {
 
   return masked.replace(/(.{4})/g, "$1 ").trim(); // adds spaces every 4 digits
 }
-   
 
 export { FieldDisplay, SectionHeader, RadioOption, CheckboxOption };
 
 // Main Component
 export default function DetailsCard() {
   const { basicData } = useBasicData();
-   const { personalData } = usePersonalDetails();
+  const { personalData } = usePersonalDetails();
+  const { profData } = useProfessionalDetails();
   // Sample data - this will be replaced with context data
   const customerData = {
     // Basic Details
-    name: "Rajesh Kumar",
-    aadhaarNumber: "XXXXXXXXXXXX34",
-    gender: "Male",
-    dateOfBirth: "05/07/1997",
 
     // Address Details
     addressLine1: "403 Matru Vatsalya",
@@ -127,12 +124,6 @@ export default function DetailsCard() {
     // Communication Address
     communicationOption: "bank", // "bank" or "aadhaar"
     addressType: "Home",
-
-    // Personal Details
-    emailId: "Rajesh456@gmail.com",
-    maritalStatus: "Unmarried",
-    fatherName: "Ramesh Kumar",
-    motherName: "Sunita devi",
 
     // Professional Details
     occupation: "Professor",
@@ -150,15 +141,21 @@ export default function DetailsCard() {
         <div>
           <SectionHeader title="Basic Details" />
           <div className="flex flex-wrap gap-x-16 gap-y-6">
-            <FieldDisplay label="Name" value={basicData.name || "Not Provided"} />
+            <FieldDisplay
+              label="Name"
+              value={basicData.name || "Not Provided"}
+            />
             <FieldDisplay
               label="Aadhaar Number"
               value={formatMaskedAadhaar(basicData.aadhaarNumber)}
             />
-            <FieldDisplay label="Gender" value={basicData.gender || "Not Provided"} />
+            <FieldDisplay
+              label="Gender"
+              value={basicData.gender || "Not Provided"}
+            />
             <FieldDisplay
               label="Date of Birth"
-              value={basicData.dateOfBirth || "Not Provided"} 
+              value={basicData.dateOfBirth || "Not Provided"}
             />
             <div>
               <SectionHeader title="Permanent Address" />
@@ -204,7 +201,6 @@ export default function DetailsCard() {
         <div>
           <SectionHeader title="Personal Details" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
-            
             <FieldDisplay
               label="Marital Status"
               value={personalData.maritalStatus || "Not selected"}
@@ -225,26 +221,25 @@ export default function DetailsCard() {
         <div>
           <SectionHeader title="Professional Details" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
-            <FieldDisplay label="Occupation" value={customerData.occupation} />
+            <FieldDisplay
+              label="Occupation"
+              value={profData.occupation || "Not selected"}
+            />
             <FieldDisplay
               label="Organization Type"
-              value={customerData.organizationType}
+              value={profData.organizationType || "Not selected"}
             />
             <FieldDisplay
               label="Organization Name"
-              value={customerData.organizationName}
+              value={profData.organizationName || "Not selected"}
             />
             <FieldDisplay
               label="Source of Funds"
-              value={customerData.sourceOfFunds}
+              value={profData.sourceOfFunds || "Not selected"}
             />
             <FieldDisplay
-              label="Gross Annual Income *"
-              value={customerData.grossAnnualIncome}
-            />
-            <FieldDisplay
-              label="Savings Account Type"
-              value={customerData.savingsAccountType}
+              label="Gross Annual Income"
+              value={profData.grossAnnualIncome || "Not selected"}
             />
           </div>
         </div>

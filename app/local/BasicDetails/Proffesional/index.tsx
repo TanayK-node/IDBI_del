@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import TextBox from "../../../components/TextBox/index"; // Adjust path as needed
 import Dropdown from "../../../components/DropBox/index";
+import { useProfessionalDetails } from "../../../../context/Proffesional";
+
 
 interface ProfessionalDetailsProps {
   value: ProfessionalDetailsData;
@@ -15,7 +17,7 @@ export interface ProfessionalDetailsData {
   organizationName: string;
   sourceOfFunds: string;
   grossAnnualIncome: string;
-  savingsAccountType: string;
+
 }
 
 const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
@@ -24,6 +26,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   className = "",
 }) => {
   const [isVerified, setIsVerified] = useState(false);
+    const { profData, updateProfField } = useProfessionalDetails();
 
   const handleInputChange = (
     field: keyof ProfessionalDetailsData,
@@ -42,8 +45,7 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
       value.organizationType.trim() !== "" &&
       value.organizationName.trim() !== "" &&
       value.sourceOfFunds.trim() !== "" &&
-      value.grossAnnualIncome.trim() !== "" &&
-      value.savingsAccountType.trim() !== "";
+      value.grossAnnualIncome.trim() !== "" ;
 
     if (isFormValid) {
       setIsVerified(true);
@@ -53,12 +55,11 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
   };
 
   const isFormValid =
-    value.occupation.trim() !== "" &&
-    value.organizationType.trim() !== "" &&
-    value.organizationName.trim() !== "" &&
-    value.sourceOfFunds.trim() !== "" &&
-    value.grossAnnualIncome.trim() !== "" &&
-    value.savingsAccountType.trim() !== "";
+    profData.occupation.trim() !== "" &&
+    profData.organizationType.trim() !== "" &&
+    profData.organizationName.trim() !== "" &&
+    profData.sourceOfFunds.trim() !== "" &&
+    profData.grossAnnualIncome.trim() !== "" ;
 
   // Dropdown options
   const occupationOptions = [
@@ -97,8 +98,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               label="Occupation"
               placeholder="Select Occupation"
               options={occupationOptions}
-              value={value.occupation}
-              onChange={(value) => handleInputChange("occupation", value)}
+              value={profData.occupation}
+              onChange={(value) => updateProfField("occupation", value)}
               required
             />
           </div>
@@ -106,15 +107,15 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
             label="Organization Type"
             placeholder="Select Organization Type"
             options={organizationTypeOptions}
-            value={value.organizationType}
-            onChange={(value) => handleInputChange("organizationType", value)}
+            value={profData.organizationType}
+            onChange={(value) => updateProfField("organizationType", value)}
             required
           />
           <TextBox
             label="Organization Name"
             placeholder="Enter Organization Name"
-            value={value.organizationName}
-            onChange={(value) => handleInputChange("organizationName", value)}
+            value={profData.organizationName}
+            onChange={(value) => updateProfField("organizationName", value)}
             
           />
         </div>
@@ -125,8 +126,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               label="Source of Funds"
               placeholder="Select Organization Type"
               options={sourceOfFundsOptions}
-              value={value.sourceOfFunds}
-              onChange={(value) => handleInputChange("sourceOfFunds", value)}
+              value={profData.sourceOfFunds}
+              onChange={(value) => updateProfField("sourceOfFunds", value)}
               required
             />
           </div>
@@ -145,8 +146,8 @@ const ProfessionalDetails: React.FC<ProfessionalDetailsProps> = ({
               },
               { label: "Above ₹10,00,000", value: "Above ₹10,00,000" },
             ]}
-            value={value.grossAnnualIncome}
-            onChange={(value) => handleInputChange("grossAnnualIncome", value)}
+            value={profData.grossAnnualIncome}
+            onChange={(value) => updateProfField("grossAnnualIncome", value)}
             required
           />
           

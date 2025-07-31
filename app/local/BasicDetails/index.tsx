@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Accordion from "../../components/Accord/index";
 import CommunicationAddress, {
   CommunicationAddressData,
@@ -13,6 +13,10 @@ import Button from "../../components/Button/index"; // Adjust path as needed
 import rawAadhaarData from "./aadhar.json";
 import OTPVerification from "../../components/OTP/index";
 import { useBasicData  } from "../../../context/Basic";
+import { useProfessionalDetails  } from "../../../context/Proffesional";
+import { usePersonalDetails  } from "../../../context/personal";
+
+
 
 interface CompleteFormProps {
   basicData: BasicData;
@@ -71,7 +75,8 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
   const [showOTP, setShowOTP] = useState(false);
   const [idType, setIdType] = useState("aadhaar");
   const [aadhaarType, setAadhaarType] = useState<"aadhaar" | "vid">("aadhaar");
-
+  //const { professionalData } = useProfessionalDetails();
+  const { personalData } = usePersonalDetails();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [verificationError, setVerificationError] = useState<string | null>(
     null
@@ -181,19 +186,20 @@ const CompleteForm: React.FC<CompleteFormProps> = ({
       organizationName: "",
       sourceOfFunds: "",
       grossAnnualIncome: "",
-      savingsAccountType: "",
+
     });
 
-  const isAllSectionsSaved =
-    //personalDetailsData?.maritalStatus?.trim() &&
-   // personalDetailsData?.fatherName?.trim() &&
-    //personalDetailsData?.motherName?.trim() &&
-    ProfessionalDetailsData?.occupation?.trim() &&
-    ProfessionalDetailsData?.organizationType?.trim();
-  ProfessionalDetailsData?.organizationName?.trim();
-  ProfessionalDetailsData?.sourceOfFunds?.trim();
-  ProfessionalDetailsData?.grossAnnualIncome?.trim();
-  ProfessionalDetailsData?.savingsAccountType?.trim();
+const isAllSectionsSaved =
+  !!personalData?.maritalStatus?.trim() &&
+  !!personalData?.fatherName?.trim() &&
+  !!personalData?.motherName?.trim() ;
+  //!!professionalData?.occupation?.trim() &&
+ // !!professionalData?.organizationType?.trim() &&
+  //!!professionalData?.organizationName?.trim() &&
+  //!!professionalData?.sourceOfFunds?.trim() &&
+  //!!professionalData?.grossAnnualIncome?.trim();
+    
+ 
 
   const handleFinalSubmit = () => {
     console.log("Trying to submit form...");
