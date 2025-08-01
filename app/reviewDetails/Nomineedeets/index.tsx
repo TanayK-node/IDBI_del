@@ -36,14 +36,7 @@ function SectionHeader({ title }: SectionHeaderProps) {
 // Main Nominee Details Component
 export default function NomineeDetailsCard() {
   const { nomineeData, sameAsCustomer } = useNominee();
-  // Sample data - this will be replaced with context data
-  /*const nomineeData = {
-    name: "Vinod Kumar",
-    relationship: "Father",
-    dateOfBirth: "06/07/1997",
-    mobileNumber: "(+91) 9900012345",
-    address: "123, Jasmine Apartments, Palace Road, Bangalore, Karnataka - 560003"
-  };*/
+ 
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">

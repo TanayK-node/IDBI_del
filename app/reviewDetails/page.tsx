@@ -11,7 +11,7 @@ import { CustomerProvider } from "@/context/CustDetail";
 import DetailsCard from "./BasicDetails";
 import NomineeDetailsCard from "./Nomineedeets";
 import BranchBankCard from "../local/Branch";
-import Resident from "../local/Resident";
+import Resident from "./ResidentDisplay/index";
 import ChannelCard from "./Channel";
 import { useRouter } from "next/navigation";
 

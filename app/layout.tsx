@@ -9,7 +9,7 @@ import { PersonalDetailsProvider } from "../context/personal";
 import { ProfessionalDetailsProvider } from "../context/Proffesional";
 import { ServicesProvider } from "../context/Service";
 import { NomineeProvider } from "../context/Nomineecon";
-
+import { IndianResidentProvider } from "../context/ResidentCon";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -47,7 +47,11 @@ export default function RootLayout({
               <PersonalDetailsProvider>
                 <ProfessionalDetailsProvider>
                   <ServicesProvider>
-                      <NomineeProvider>{children} </NomineeProvider>
+                    <NomineeProvider>
+                      <IndianResidentProvider>
+                        {children}{" "}
+                      </IndianResidentProvider>
+                    </NomineeProvider>
                   </ServicesProvider>
                 </ProfessionalDetailsProvider>
               </PersonalDetailsProvider>

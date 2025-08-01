@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Card from '../../components/Card/index';
+import { useIndianResident } from "../../../context/ResidentCon";
 
 const IndianResidentCard = () => {
-  const [selectedOption, setSelectedOption] = useState('Yes');
+  //const [selectedOption, setSelectedOption] = useState( 'Yes');
+   const { selectedOption, setSelectedOption } = useIndianResident();
 
   return (
     <div className="p-4">
