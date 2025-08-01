@@ -8,6 +8,7 @@ import { BasicDataProvider } from "../context/Basic";
 import { PersonalDetailsProvider } from "../context/personal";
 import { ProfessionalDetailsProvider } from "../context/Proffesional";
 import { ServicesProvider } from "../context/Service";
+import { NomineeProvider } from "../context/Nomineecon";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,7 +46,9 @@ export default function RootLayout({
             <BasicDataProvider>
               <PersonalDetailsProvider>
                 <ProfessionalDetailsProvider>
-                  <ServicesProvider>{children} </ServicesProvider>
+                  <ServicesProvider>
+                      <NomineeProvider>{children} </NomineeProvider>
+                  </ServicesProvider>
                 </ProfessionalDetailsProvider>
               </PersonalDetailsProvider>
             </BasicDataProvider>

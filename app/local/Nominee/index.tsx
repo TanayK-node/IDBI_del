@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 import Card from "../../components/Card/index";
 import TextBox from "../../components/TextBox/index";
 import Dropdown from "../../components/DropBox/index";
 import Button from "../../components/Button/index";
 import Accordion from "../../components/Accord/index";
+import { useNominee } from "../../../context/Nomineecon";
 
 interface NomineeData {
   name: string;
@@ -34,7 +34,7 @@ interface NomineeProps {
 
 const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [nomineeData, setNomineeData] = useState<NomineeData>({
+  /*const [nomineeData, setNomineeData] = useState<NomineeData>({
     name: "",
     relationship: "",
     dateOfBirth: "",
@@ -42,7 +42,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
     addressLine1: "",
     addressLine2: "",
     pinCode: "",
-  });
+  });*/
   const [guardianData, setGuardianData] = useState<GuardianData>({
     name: "",
     relationship: "",
@@ -52,7 +52,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
     addressLine2: "",
     pinCode: "",
   });
-  const [sameAsCustomer, setSameAsCustomer] = useState(false);
+  const { nomineeData, setNomineeData, sameAsCustomer, setSameAsCustomer } = useNominee();
   const [guardianSameAsNominee, setGuardianSameAsNominee] = useState(false);
   const [isNomineeSaved, setIsNomineeSaved] = useState(false);
   const [showGuardianSection, setShowGuardianSection] = useState(false);
@@ -108,6 +108,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
     handleInputChange("mobileNumber", cleaned);
     setMobileError(cleaned.length === 10 ? "" : "Invalid mobile number");
   };
+  
   const handleInputChange = (field: keyof NomineeData, value: string) => {
     let filteredValue = value;
 
@@ -355,7 +356,7 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
             <TextBox
               label="Address Line 1"
               placeholder="Enter Address"
-              value={nomineeData.addressLine1}
+              value={nomineeData.addressLine1 || ""}
               onChange={(value) => handleInputChange("addressLine1", value)}
               required
             />
@@ -363,14 +364,14 @@ const Nominee: React.FC<NomineeProps> = ({ onChangeClick }) => {
             <TextBox
               label="Address Line 2 (Optional)"
               placeholder="Enter Address"
-              value={nomineeData.addressLine2}
+              value={nomineeData.addressLine2 || ""}
               onChange={(value) => handleInputChange("addressLine2", value)}
             />
 
             <TextBox
               label="Pin Code"
               placeholder="Enter Pin Code"
-              value={nomineeData.pinCode}
+              value={nomineeData.pinCode || ""}
               onChange={(value) => handleInputChange("pinCode", value)}
               required
             />

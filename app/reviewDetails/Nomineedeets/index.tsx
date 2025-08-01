@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "@/app/components/Card";
+import { useNominee } from "../../../context/Nomineecon";
 
 // FieldDisplay Props
 interface FieldDisplayProps {
@@ -34,37 +35,57 @@ function SectionHeader({ title }: SectionHeaderProps) {
 
 // Main Nominee Details Component
 export default function NomineeDetailsCard() {
+  const { nomineeData, sameAsCustomer } = useNominee();
   // Sample data - this will be replaced with context data
-  const nomineeData = {
+  /*const nomineeData = {
     name: "Vinod Kumar",
     relationship: "Father",
     dateOfBirth: "06/07/1997",
     mobileNumber: "(+91) 9900012345",
     address: "123, Jasmine Apartments, Palace Road, Bangalore, Karnataka - 560003"
-  };
+  };*/
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
       <Card className="p-8">
-        
         {/* Nominee Details Section */}
         <div>
           <SectionHeader title="Nominee Details" />
-          
+
           {/* First Row - Name, Relationship, Date of Birth */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <FieldDisplay label="Name" value={nomineeData.name} />
-            <FieldDisplay label="Relationship" value={nomineeData.relationship} />
-            <FieldDisplay label="Date of Birth" value={nomineeData.dateOfBirth} />
+            <FieldDisplay
+              label="Relationship"
+              value={nomineeData.relationship}
+            />
+            <FieldDisplay
+              label="Date of Birth"
+              value={nomineeData.dateOfBirth}
+            />
           </div>
 
           {/* Second Row - Mobile Number, Address */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <FieldDisplay label="Mobile Number" value={nomineeData.mobileNumber} />
-            <FieldDisplay className="w-[300px]" label="Address" value={nomineeData.address} />
+            <FieldDisplay
+              label="Mobile Number"
+              value={nomineeData.mobileNumber}
+            />
+            {!sameAsCustomer && (
+              <>
+                <p>
+                  <strong>Address Line 1:</strong> {nomineeData.addressLine1}
+                </p>
+                <p>
+                  <strong>Address Line 2:</strong> {nomineeData.addressLine2}
+                </p>
+                <p>
+                  <strong>Pin Code:</strong> {nomineeData.pinCode}
+                </p>
+              </>
+            )}
           </div>
         </div>
-
       </Card>
     </div>
   );
